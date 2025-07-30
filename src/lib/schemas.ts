@@ -63,3 +63,25 @@ export const resizeFormSchema = z.object({
 });
 
 export type ResizeFormData = z.infer<typeof resizeFormSchema>;
+
+export const backgroundRemovalFormSchema = z.object({
+    format: z.enum(["png", "jpg", "webp"]).default("png"),
+    quality: z.coerce
+        .number()
+        .min(1, "Quality must be at least 1")
+        .max(100, "Quality cannot exceed 100")
+        .default(90),
+    backgroundColor: z
+        .string()
+        .regex(
+            /^[0-9a-fA-F]{6}$/,
+            "Background color must be a valid hex color (6 characters)"
+        )
+        .default("ffffff")
+        .optional(),
+    model: z.enum(["isnet", "isnet_fp16", "isnet_quint8"]).default("isnet"),
+});
+
+export type BackgroundRemovalFormData = z.infer<
+    typeof backgroundRemovalFormSchema
+>;

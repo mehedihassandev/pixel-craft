@@ -15,7 +15,8 @@ export const Footer = () => {
                         <p className="text-sm text-muted-foreground">
                             Think of an idea, we will make it real. Everything
                             is generated on the fly, no images are stored or
-                            cached.
+                            cached. This is a demo of the power of AI and modern
+                            web technologies.
                         </p>
                         <p className="text-sm text-muted-foreground">
                             © {currentYear} Pixel Craft. All rights reserved.
