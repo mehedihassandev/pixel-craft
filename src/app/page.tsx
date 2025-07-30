@@ -157,6 +157,7 @@ export default function Home() {
                             Last updated: {lastUpdated.toLocaleTimeString()}
                         </div>
                     </div>
+
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {stats.map((stat) => {
                             const IconComponent = stat.icon;
