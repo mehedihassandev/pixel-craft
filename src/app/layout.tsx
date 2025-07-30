@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { ReactNode } from "react";
+
 export const metadata: Metadata = {
     title: "Pixel Craft",
     description: "Generate custom placeholder images with ease.",
@@ -10,7 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
     children,
 }: Readonly<{
-    children: React.ReactNode;
+    children: ReactNode;
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
@@ -26,8 +30,10 @@ export default function RootLayout({
                     rel="stylesheet"
                 />
             </head>
-            <body className="font-body antialiased">
+            <body className="font-body antialiased bg-white">
+                <Header />
                 {children}
+                <Footer />
                 <Toaster />
             </body>
         </html>

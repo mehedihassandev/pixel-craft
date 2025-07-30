@@ -6,4 +6,6 @@ export const ROUTER = {
     RESIZE: "/resize",
     IMAGE_COMPRESS: "/image-compress",
     PLACEHOLDER: "/placeholder",
+    OCR: "/ocr",
+    PNG_TO_SVG: "/png-to-svg",
 };

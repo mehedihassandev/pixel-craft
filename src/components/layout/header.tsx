@@ -6,6 +6,8 @@ import {
     Maximize,
     Archive,
     Menu,
+    FileText,
+    Layers,
 } from "lucide-react";
 import Link from "next/link";
 import { menus } from "@/navigation/menus";
@@ -19,11 +21,13 @@ const iconMap = {
     Maximize,
     Archive,
     ImageIcon,
+    FileText,
+    Layers,
 };
 
-export default function Header() {
+const Header = () => {
     return (
-        <header className="border-b bg-card/95 backdrop-blur sticky top-0 z-50 shadow-sm">
+        <header className="bg-card/95 backdrop-blur sticky top-0 z-50 shadow-sm">
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
@@ -37,7 +41,7 @@ export default function Header() {
                     </Link>
 
                     {/* Desktop Menu */}
-                    <nav className="hidden md:flex items-center space-x-6">
+                    <nav className="hidden md:flex items-center space-x-2">
                         {menus.map((item) => {
                             const IconComponent =
                                 iconMap[item.icon as keyof typeof iconMap];
@@ -45,7 +49,7 @@ export default function Header() {
                                 <Link
                                     key={item.id}
                                     href={item.href}
-                                    className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors text-sm font-medium"
+                                    className="flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors text-sm font-medium"
                                 >
                                     <IconComponent className="h-4 w-4" />
                                     <span>{item.label}</span>
@@ -105,4 +109,6 @@ export default function Header() {
             </div>
         </header>
     );
-}
+};
+
+export { Header };
