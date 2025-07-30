@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { ImageResizeForm } from "@/components/resize/image-resize-form";
-import { ImageComparison } from "@/components/resize/image-comparison";
+import { ImageComparison } from "@/components/ui/image-comparison";
 import {
     Card,
     CardContent,
@@ -29,7 +29,7 @@ interface IProcessedImageData {
     quality?: number;
 }
 
-export const Resize = () => {
+export default function ResizePage() {
     const [imageData, setImageData] = useState<IProcessedImageData | null>(
         null
     );
@@ -142,6 +142,7 @@ export const Resize = () => {
                 {/* Right Column - Image Comparison */}
                 <div className="space-y-6">
                     <ImageComparison
+                        type="resize"
                         originalImageUrl={imageData?.originalImageUrl}
                         processedImageUrl={imageData?.processedImageUrl}
                         originalDimensions={imageData?.originalDimensions}
@@ -296,6 +297,4 @@ export const Resize = () => {
             </Card>
         </div>
     );
-};
-
-export default Resize;
+}

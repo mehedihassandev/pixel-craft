@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { BackgroundRemovalForm } from "@/components/background-remove/background-removal-form";
-import { ImageComparison } from "@/components/background-remove/image-comparison";
+import { ImageComparison } from "@/components/ui/image-comparison";
 import {
     Card,
     CardContent,
@@ -153,6 +153,7 @@ export default function BackgroundRemovePage() {
                         />
                     ) : (
                         <ImageComparison
+                            type="background-remove"
                             originalImageUrl={imageData.originalImageUrl}
                             processedImageUrl={imageData.processedImageUrl}
                             metadata={{
