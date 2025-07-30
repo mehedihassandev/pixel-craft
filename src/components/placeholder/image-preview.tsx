@@ -21,7 +21,7 @@ interface ImagePreviewProps {
     url: string;
 }
 
-export default function ImagePreview({ options, url }: ImagePreviewProps) {
+export const ImagePreview = ({ options, url }: ImagePreviewProps) => {
     const { toast } = useToast();
 
     const handleDownload = async () => {
@@ -49,7 +49,7 @@ export default function ImagePreview({ options, url }: ImagePreviewProps) {
     };
 
     return (
-        <Card className="w-full shadow-lg sticky top-24">
+        <Card className="w-full shadow-lg sticky top-24 border-2 border-transparent hover:border-primary/20 transition-all duration-300">
             <CardHeader>
                 <CardTitle>Live Preview</CardTitle>
                 <CardDescription>
@@ -97,4 +97,6 @@ export default function ImagePreview({ options, url }: ImagePreviewProps) {
             </CardFooter>
         </Card>
     );
-}
+};
+
+export default ImagePreview;

@@ -2,19 +2,11 @@
 
 import type { Dispatch, SetStateAction } from "react";
 import { useTransition, useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { PlaceholdrOptions } from "@/app/page";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
 import {
     Card,
     CardContent,
@@ -26,19 +18,27 @@ import { Wand2, Loader2 } from "lucide-react";
 import { handleSuggestFontSize } from "@/app/actions";
 import { useToast } from "@/hooks/use-toast";
 import { placeholderFormSchema, type PlaceholderFormData } from "@/lib/schemas";
-import RhfTextField from "./ui/rhfTextfield/rhf-textfield";
+import RhfTextField from "../ui/rhfTextfield/rhf-textfield";
+import RhfSelect from "../ui/rhfSelect/rhf-select";
 
 interface PlaceholdrFormProps {
     options: PlaceholdrOptions;
     setOptions: Dispatch<SetStateAction<PlaceholdrOptions>>;
 }
 
-export default function PlaceholdrForm({
+export const PlaceholderForm = ({
     options,
     setOptions,
-}: PlaceholdrFormProps) {
+}: PlaceholdrFormProps) => {
     const { toast } = useToast();
     const [isPending, startTransition] = useTransition();
+
+    // Format options for the select dropdown
+    const formatOptions = [
+        { value: "png", label: "PNG" },
+        { value: "jpg", label: "JPG" },
+        { value: "webp", label: "WebP" },
+    ];
 
     // Initialize React Hook Form
     const form = useForm<PlaceholderFormData>({
@@ -93,13 +93,6 @@ export default function PlaceholdrForm({
         }));
     }, [width, height, text, bgColor, textColor, format, fontSize, setOptions]);
 
-    const handleColorChange = (key: "bgColor" | "textColor", value: string) => {
-        const cleanValue = value.startsWith("#") ? value.substring(1) : value;
-        if (/^[0-9a-fA-F]{0,6}$/.test(cleanValue)) {
-            setValue(key, cleanValue);
-        }
-    };
-
     const onSuggestFontSize = () => {
         startTransition(async () => {
             const result = await handleSuggestFontSize({
@@ -122,6 +115,13 @@ export default function PlaceholdrForm({
                 });
             }
         });
+    };
+
+    const handleColorChange = (key: "bgColor" | "textColor", value: string) => {
+        const cleanValue = value.startsWith("#") ? value.substring(1) : value;
+        if (/^[0-9a-fA-F]{0,6}$/.test(cleanValue)) {
+            setValue(key, cleanValue);
+        }
     };
 
     return (
@@ -152,105 +152,37 @@ export default function PlaceholdrForm({
                     />
                 </div>
 
-                <div className="space-y-2">
-                    <Label htmlFor="format">Format</Label>
-                    <Controller
-                        control={control}
-                        name="format"
-                        render={({ field }) => (
-                            <Select
-                                value={field.value}
-                                onValueChange={field.onChange}
-                            >
-                                <SelectTrigger id="format" className="w-full">
-                                    <SelectValue placeholder="Select format" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="png">PNG</SelectItem>
-                                    <SelectItem value="jpg">JPG</SelectItem>
-                                    <SelectItem value="webp">WebP</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        )}
-                    />
-                    {errors.format && (
-                        <p className="text-sm text-destructive">
-                            {errors.format.message}
-                        </p>
-                    )}
-                </div>
+                <RhfSelect
+                    control={control}
+                    name="format"
+                    label="Format"
+                    options={formatOptions}
+                    placeholder="Select format"
+                />
 
                 <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <Label htmlFor="bgColor">Background Color</Label>
-                        <Controller
-                            control={control}
-                            name="bgColor"
-                            render={({ field, fieldState: { error } }) => (
-                                <div className="relative">
-                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-                                        #
-                                    </span>
-                                    <Input
-                                        id="bgColor"
-                                        value={field.value}
-                                        onChange={(e) =>
-                                            handleColorChange(
-                                                "bgColor",
-                                                e.target.value
-                                            )
-                                        }
-                                        className={`pl-7 font-mono ${
-                                            error
-                                                ? "border-destructive focus-visible:ring-destructive"
-                                                : ""
-                                        }`}
-                                        maxLength={6}
-                                    />
-                                    {error && (
-                                        <p className="text-sm text-destructive mt-1">
-                                            {error.message}
-                                        </p>
-                                    )}
-                                </div>
-                            )}
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="textColor">Text Color</Label>
-                        <Controller
-                            control={control}
-                            name="textColor"
-                            render={({ field, fieldState: { error } }) => (
-                                <div className="relative">
-                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-                                        #
-                                    </span>
-                                    <Input
-                                        id="textColor"
-                                        value={field.value}
-                                        onChange={(e) =>
-                                            handleColorChange(
-                                                "textColor",
-                                                e.target.value
-                                            )
-                                        }
-                                        className={`pl-7 font-mono ${
-                                            error
-                                                ? "border-destructive focus-visible:ring-destructive"
-                                                : ""
-                                        }`}
-                                        maxLength={6}
-                                    />
-                                    {error && (
-                                        <p className="text-sm text-destructive mt-1">
-                                            {error.message}
-                                        </p>
-                                    )}
-                                </div>
-                            )}
-                        />
-                    </div>
+                    <RhfTextField
+                        control={control}
+                        name="bgColor"
+                        label="Background Color"
+                        placeholder="c0c0c0"
+                        maxLength={6}
+                        className="font-mono"
+                        onCustomChange={(event) =>
+                            handleColorChange("bgColor", event.target.value)
+                        }
+                    />
+                    <RhfTextField
+                        control={control}
+                        name="textColor"
+                        label="Text Color"
+                        placeholder="F0F8FF"
+                        maxLength={6}
+                        className="font-mono"
+                        onCustomChange={(event) =>
+                            handleColorChange("bgColor", event.target.value)
+                        }
+                    />
                 </div>
 
                 <RhfTextField
@@ -291,4 +223,6 @@ export default function PlaceholdrForm({
             </CardContent>
         </Card>
     );
-}
+};
+
+export default PlaceholderForm;

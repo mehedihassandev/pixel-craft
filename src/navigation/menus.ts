@@ -38,4 +38,16 @@ export const menus: IMenus[] = [
         href: ROUTER.ADD_BACKGROUND_AI,
         icon: "Sparkles",
     },
+    {
+        id: "ocr",
+        label: "OCR Text Extract",
+        href: ROUTER.OCR,
+        icon: "FileText",
+    },
+    {
+        id: "png-to-svg",
+        label: "PNG to SVG",
+        href: ROUTER.PNG_TO_SVG,
+        icon: "Layers",
+    },
 ];
