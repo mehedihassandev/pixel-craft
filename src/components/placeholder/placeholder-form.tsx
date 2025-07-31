@@ -135,7 +135,7 @@ export const PlaceholderForm = ({
     return (
         <div className="space-y-6">
             {/* Dimensions Card */}
-            <Card>
+            <Card className="border-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Grid3X3 className="h-5 w-5" />
@@ -194,7 +194,7 @@ export const PlaceholderForm = ({
             </Card>
 
             {/* Colors Card */}
-            <Card>
+            <Card className="border-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Palette className="h-5 w-5" />
@@ -310,7 +310,7 @@ export const PlaceholderForm = ({
             </Card>
 
             {/* Text & Typography Card */}
-            <Card>
+            <Card className="border-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Type className="h-5 w-5" />
@@ -373,7 +373,7 @@ export const PlaceholderForm = ({
             </Card>
 
             {/* Output Settings Card */}
-            <Card>
+            <Card className="border-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <FileImage className="h-5 w-5" />

@@ -340,7 +340,7 @@ export const ImageResizeForm: React.FC<ImageResizeFormProps> = ({
 
     return (
         <div className="space-y-6">
-            <Card>
+            <Card className=" bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Upload className="h-5 w-5" />
@@ -402,7 +402,7 @@ export const ImageResizeForm: React.FC<ImageResizeFormProps> = ({
                         onSubmit={handleSubmit(processImage)}
                         className="space-y-6"
                     >
-                        <Card>
+                        <Card className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
                                     <Maximize2 className="h-5 w-5" />
