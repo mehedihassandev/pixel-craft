@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { ImageUploadZone } from "@/components/ui/image-upload-zone";
 import { Loader2, ImageIcon, Download } from "lucide-react";
 
 export const PngToSvgConverter: React.FC = () => {
@@ -15,12 +16,9 @@ export const PngToSvgConverter: React.FC = () => {
     const [numColors, setNumColors] = useState<number>(16);
     const [scale, setScale] = useState<number>(1);
     const [threshold, setThreshold] = useState<number>(32);
-    const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleFileInputClick = () => fileInputRef.current?.click();
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const f = e.target.files?.[0];
+    const handleFileSelect = (files: File[]) => {
+        const f = files[0];
         if (f) {
             setFile(f);
             setSvg("");
@@ -69,18 +67,22 @@ export const PngToSvgConverter: React.FC = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                     {/* File Selection */}
-                    <div className="flex flex-col space-y-2">
-                        <Button onClick={handleFileInputClick}>
-                            Select PNG Image
-                        </Button>
-                        <input
-                            type="file"
+                    <div className="space-y-4">
+                        <ImageUploadZone
+                            onFilesSelected={handleFileSelect}
                             accept="image/png"
-                            className="hidden"
-                            ref={fileInputRef}
-                            onChange={handleFileChange}
+                            multiple={false}
+                            maxFileSize={10}
+                            title="Click to upload a PNG image"
+                            subtitle="PNG images only • Max size: 10MB"
+                            enableDragDrop={false}
+                            supportedFormats="PNG"
                         />
-                        {file && <span className="text-sm">{file.name}</span>}
+                        {file && (
+                            <div className="text-sm text-muted-foreground text-center">
+                                Selected: {file.name}
+                            </div>
+                        )}
                     </div>
                     {/* Settings */}
                     <div className="space-y-6">

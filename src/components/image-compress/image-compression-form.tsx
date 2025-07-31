@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useCallback, useRef } from 'react';
+import Image from 'next/image';
 import { useImageCompressor } from '@/hooks/use-image-compressor';
 import { formatFileSize, createFilePreviewUrl, revokeFilePreviewUrl } from '@/lib/utils';
 import {
@@ -9,6 +10,7 @@ import {
   downloadCompressedImagesZip
 } from '@/lib/compression-utils';
 import { CompressionSettingsPanel } from './compression-settings-panel';
+import { ImageUploadZone } from '@/components/ui/image-upload-zone';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -51,7 +53,6 @@ interface CompressionSettings {
 
 export function ImageCompressionForm() {
   const { compressImage, isCompressing, error, clearError } = useImageCompressor();
-  const [isDragOver, setIsDragOver] = useState(false);
   const [compressedImages, setCompressedImages] = useState<CompressedImageData[]>([]);
   const [showSettings, setShowSettings] = useState(false);
   const [compressionSettings, setCompressionSettings] = useState<CompressionSettings>({
@@ -65,17 +66,20 @@ export function ImageCompressionForm() {
   const [compressionProgress, setCompressionProgress] = useState(0);
   const [estimatedTime, setEstimatedTime] = useState<number>(0);
   const [validationErrors, setValidationErrors] = useState<Array<{ file: File; reason: string }>>([]);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileSelect = useCallback(async (files: FileList | null) => {
+  const handleFileSelect = useCallback(async (files: File[]) => {
     if (!files || files.length === 0) return;
 
     clearError();
     setCompressionProgress(0);
     setValidationErrors([]);
 
+    // Convert to FileList-like array for validation
+    const fileList = files as any;
+    fileList.length = files.length;
+
     // Validate files
-    const { validFiles, invalidFiles } = validateFiles(files);
+    const { validFiles, invalidFiles } = validateFiles(fileList);
 
     if (invalidFiles.length > 0) {
       setValidationErrors(invalidFiles);
@@ -84,7 +88,7 @@ export function ImageCompressionForm() {
     if (validFiles.length === 0) return;
 
     // Estimate compression time
-    const estimated = estimateCompressionTime(files);
+    const estimated = estimateCompressionTime(fileList);
     setEstimatedTime(estimated);
 
     const newCompressedImages: CompressedImageData[] = [];
@@ -124,28 +128,6 @@ export function ImageCompressionForm() {
     setCompressionProgress(0);
     setEstimatedTime(0);
   }, [compressImage, clearError, compressionSettings]);
-
-  const handleDragOver = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragOver(true);
-  }, []);
-
-  const handleDragLeave = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragOver(false);
-  }, []);
-
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragOver(false);
-
-    const files = e.dataTransfer.files;
-    handleFileSelect(files);
-  }, [handleFileSelect]);
-
-  const handleFileInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    handleFileSelect(e.target.files);
-  }, [handleFileSelect]);
 
   const handleDownload = useCallback((compressedFile: File, originalFileName: string) => {
     const url = createFilePreviewUrl(compressedFile);
@@ -199,10 +181,6 @@ export function ImageCompressionForm() {
     clearError();
   }, [compressedImages, clearError]);
 
-  const handleBrowseFiles = useCallback(() => {
-    fileInputRef.current?.click();
-  }, []);
-
   const totalOriginalSize = compressedImages.reduce((sum, img) => sum + img.originalSize, 0);
   const totalCompressedSize = compressedImages.reduce((sum, img) => sum + img.compressedSize, 0);
   const totalSavings = totalOriginalSize - totalCompressedSize;
@@ -247,89 +225,22 @@ export function ImageCompressionForm() {
             />
           )}
 
-          <div
-            className={`
-              relative border-2 border-dashed rounded-lg p-8 text-center transition-colors
-              ${isDragOver
-                ? 'border-primary bg-primary/5'
-                : 'border-gray-300 hover:border-gray-400'
-              }
-            `}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-          >
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".jpg,.jpeg,.png,.webp"
-              multiple
-              onChange={handleFileInputChange}
-              className="hidden"
-            />
-
-            <div className="space-y-4">
-              <Upload className="mx-auto h-12 w-12 text-gray-400" />
-
-              <div>
-                <p className="text-lg font-medium">
-                  Drop your images here, or{' '}
-                  <button
-                    onClick={handleBrowseFiles}
-                    className="text-primary hover:underline font-semibold"
-                    disabled={isCompressing}
-                  >
-                    browse files
-                  </button>
-                </p>
-                <p className="text-sm text-gray-500 mt-1">
-                  Supports JPG, JPEG, PNG, WEBP • Max size: 50MB per file
-                </p>
-              </div>
-
-              {isCompressing && (
-                <div className="space-y-2">
-                  <div className="flex items-center justify-center space-x-2">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    <span className="text-sm">Compressing images...</span>
-                  </div>
-                  {compressionProgress > 0 && (
-                    <div className="space-y-1">
-                      <Progress value={compressionProgress} className="w-full max-w-xs mx-auto" />
-                      {estimatedTime > 0 && (
-                        <div className="flex items-center justify-center space-x-1 text-xs text-muted-foreground">
-                          <Clock className="h-3 w-3" />
-                          <span>Est. {Math.ceil(estimatedTime)}s remaining</span>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Validation Errors */}
-          {validationErrors.length > 0 && (
-            <Alert variant="destructive">
-              <AlertCircle className="h-4 w-4" />
-              <AlertDescription>
-                <div className="space-y-1">
-                  <div className="font-medium">Some files could not be processed:</div>
-                  {validationErrors.slice(0, 3).map((error, index) => (
-                    <div key={index} className="text-sm">
-                      • {error.file.name}: {error.reason}
-                    </div>
-                  ))}
-                  {validationErrors.length > 3 && (
-                    <div className="text-sm">
-                      ... and {validationErrors.length - 3} more files
-                    </div>
-                  )}
-                </div>
-              </AlertDescription>
-            </Alert>
-          )}
+          <ImageUploadZone
+            onFilesSelected={handleFileSelect}
+            accept=".jpg,.jpeg,.png,.webp"
+            multiple={true}
+            maxFileSize={50}
+            disabled={isCompressing}
+            isProcessing={isCompressing}
+            processingText="Compressing images..."
+            progress={compressionProgress}
+            estimatedTime={estimatedTime}
+            validationErrors={validationErrors.map(error => ({
+              file: error.file.name,
+              error: error.reason
+            }))}
+            supportedFormats="JPG, JPEG, PNG, WEBP"
+          />
 
           {error && (
             <Alert variant="destructive">
@@ -483,10 +394,12 @@ export function ImageCompressionForm() {
                       Original
                     </h4>
                     <div className="relative aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                      <img
+                      <Image
                         src={image.originalPreviewUrl}
                         alt="Original"
-                        className="w-full h-full object-contain"
+                        fill
+                        className="object-contain"
+                        unoptimized
                       />
                     </div>
                   </div>
@@ -497,10 +410,12 @@ export function ImageCompressionForm() {
                       Compressed
                     </h4>
                     <div className="relative aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                      <img
+                      <Image
                         src={image.compressedPreviewUrl}
                         alt="Compressed"
-                        className="w-full h-full object-contain"
+                        fill
+                        className="object-contain"
+                        unoptimized
                       />
                     </div>
                   </div>

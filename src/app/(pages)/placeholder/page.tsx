@@ -34,7 +34,7 @@ export interface PlaceholdrOptions {
     fontSize: number | null;
 }
 
-export const Placeholder = () => {
+const PlaceholderPage = () => {
     const [options, setOptions] = useState<PlaceholdrOptions>({
         width: 600,
         height: 400,
@@ -432,4 +432,4 @@ export const Placeholder = () => {
     );
 };
 
-export default Placeholder;
+export default PlaceholderPage;

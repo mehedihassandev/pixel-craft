@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import {
     Card,
     CardContent,
@@ -57,6 +58,7 @@ export const ImageComparison: React.FC<ImageComparisonProps> = ({
     const [activeView, setActiveView] = useState<
         "original" | "processed" | "comparison"
     >("comparison");
+    const [isDragging, setIsDragging] = useState(false);
     const { toast } = useToast();
 
     // Get the format and quality from either metadata or direct props
@@ -146,6 +148,52 @@ export const ImageComparison: React.FC<ImageComparisonProps> = ({
         return `${ratio.toFixed(1)}%`;
     };
 
+    // Handle mouse drag for comparison slider
+    const handleMouseDown = (e: React.MouseEvent) => {
+        setIsDragging(true);
+        updateComparisonPosition(e);
+    };
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (isDragging) {
+            updateComparisonPosition(e);
+        }
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    };
+
+    const updateComparisonPosition = (e: React.MouseEvent) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const percentage = (x / rect.width) * 100;
+        setComparisonPosition(Math.max(0, Math.min(100, percentage)));
+    };
+
+    // Handle touch events for mobile
+    const handleTouchStart = (e: React.TouchEvent) => {
+        setIsDragging(true);
+        updateComparisonPositionTouch(e);
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        if (isDragging) {
+            updateComparisonPositionTouch(e);
+        }
+    };
+
+    const handleTouchEnd = () => {
+        setIsDragging(false);
+    };
+
+    const updateComparisonPositionTouch = (e: React.TouchEvent) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.touches[0].clientX - rect.left;
+        const percentage = (x / rect.width) * 100;
+        setComparisonPosition(Math.max(0, Math.min(100, percentage)));
+    };
+
     // Don't render if no images are provided
     if (!originalImageUrl && !processedImageUrl) {
         return null;
@@ -204,10 +252,14 @@ export const ImageComparison: React.FC<ImageComparisonProps> = ({
                     </div>
 
                     {/* Comparison Slider (only show in comparison mode) */}
-                    {activeView === "comparison" && (
+                    {/* {activeView === "comparison" && (
                         <div className="space-y-2">
-                            <label className="text-sm font-medium">
-                                Comparison Position: {comparisonPosition}%
+                            <label className="text-sm font-medium flex items-center gap-2">
+                                <ArrowLeftRight className="h-4 w-4" />
+                                Comparison Position: {Math.round(comparisonPosition)}%
+                                <span className="text-xs text-muted-foreground ml-2">
+                                    (Drag the handle on the image to compare)
+                                </span>
                             </label>
                             <Slider
                                 value={[comparisonPosition]}
@@ -220,7 +272,7 @@ export const ImageComparison: React.FC<ImageComparisonProps> = ({
                                 className="w-full"
                             />
                         </div>
-                    )}
+                    )} */}
 
                     {/* Resize Statistics (only for resize type) */}
                     {type === "resize" &&
@@ -265,7 +317,7 @@ export const ImageComparison: React.FC<ImageComparisonProps> = ({
                         )}
 
                     {/* Metadata */}
-                    {imageFormat && (
+                    {/* {imageFormat && (
                         <div className="flex flex-wrap gap-2">
                             <Badge variant="secondary">
                                 Format: {imageFormat.toUpperCase()}
@@ -276,7 +328,7 @@ export const ImageComparison: React.FC<ImageComparisonProps> = ({
                                 </Badge>
                             )}
                         </div>
-                    )}
+                    )} */}
 
                     {/* Action Buttons */}
                     <div className="flex flex-col sm:flex-row gap-4">
@@ -395,18 +447,24 @@ export const ImageComparison: React.FC<ImageComparisonProps> = ({
 
                         {/* Single Image View */}
                         {activeView === "original" && originalImageUrl && (
-                            <img
+                            <Image
                                 src={originalImageUrl}
                                 alt="Original"
+                                width={600}
+                                height={400}
                                 className="relative z-10 max-w-full h-auto max-h-96 mx-auto object-contain"
+                                unoptimized
                             />
                         )}
 
                         {activeView === "processed" && processedImageUrl && (
-                            <img
+                            <Image
                                 src={processedImageUrl}
                                 alt={getProcessedLabel()}
+                                width={600}
+                                height={400}
                                 className="relative z-10 max-w-full h-auto max-h-96 mx-auto object-contain"
+                                unoptimized
                             />
                         )}
 
@@ -414,38 +472,58 @@ export const ImageComparison: React.FC<ImageComparisonProps> = ({
                         {activeView === "comparison" &&
                             originalImageUrl &&
                             processedImageUrl && (
-                                <div className="relative max-w-full h-auto max-h-96 mx-auto">
+                                <div
+                                    className={`relative max-w-full h-auto max-h-96 mx-auto ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+                                    onMouseDown={handleMouseDown}
+                                    onMouseMove={handleMouseMove}
+                                    onMouseUp={handleMouseUp}
+                                    onMouseLeave={handleMouseUp}
+                                    onTouchStart={handleTouchStart}
+                                    onTouchMove={handleTouchMove}
+                                    onTouchEnd={handleTouchEnd}
+                                >
                                     {/* Base image (processed) */}
-                                    <img
+                                    <Image
                                         src={processedImageUrl}
                                         alt={getProcessedLabel()}
-                                        className="relative z-10 max-w-full h-auto mx-auto object-contain"
+                                        width={600}
+                                        height={400}
+                                        className="relative z-10 max-w-full h-auto mx-auto object-contain pointer-events-none select-none"
+                                        draggable={false}
+                                        unoptimized
                                     />
 
                                     {/* Overlay image (original) with clip-path */}
-                                    <img
+                                    <Image
                                         src={originalImageUrl}
                                         alt="Original"
-                                        className="absolute top-0 left-0 z-20 max-w-full h-auto mx-auto object-contain"
+                                        width={600}
+                                        height={400}
+                                        className="absolute top-0 left-0 z-20 max-w-full h-auto mx-auto object-contain pointer-events-none select-none"
                                         style={{
-                                            clipPath: `inset(0 ${
-                                                100 - comparisonPosition
-                                            }% 0 0)`,
+                                            clipPath: `inset(0 ${100 - comparisonPosition}% 0 0)`,
                                         }}
+                                        draggable={false}
+                                        unoptimized
                                     />
 
                                     {/* Divider line */}
                                     <div
-                                        className="absolute top-0 bottom-0 w-0.5 bg-white shadow-lg z-30"
+                                        className={`absolute top-0 bottom-0 w-1 bg-white shadow-2xl z-30 transition-all duration-100 ${
+                                            isDragging ? 'bg-blue-500 w-1.5' : 'bg-white'
+                                        }`}
                                         style={{
                                             left: `${comparisonPosition}%`,
                                             transform: "translateX(-50%)",
                                         }}
                                     >
                                         {/* Drag handle */}
-                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg border-2 border-gray-300 flex items-center justify-center">
-                                            <div className="w-1 h-4 bg-gray-400 rounded"></div>
-                                            <div className="w-1 h-4 bg-gray-400 rounded ml-1"></div>
+                                        <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full shadow-lg border-2 flex items-center justify-center transition-all duration-200 ${
+                                            isDragging
+                                                ? 'bg-blue-500 border-blue-600 scale-110'
+                                                : 'bg-white border-gray-300 hover:bg-gray-50 hover:scale-105'
+                                        }`}>
+                                            <ArrowLeftRight className={`w-4 h-4 ${isDragging ? 'text-white' : 'text-gray-600'}`} />
                                         </div>
                                     </div>
                                 </div>

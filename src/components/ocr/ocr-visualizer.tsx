@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -47,6 +48,7 @@ export const OcrVisualizer = ({
         if (imageLoaded && canvasRef.current && imageRef.current) {
             drawCanvas();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         imageLoaded,
         showWords,
@@ -327,12 +329,15 @@ export const OcrVisualizer = ({
                 </CardHeader>
                 <CardContent>
                     <div className="relative">
-                        <img
+                        <Image
                             ref={imageRef}
                             src={imageUrl}
                             alt="OCR Source"
+                            width={800}
+                            height={600}
                             className="hidden"
                             onLoad={handleImageLoad}
+                            unoptimized
                         />
                         <canvas
                             ref={canvasRef}
