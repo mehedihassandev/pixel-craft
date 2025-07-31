@@ -44,10 +44,10 @@ export const menus: IMenus[] = [
         href: ROUTER.OCR,
         icon: "FileText",
     },
-    // {
-    //     id: "png-to-svg",
-    //     label: "PNG to SVG",
-    //     href: ROUTER.PNG_TO_SVG,
-    //     icon: "Layers",
-    // },
+    {
+        id: "png-to-svg",
+        label: "PNG to SVG",
+        href: ROUTER.PNG_TO_SVG,
+        icon: "Layers",
+    },
 ];

@@ -44,6 +44,7 @@
     "embla-carousel-react": "^8.6.0",
     "firebase": "^11.9.1",
     "genkit": "^1.14.1",
+    "imagetracerjs": "^1.2.6",
     "lucide-react": "^0.475.0",
     "next": "15.3.3",
     "onnxruntime-web": "1.21.0",

@@ -82,18 +82,28 @@ export const Placeholder = () => {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8 max-w-7xl">
+        <div className="container mx-auto px-4 py-8 max-w-7xl space-y-12 relative">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 -z-10 overflow-hidden">
+                <div className="absolute top-0 left-1/4 w-72 h-72 bg-gradient-to-r from-purple-300/20 to-pink-300/20 rounded-full blur-3xl"></div>
+                <div className="absolute top-20 right-1/4 w-96 h-96 bg-gradient-to-r from-orange-300/20 to-yellow-300/20 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-r from-blue-300/20 to-indigo-300/20 rounded-full blur-3xl"></div>
+            </div>
+
             {/* Header */}
-            <div className="text-center mb-8">
+            <div className="text-center mb-8 relative">
                 <div className="flex items-center justify-center gap-3 mb-4">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                        <ImageIcon className="h-8 w-8 text-primary" />
+                    <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-r from-primary to-purple-600 rounded-full blur-md opacity-50 animate-pulse"></div>
+                        <div className="relative p-4 bg-gradient-to-br from-primary/20 via-purple-500/20 to-pink-500/20 rounded-full border border-primary/30 backdrop-blur-sm">
+                            <ImageIcon className="h-8 w-8 text-primary" />
+                        </div>
                     </div>
-                    <h1 className="text-4xl font-bold tracking-tight">
+                    <h1 className="text-5xl font-bold tracking-tight bg-gradient-to-r from-gray-900 via-purple-900 to-pink-900 dark:from-white dark:via-purple-300 dark:to-pink-300 bg-clip-text text-transparent">
                         Placeholder Generator
                     </h1>
                 </div>
-                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
                     Create custom placeholder images with full control over
                     dimensions, colors, text, and format. Perfect for mockups,
                     wireframes, and development.
@@ -102,61 +112,65 @@ export const Placeholder = () => {
 
             {/* Features Overview */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                <Card className="text-center">
-                    <CardContent className="pt-6">
-                        <div className="flex justify-center mb-3">
-                            <div className="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
+                <Card className="text-center hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group border-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg hover:shadow-purple-500/25">
+                    <CardContent className="pt-8 pb-6">
+                        <div className="flex justify-center mb-4">
+                            <div className="p-3 bg-blue-100 dark:bg-blue-900/20 rounded-2xl group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-blue-500/25">
                                 <Grid3X3 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                             </div>
                         </div>
-                        <h3 className="font-semibold mb-2">
+                        <h3 className="font-bold text-lg mb-3 group-hover:text-primary transition-colors">
                             Custom Dimensions
                         </h3>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground leading-relaxed">
                             Set any width and height up to 5000px
                         </p>
                     </CardContent>
                 </Card>
 
-                <Card className="text-center">
-                    <CardContent className="pt-6">
-                        <div className="flex justify-center mb-3">
-                            <div className="p-2 bg-green-100 dark:bg-green-900/20 rounded-lg">
+                <Card className="text-center hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group border-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg hover:shadow-green-500/25">
+                    <CardContent className="pt-8 pb-6">
+                        <div className="flex justify-center mb-4">
+                            <div className="p-3 bg-green-100 dark:bg-green-900/20 rounded-2xl group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-green-500/25">
                                 <Palette className="h-6 w-6 text-green-600 dark:text-green-400" />
                             </div>
                         </div>
-                        <h3 className="font-semibold mb-2">Color Control</h3>
-                        <p className="text-sm text-muted-foreground">
+                        <h3 className="font-bold text-lg mb-3 group-hover:text-primary transition-colors">
+                            Color Control
+                        </h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
                             Customize background and text colors
                         </p>
                     </CardContent>
                 </Card>
 
-                <Card className="text-center">
-                    <CardContent className="pt-6">
-                        <div className="flex justify-center mb-3">
-                            <div className="p-2 bg-purple-100 dark:bg-purple-900/20 rounded-lg">
+                <Card className="text-center hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group border-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg hover:shadow-purple-500/25">
+                    <CardContent className="pt-8 pb-6">
+                        <div className="flex justify-center mb-4">
+                            <div className="p-3 bg-purple-100 dark:bg-purple-900/20 rounded-2xl group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-purple-500/25">
                                 <Type className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                             </div>
                         </div>
-                        <h3 className="font-semibold mb-2">
+                        <h3 className="font-bold text-lg mb-3 group-hover:text-primary transition-colors">
                             Text & Typography
                         </h3>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground leading-relaxed">
                             Add custom text with AI-suggested font sizes
                         </p>
                     </CardContent>
                 </Card>
 
-                <Card className="text-center">
-                    <CardContent className="pt-6">
-                        <div className="flex justify-center mb-3">
-                            <div className="p-2 bg-orange-100 dark:bg-orange-900/20 rounded-lg">
+                <Card className="text-center hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group border-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg hover:shadow-orange-500/25">
+                    <CardContent className="pt-8 pb-6">
+                        <div className="flex justify-center mb-4">
+                            <div className="p-3 bg-orange-100 dark:bg-orange-900/20 rounded-2xl group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-orange-500/25">
                                 <Layers className="h-6 w-6 text-orange-600 dark:text-orange-400" />
                             </div>
                         </div>
-                        <h3 className="font-semibold mb-2">Multiple Formats</h3>
-                        <p className="text-sm text-muted-foreground">
+                        <h3 className="font-bold text-lg mb-3 group-hover:text-primary transition-colors">
+                            Multiple Formats
+                        </h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
                             Export as PNG, JPG, or WebP formats
                         </p>
                     </CardContent>
@@ -164,83 +178,96 @@ export const Placeholder = () => {
             </div>
 
             {/* Main Content */}
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                {/* Left Column - Form */}
-                <div className="space-y-6">
-                    <PlaceholderForm
-                        options={options}
-                        setOptions={setOptions}
-                    />
-                </div>
+            <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-purple-500/5 to-pink-500/5 rounded-3xl blur-xl"></div>
+                <div className="relative">
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                        {/* Left Column - Form */}
+                        <div className="space-y-6">
+                            <PlaceholderForm
+                                options={options}
+                                setOptions={setOptions}
+                            />
+                        </div>
 
-                {/* Right Column - Preview */}
-                <div className="space-y-6">
-                    <ImagePreview options={options} url={imageUrl} />
+                        {/* Right Column - Preview */}
+                        <div className="space-y-6">
+                            <ImagePreview options={options} url={imageUrl} />
+                        </div>
+                    </div>
                 </div>
             </div>
 
             {/* How to Use Section */}
-            <Card className="mt-12">
+            <Card className="mt-12 border-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-2xl">
                 <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                        <Settings className="h-5 w-5" />
-                        How to Use
+                    <CardTitle className="flex items-center gap-3 text-2xl">
+                        <div className="p-2 bg-gradient-to-br from-primary/20 via-purple-500/20 to-pink-500/20 rounded-xl border border-primary/30">
+                            <Settings className="h-5 w-5 text-primary" />
+                        </div>
+                        How to Use Placeholder Generator
                     </CardTitle>
-                    <CardDescription>
+                    <CardDescription className="text-lg">
                         Follow these simple steps to create your perfect
                         placeholder image
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                        <div className="flex flex-col items-center text-center space-y-3">
-                            <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-full">
-                                <span className="text-sm font-semibold text-primary">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="flex flex-col items-center text-center p-4 border border-dashed border-blue-300 rounded-xl hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-all duration-300 group shadow-md hover:shadow-lg hover:shadow-blue-500/25">
+                            <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-sm shadow-blue-500/25">
+                                <span className="text-blue-600 font-bold text-sm">
                                     1
                                 </span>
                             </div>
-                            <h4 className="font-medium">Set Dimensions</h4>
-                            <p className="text-sm text-muted-foreground">
+                            <h4 className="font-semibold mb-2 text-sm">
+                                Set Dimensions
+                            </h4>
+                            <p className="text-xs text-muted-foreground">
                                 Enter your desired width and height in pixels
+                                (up to 5000px)
                             </p>
                         </div>
-
-                        <div className="flex flex-col items-center text-center space-y-3">
-                            <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-full">
-                                <span className="text-sm font-semibold text-primary">
+                        <div className="flex flex-col items-center text-center p-4 border border-dashed border-green-300 rounded-xl hover:bg-green-50/50 dark:hover:bg-green-900/10 transition-all duration-300 group shadow-md hover:shadow-lg hover:shadow-green-500/25">
+                            <div className="w-10 h-10 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-sm shadow-green-500/25">
+                                <span className="text-green-600 font-bold text-sm">
                                     2
                                 </span>
                             </div>
-                            <h4 className="font-medium">Choose Colors</h4>
-                            <p className="text-sm text-muted-foreground">
-                                Select background and text colors using hex
-                                codes
+                            <h4 className="font-semibold mb-2 text-sm">
+                                Choose Colors
+                            </h4>
+                            <p className="text-xs text-muted-foreground">
+                                Select background and text colors using the
+                                color picker
                             </p>
                         </div>
-
-                        <div className="flex flex-col items-center text-center space-y-3">
-                            <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-full">
-                                <span className="text-sm font-semibold text-primary">
+                        <div className="flex flex-col items-center text-center p-4 border border-dashed border-purple-300 rounded-xl hover:bg-purple-50/50 dark:hover:bg-purple-900/10 transition-all duration-300 group shadow-md hover:shadow-lg hover:shadow-purple-500/25">
+                            <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-sm shadow-purple-500/25">
+                                <span className="text-purple-600 font-bold text-sm">
                                     3
                                 </span>
                             </div>
-                            <h4 className="font-medium">Add Text</h4>
-                            <p className="text-sm text-muted-foreground">
-                                Optionally add custom text with AI-suggested
-                                sizing
+                            <h4 className="font-semibold mb-2 text-sm">
+                                Add Text & Format
+                            </h4>
+                            <p className="text-xs text-muted-foreground">
+                                Add custom text with AI-suggested sizing and
+                                choose output format
                             </p>
                         </div>
-
-                        <div className="flex flex-col items-center text-center space-y-3">
-                            <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-full">
-                                <span className="text-sm font-semibold text-primary">
+                        <div className="flex flex-col items-center text-center p-4 border border-dashed border-orange-300 rounded-xl hover:bg-orange-50/50 dark:hover:bg-orange-900/10 transition-all duration-300 group shadow-md hover:shadow-lg hover:shadow-orange-500/25">
+                            <div className="w-10 h-10 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-sm shadow-orange-500/25">
+                                <span className="text-orange-600 font-bold text-sm">
                                     4
                                 </span>
                             </div>
-                            <h4 className="font-medium">Download & Use</h4>
-                            <p className="text-sm text-muted-foreground">
-                                Preview in real-time and download in your
-                                preferred format
+                            <h4 className="font-semibold mb-2 text-sm">
+                                Preview & Download
+                            </h4>
+                            <p className="text-xs text-muted-foreground">
+                                Preview your placeholder and download in your
+                                chosen format
                             </p>
                         </div>
                     </div>
@@ -249,7 +276,7 @@ export const Placeholder = () => {
 
             {/* Features & Tips */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                <Card>
+                <Card className="shadow-xl hover:shadow-2xl transition-all duration-300 hover:shadow-purple-500/20">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <Sparkles className="h-5 w-5" />
@@ -261,7 +288,7 @@ export const Placeholder = () => {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="flex items-start gap-3">
-                            <Badge variant="outline" className="mt-1">
+                            <Badge variant="outline" className="mt-1 shadow-sm">
                                 AI
                             </Badge>
                             <div>
@@ -277,7 +304,7 @@ export const Placeholder = () => {
                         </div>
 
                         <div className="flex items-start gap-3">
-                            <Badge variant="outline" className="mt-1">
+                            <Badge variant="outline" className="mt-1 shadow-sm">
                                 Live
                             </Badge>
                             <div>
@@ -292,7 +319,7 @@ export const Placeholder = () => {
                         </div>
 
                         <div className="flex items-start gap-3">
-                            <Badge variant="outline" className="mt-1">
+                            <Badge variant="outline" className="mt-1 shadow-sm">
                                 Fast
                             </Badge>
                             <div>
@@ -308,7 +335,7 @@ export const Placeholder = () => {
                     </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="shadow-xl hover:shadow-2xl transition-all duration-300 hover:shadow-blue-500/20">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <Zap className="h-5 w-5" />
@@ -358,7 +385,7 @@ export const Placeholder = () => {
             </div>
 
             {/* Use Cases */}
-            <Card className="mt-8">
+            <Card className="mt-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:shadow-indigo-500/20">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Download className="h-5 w-5" />
@@ -370,7 +397,7 @@ export const Placeholder = () => {
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div className="text-center p-4 bg-muted/50 rounded-lg">
+                        <div className="text-center p-4 bg-muted/50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
                             <h4 className="font-medium mb-1">
                                 Web Development
                             </h4>
@@ -378,13 +405,13 @@ export const Placeholder = () => {
                                 Mockups & wireframes
                             </p>
                         </div>
-                        <div className="text-center p-4 bg-muted/50 rounded-lg">
+                        <div className="text-center p-4 bg-muted/50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
                             <h4 className="font-medium mb-1">UI/UX Design</h4>
                             <p className="text-xs text-muted-foreground">
                                 Prototypes & layouts
                             </p>
                         </div>
-                        <div className="text-center p-4 bg-muted/50 rounded-lg">
+                        <div className="text-center p-4 bg-muted/50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
                             <h4 className="font-medium mb-1">
                                 Content Creation
                             </h4>
@@ -392,7 +419,7 @@ export const Placeholder = () => {
                                 Blog posts & articles
                             </p>
                         </div>
-                        <div className="text-center p-4 bg-muted/50 rounded-lg">
+                        <div className="text-center p-4 bg-muted/50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
                             <h4 className="font-medium mb-1">Testing</h4>
                             <p className="text-xs text-muted-foreground">
                                 Image loading tests
