@@ -26,12 +26,12 @@ export const menus: IMenus[] = [
     //     href: ROUTER.IMAGE_OPTIMIZATION,
     //     icon: "Zap",
     // },
-    // {
-    //     id: "image-compress",
-    //     label: "Image Compress",
-    //     href: ROUTER.IMAGE_COMPRESS,
-    //     icon: "Archive",
-    // },
+    {
+        id: "image-compress",
+        label: "Image Compress",
+        href: ROUTER.IMAGE_COMPRESS,
+        icon: "Archive",
+    },
     // {
     //     id: "add-background-ai",
     //     label: "Add Background with AI",
