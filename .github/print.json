@@ -1,0 +1,14 @@
+{
+  "title": [
+    {
+      "pattern": "^MH-[0-9]+:\\s.+",
+      "message": "Title must start with 'MH-' followed by a number, then a colon and a space, and then the title text"
+    }
+  ],
+  "body": [
+    {
+      "pattern": "^\\S",
+      "message": "Body must not be empty"
+    }
+  ]
+}
