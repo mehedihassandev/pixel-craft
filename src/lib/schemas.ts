@@ -85,3 +85,27 @@ export const backgroundRemovalFormSchema = z.object({
 export type BackgroundRemovalFormData = z.infer<
     typeof backgroundRemovalFormSchema
 >;
+
+export const ocrFormSchema = z.object({
+    language: z.string().default("eng"),
+    outputFormat: z.enum(["text", "json", "hocr"]).default("text"),
+    preserveLineBreaks: z.boolean().default(true),
+    removeExtra: z.boolean().default(false),
+    confidence: z.coerce
+        .number()
+        .min(0, "Confidence must be at least 0")
+        .max(100, "Confidence cannot exceed 100")
+        .default(70),
+    psm: z.coerce
+        .number()
+        .min(0, "PSM must be at least 0")
+        .max(13, "PSM cannot exceed 13")
+        .default(3),
+    oem: z.coerce
+        .number()
+        .min(0, "OEM must be at least 0")
+        .max(3, "OEM cannot exceed 3")
+        .default(3),
+});
+
+export type OcrFormData = z.infer<typeof ocrFormSchema>;
