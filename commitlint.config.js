@@ -1,25 +1,51 @@
 module.exports = {
     rules: {
-        "type-enum": [2, "always", ["MH"]], // Enforce "MH" type
         "header-max-length": [2, "always", 50000], // Enforce header length
-        "scope-empty": [2, "never"], // Scope must not be empty
-        "scope-case": [2, "always", "lower-case"], // Ensure scope is lowercase
-        "scope-pattern": [2, "always"], // Custom scope pattern rule
+        "type-empty": [0], // Disable - we use custom format
+        "subject-empty": [0], // Disable - we use custom format
+        "mh-format": [2, "always"], // Custom rule for MH-{number}: format
     },
     plugins: [
         {
             rules: {
-                "scope-pattern": (parsed) => {
-                    if (!parsed.scope) {
-                        return [false, `Scope must not be empty.`];
+                "mh-format": (parsed) => {
+                    const { header } = parsed;
+                    if (!header) {
+                        return [false, "Header cannot be empty"];
                     }
 
-                    const scopePattern = /^[0-9]{3}$/; // Match 3-digit numeric scope
+                    // Check for MH-{number}: format
+                    const mhPattern = /^MH-\d+:\s.+$/;
 
-                    return [
-                        scopePattern.test(parsed.scope),
-                        `Scope must be a 3-digit number (e.g., 000, 123).`,
-                    ];
+                    if (!mhPattern.test(header)) {
+                        return [
+                            false,
+                            "Header must be in format 'MH-{number}: Description' (e.g., MH-123: Add new feature)",
+                        ];
+                    }
+
+                    // Check for at least 3 words after the colon
+                    const afterColon = header.split(": ")[1];
+                    if (
+                        !afterColon ||
+                        afterColon.trim().split(/\s+/).length < 3
+                    ) {
+                        return [
+                            false,
+                            "Description must have at least 3 words after the colon",
+                        ];
+                    }
+
+                    // Check for imperative mood (no -ing or -ed endings)
+                    const firstWord = afterColon.trim().split(/\s+/)[0];
+                    if (/ing$|ed$/.test(firstWord.toLowerCase())) {
+                        return [
+                            false,
+                            "Use imperative mood (e.g., 'Add', not 'Adding' or 'Added')",
+                        ];
+                    }
+
+                    return [true];
                 },
             },
         },
