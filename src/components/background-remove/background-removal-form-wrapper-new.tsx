@@ -83,8 +83,40 @@ export default function BackgroundRemovalFormWrapper() {
             clearInterval(progressInterval);
 
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Failed to remove background');
+                let errorMessage = 'Failed to remove background';
+
+                try {
+                    // Check if response is JSON
+                    const contentType = response.headers.get('content-type');
+                    if (contentType && contentType.includes('application/json')) {
+                        const errorData = await response.json();
+                        errorMessage = errorData.error || errorMessage;
+                    } else {
+                        // If not JSON, it might be an HTML error page
+                        const textError = await response.text();
+                        if (textError.includes('Request Entity Too Large')) {
+                            errorMessage = 'Image file is too large. Please use a smaller image.';
+                        } else if (response.status >= 500) {
+                            errorMessage = 'Server error. Please try again later.';
+                        } else if (response.status === 402) {
+                            errorMessage = 'Service quota exceeded. Please try again later.';
+                        } else if (response.status === 403) {
+                            errorMessage = 'Access denied. Please contact support.';
+                        }
+                    }
+                } catch (parseError) {
+                    console.error('Error parsing response:', parseError);
+                    // Provide user-friendly error messages based on status code
+                    if (response.status >= 500) {
+                        errorMessage = 'Server error. Please try again later.';
+                    } else if (response.status === 413) {
+                        errorMessage = 'Image file is too large. Please use a smaller image.';
+                    } else {
+                        errorMessage = 'Service temporarily unavailable. Please try again.';
+                    }
+                }
+
+                throw new Error(errorMessage);
             }
 
             const processedBlob = await response.blob();
@@ -100,7 +132,20 @@ export default function BackgroundRemovalFormWrapper() {
             setProgress(100);
         } catch (err) {
             console.error('Background removal failed:', err);
-            setError(err instanceof Error ? err.message : 'Failed to remove background');
+
+            let errorMessage = 'Failed to remove background';
+
+            if (err instanceof Error) {
+                if (err.message.includes('timeout') || err.message.includes('408')) {
+                    errorMessage = 'Request timeout. Please try again with a smaller image.';
+                } else if (err.message.includes('Network') || err.message.includes('fetch')) {
+                    errorMessage = 'Network error. Please check your connection and try again.';
+                } else {
+                    errorMessage = err.message;
+                }
+            }
+
+            setError(errorMessage);
         } finally {
             setIsProcessing(false);
             setTimeout(() => setProgress(0), 1000);
