@@ -1,6 +1,4 @@
-"use client";
 
-import { useState } from "react";
 import {
     Card,
     CardContent,
@@ -9,7 +7,6 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { FileText } from "lucide-react";
 import { OcrForm } from "@/components/ocr/ocr-form";
 import { BatchOcr } from "@/components/ocr/batch-ocr";
