@@ -61,17 +61,46 @@ export default function Home() {
                         Professional image processing tools powered by AI.
                         Transform, optimize, and enhance your images with
                         cutting-edge technology.
+                        <span className="font-semibold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
+                            {" "}
+                            Open source{" "}
+                        </span>
+                        and free for everyone.
                     </p>
                     <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
-                        <Badge variant="secondary" className="px-3 py-1">
-                            <Star className="h-3 w-3 mr-1" />
-                            AI Powered
+                        <Badge
+                            variant="secondary"
+                            className="px-3 py-1 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border-yellow-300 dark:border-yellow-700 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+                        >
+                            <Star className="h-3 w-3 mr-1 text-yellow-600" />
+                            <span className="font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
+                                AI Powered
+                            </span>
                         </Badge>
-                        <Badge variant="outline" className="px-3 py-1">
-                            Free to Use
+                        <Badge
+                            variant="outline"
+                            className="px-3 py-1 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 border-green-300 dark:border-green-700 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+                        >
+                            <Users className="h-3 w-3 mr-1 text-green-600" />
+                            <span className="font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+                                Open Source
+                            </span>
                         </Badge>
-                        <Badge variant="outline" className="px-3 py-1">
-                            No Watermarks
+                        <Badge
+                            variant="outline"
+                            className="px-3 py-1 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-300 dark:border-purple-700 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+                        >
+                            <span className="font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                                Free to Use
+                            </span>
+                        </Badge>
+                        <Badge
+                            variant="outline"
+                            className="px-3 py-1 bg-gradient-to-r from-cyan-50 to-teal-50 dark:from-cyan-900/20 dark:to-teal-900/20 border-cyan-300 dark:border-cyan-700 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+                        >
+                            <span className="font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent">
+                                No Watermarks
+                            </span>
                         </Badge>
                     </div>
                 </div>
@@ -206,6 +235,87 @@ export default function Home() {
                                 </div>
                             ))}
                         </div>
+                    </div>
+                </div>
+
+                {/* Open Source Section */}
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl p-8 shadow-lg mb-16">
+                    <div className="text-center mb-6">
+                        <div className="flex items-center justify-center mb-4">
+                            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-3 rounded-2xl">
+                                <Users className="h-8 w-8 text-white" />
+                            </div>
+                        </div>
+                        <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                            Open Source & Community Driven
+                        </h2>
+                        <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-6">
+                            PixelCraft is proudly open source! Join our growing
+                            community of developers and contributors to help
+                            make image processing tools accessible to everyone.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div className="text-center p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm">
+                            <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-full w-fit mx-auto mb-3">
+                                <Shield className="h-6 w-6 text-green-600" />
+                            </div>
+                            <h3 className="font-semibold mb-2">MIT Licensed</h3>
+                            <p className="text-sm text-slate-600 dark:text-slate-300">
+                                Free to use, modify, and distribute
+                            </p>
+                        </div>
+
+                        <div className="text-center p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm">
+                            <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-full w-fit mx-auto mb-3">
+                                <Users className="h-6 w-6 text-blue-600" />
+                            </div>
+                            <h3 className="font-semibold mb-2">
+                                Community Driven
+                            </h3>
+                            <p className="text-sm text-slate-600 dark:text-slate-300">
+                                Built by developers, for developers
+                            </p>
+                        </div>
+
+                        <div className="text-center p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm">
+                            <div className="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-full w-fit mx-auto mb-3">
+                                <Sparkles className="h-6 w-6 text-purple-600" />
+                            </div>
+                            <h3 className="font-semibold mb-2">
+                                Always Improving
+                            </h3>
+                            <p className="text-sm text-slate-600 dark:text-slate-300">
+                                New features and improvements regularly
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-wrap justify-center gap-4">
+                        <a
+                            href="https://github.com/mehedihassandev/pixel-craft"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Button
+                                size="lg"
+                                className="bg-gray-900 hover:bg-gray-800 text-white"
+                            >
+                                <Star className="h-5 w-5 mr-2" />
+                                Star on GitHub
+                            </Button>
+                        </a>
+                        <a
+                            href="https://github.com/mehedihassandev/pixel-craft/blob/main/CONTRIBUTING.md"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Button size="lg" variant="outline">
+                                <Users className="h-5 w-5 mr-2" />
+                                Contribute
+                            </Button>
+                        </a>
                     </div>
                 </div>
 

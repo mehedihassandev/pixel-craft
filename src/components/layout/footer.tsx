@@ -10,15 +10,32 @@ export const Footer = () => {
             <div className="container mx-auto px-4 py-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {/* Brand and Copyright */}
-                    <div className="space-y-4">
+                    <div className="space-y-2">
                         <h3 className="text-lg font-semibold">Pixel Craft</h3>
                         <p className="text-sm text-muted-foreground">
-                            Think of an idea, we will make it real. Everything
-                            is generated on the fly, no images are stored or
-                            cached. This is a demo of the power of AI and modern
-                            web technologies.
+                            An open-source image processing application powered
+                            by AI. Transform, optimize, and enhance your images
+                            with cutting-edge technology. Built by the
+                            community, for the community.
                         </p>
-                        <p className="text-sm text-muted-foreground">
+                        <div className="flex items-center space-x-4 pt-2">
+                            <a
+                                href="https://github.com/mehedihassandev/pixel-craft"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center space-x-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                <Github className="h-4 w-4" />
+                                <span>Open Source</span>
+                            </a>
+                            <span className="text-xs text-muted-foreground">
+                                •
+                            </span>
+                            <span className="text-xs text-muted-foreground">
+                                MIT License
+                            </span>
+                        </div>
+                        <p className="text-sm text-muted-foreground pt-4">
                             © {currentYear} Pixel Craft. All rights reserved.
                         </p>
                     </div>
@@ -82,14 +99,14 @@ export const Footer = () => {
                 {/* Bottom separator */}
                 <div className="mt-8 pt-6 border-t text-center">
                     <p className="text-sm text-muted-foreground">
-                        Made with ❤️ by{" "}
+                        Made with ❤️ by the open source community •{" "}
                         <a
-                            href={CONTACT_INFO.website}
+                            href="https://github.com/mehedihassandev/pixel-craft"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="hover:text-foreground transition-colors"
                         >
-                            {CONTACT_INFO.name}
+                            Contribute on GitHub
                         </a>
                     </p>
                 </div>
