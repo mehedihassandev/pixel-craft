@@ -7,7 +7,6 @@ import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { ImageComparison } from "@/components/ui/image-comparison";
-import { ImageUploadZone } from "@/components/ui/image-upload-zone";
 import {
     Upload,
     Image as ImageIcon,
@@ -29,12 +28,14 @@ interface ProcessedImageData {
 }
 
 export default function BackgroundRemovalFormWrapper() {
+    const [isDragOver, setIsDragOver] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
     const [processedImage, setProcessedImage] = useState<ProcessedImageData | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [progress, setProgress] = useState(0);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleFileSelect = useCallback(async (files: File[]) => {
+    const handleFileSelect = useCallback(async (files: FileList | null) => {
         if (!files || files.length === 0) return;
 
         const file = files[0];
@@ -42,6 +43,12 @@ export default function BackgroundRemovalFormWrapper() {
         // Validate file type
         if (!file.type.startsWith('image/')) {
             setError('Please select a valid image file (JPG, PNG, WebP)');
+            return;
+        }
+
+        // Validate file size (10MB limit)
+        if (file.size > 10 * 1024 * 1024) {
+            setError('File size must be less than 10MB');
             return;
         }
 
@@ -100,6 +107,26 @@ export default function BackgroundRemovalFormWrapper() {
         }
     }, []);
 
+    const handleDragOver = useCallback((e: React.DragEvent) => {
+        e.preventDefault();
+        setIsDragOver(true);
+    }, []);
+
+    const handleDragLeave = useCallback((e: React.DragEvent) => {
+        e.preventDefault();
+        setIsDragOver(false);
+    }, []);
+
+    const handleDrop = useCallback((e: React.DragEvent) => {
+        e.preventDefault();
+        setIsDragOver(false);
+        handleFileSelect(e.dataTransfer.files);
+    }, [handleFileSelect]);
+
+    const handleFileInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        handleFileSelect(e.target.files);
+    }, [handleFileSelect]);
+
     const handleDownload = useCallback(() => {
         if (!processedImage) return;
 
@@ -119,6 +146,9 @@ export default function BackgroundRemovalFormWrapper() {
         setProcessedImage(null);
         setError(null);
         setProgress(0);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
     }, [processedImage]);
 
     return (
@@ -127,19 +157,78 @@ export default function BackgroundRemovalFormWrapper() {
             {!processedImage && (
                 <Card className="border-2 border-dashed transition-colors duration-300 hover:border-primary/50">
                     <CardContent className="p-8">
-                        <ImageUploadZone
-                            onFilesSelected={handleFileSelect}
-                            accept=".jpg,.jpeg,.png,.webp"
-                            multiple={false}
-                            maxFileSize={10}
-                            disabled={isProcessing}
-                            isProcessing={isProcessing}
-                            processingText="Processing Image..."
-                            progress={progress}
-                            title="Upload Image to Remove Background"
-                            subtitle="Drag and drop your image here, or click to browse"
-                            supportedFormats="JPG, PNG, WebP"
-                        />
+                        <div
+                            className={`relative border-2 border-dashed rounded-xl p-12 text-center transition-all duration-300 ${
+                                isDragOver
+                                    ? 'border-primary bg-primary/5 scale-[1.02]'
+                                    : 'border-gray-300 hover:border-primary/50 hover:bg-gray-50/50 dark:hover:bg-gray-800/50'
+                            }`}
+                            onDragOver={handleDragOver}
+                            onDragLeave={handleDragLeave}
+                            onDrop={handleDrop}
+                        >
+                            <input
+                                ref={fileInputRef}
+                                type="file"
+                                accept="image/*"
+                                onChange={handleFileInputChange}
+                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                disabled={isProcessing}
+                            />
+
+                            <div className="space-y-4">
+                                <div className="flex justify-center">
+                                    <div className="p-4 bg-primary/10 rounded-full">
+                                        {isProcessing ? (
+                                            <Loader2 className="h-12 w-12 text-primary animate-spin" />
+                                        ) : isDragOver ? (
+                                            <Download className="h-12 w-12 text-primary" />
+                                        ) : (
+                                            <Upload className="h-12 w-12 text-primary" />
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 className="text-xl font-semibold mb-2">
+                                        {isProcessing
+                                            ? 'Processing Image...'
+                                            : isDragOver
+                                            ? 'Drop your image here'
+                                            : 'Upload Image to Remove Background'}
+                                    </h3>
+                                    <p className="text-muted-foreground mb-4">
+                                        {isProcessing
+                                            ? 'Our AI is removing the background from your image'
+                                            : 'Drag and drop your image here, or click to browse'}
+                                    </p>
+                                </div>
+
+                                {!isProcessing && (
+                                    <Button size="lg" disabled={isProcessing}>
+                                        <Upload className="h-4 w-4 mr-2" />
+                                        Choose Image
+                                    </Button>
+                                )}
+
+                                <div className="flex justify-center gap-2 flex-wrap">
+                                    <Badge variant="secondary">JPG</Badge>
+                                    <Badge variant="secondary">PNG</Badge>
+                                    <Badge variant="secondary">WebP</Badge>
+                                    <Badge variant="secondary">Max 10MB</Badge>
+                                </div>
+                            </div>
+                        </div>
+
+                        {isProcessing && (
+                            <div className="mt-6 space-y-2">
+                                <div className="flex justify-between text-sm">
+                                    <span>Processing...</span>
+                                    <span>{progress}%</span>
+                                </div>
+                                <Progress value={progress} className="h-2" />
+                            </div>
+                        )}
                     </CardContent>
                 </Card>
             )}

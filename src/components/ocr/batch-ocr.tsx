@@ -15,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ImageUploadZone } from "@/components/ui/image-upload-zone";
 import {
     Select,
     SelectContent,
@@ -69,8 +70,8 @@ export const BatchOcr = ({ language = "eng" }: BatchOcrProps) => {
     const workerRef = useRef<Tesseract.Worker | null>(null);
 
     const handleFileSelect = useCallback(
-        (selectedFiles: FileList) => {
-            const newFiles: BatchFile[] = Array.from(selectedFiles)
+        (selectedFiles: File[]) => {
+            const newFiles: BatchFile[] = selectedFiles
                 .filter((file) => file.type.startsWith("image/"))
                 .map((file) => ({
                     id: Math.random().toString(36).substr(2, 9),
@@ -435,30 +436,19 @@ export const BatchOcr = ({ language = "eng" }: BatchOcrProps) => {
                         </div>
                     </div>
 
-                    {/* Upload Button */}
-                    <div className="flex gap-2">
-                        <Button
-                            onClick={() => fileInputRef.current?.click()}
-                            className="flex items-center gap-2"
-                            disabled={isProcessing}
-                        >
-                            <Upload className="h-4 w-4" />
-                            Select Images
-                        </Button>
+                    {/* Upload Section */}
+                    <ImageUploadZone
+                        onFilesSelected={handleFileSelect}
+                        accept="image/*"
+                        multiple={true}
+                        maxFileSize={10}
+                        disabled={isProcessing}
+                        title="Drop your images here, or browse files"
+                        subtitle="Upload multiple images to extract text from all of them"
+                        supportedFormats="PNG, JPG, WebP, BMP, TIFF"
+                    />
 
-                        <input
-                            ref={fileInputRef}
-                            type="file"
-                            multiple
-                            accept="image/*"
-                            className="hidden"
-                            onChange={(e) => {
-                                if (e.target.files) {
-                                    handleFileSelect(e.target.files);
-                                }
-                            }}
-                        />
-
+                    <div className="flex gap-2 pt-4">
                         <Button
                             variant="outline"
                             onClick={clearAll}

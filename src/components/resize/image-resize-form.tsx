@@ -3,9 +3,11 @@
 import React, { useState, useRef, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ImageUploadZone } from "@/components/ui/image-upload-zone";
 import {
     Card,
     CardContent,
@@ -38,6 +40,7 @@ import {
     Unlink,
     Info,
     Zap,
+    Trash2,
 } from "lucide-react";
 
 interface ImageResizeFormProps {
@@ -93,9 +96,9 @@ export const ImageResizeForm: React.FC<ImageResizeFormProps> = ({
     const format = watch("format");
     const resizeMethod = watch("resizeMethod");
 
-    const handleFileUpload = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => {
-            const file = event.target.files?.[0];
+    const handleFileSelect = useCallback(
+        (files: File[]) => {
+            const file = files[0];
             if (!file) return;
 
             // Validate file type
@@ -104,16 +107,6 @@ export const ImageResizeForm: React.FC<ImageResizeFormProps> = ({
                     variant: "destructive",
                     title: "Invalid File Type",
                     description: "Please select a valid image file.",
-                });
-                return;
-            }
-
-            // Validate file size (max 10MB)
-            if (file.size > 10 * 1024 * 1024) {
-                toast({
-                    variant: "destructive",
-                    title: "File Too Large",
-                    description: "Please select an image smaller than 10MB.",
                 });
                 return;
             }
@@ -131,7 +124,7 @@ export const ImageResizeForm: React.FC<ImageResizeFormProps> = ({
                 const imageUrl = e.target?.result as string;
                 setOriginalImageUrl(imageUrl);
 
-                const img = new Image();
+                const img = new window.Image();
                 img.onload = () => {
                     setOriginalImage(img);
                     setOriginalDimensions({
@@ -353,43 +346,56 @@ export const ImageResizeForm: React.FC<ImageResizeFormProps> = ({
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-4">
-                        <div
-                            className="relative flex flex-col items-center justify-center border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 transition-colors hover:border-muted-foreground/50 cursor-pointer"
-                            onClick={() => fileInputRef.current?.click()}
-                        >
-                            <Upload className="h-8 w-8 text-muted-foreground mb-4" />
-                            <div className="text-center space-y-2">
-                                <p className="text-sm font-medium">
-                                    Click to upload an image
-                                </p>
-                                <p className="text-xs text-muted-foreground">
-                                    PNG, JPG, WebP up to 10MB
-                                </p>
-                            </div>
-                            <input
-                                ref={fileInputRef}
-                                type="file"
-                                accept="image/*"
-                                onChange={handleFileUpload}
-                                className="hidden"
+                        {!originalImage && (
+                            <ImageUploadZone
+                                onFilesSelected={handleFileSelect}
+                                accept=".jpg,.jpeg,.png,.webp,.svg"
+                                multiple={false}
+                                maxFileSize={10}
+                                disabled={uploadProgress > 0 && uploadProgress < 100}
+                                isProcessing={uploadProgress > 0 && uploadProgress < 100}
+                                processingText="Uploading Image..."
+                                progress={uploadProgress}
+                                title="Upload Image to Resize"
+                                subtitle="Drag and drop your image here, or click to browse"
+                                supportedFormats="PNG, JPG, WebP, SVG"
+                                enableDragDrop={true}
                             />
-                        </div>
-
-                        {uploadProgress > 0 && uploadProgress < 100 && (
-                            <div className="space-y-2">
-                                <Label>Upload Progress</Label>
-                                <Progress
-                                    value={uploadProgress}
-                                    className="w-full"
-                                />
-                            </div>
                         )}
 
                         {originalImage && (
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <Info className="h-4 w-4" />
-                                Original dimensions: {originalDimensions.width}x
-                                {originalDimensions.height}px
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                    <Info className="h-4 w-4" />
+                                    Original dimensions: {originalDimensions.width}x
+                                    {originalDimensions.height}px
+                                </div>
+
+                                {/* Show uploaded image preview */}
+                                <div className="relative">
+                                    <Image
+                                        src={originalImageUrl}
+                                        alt="Original"
+                                        width={400}
+                                        height={160}
+                                        className="w-full max-h-40 object-contain rounded-lg border bg-muted/50"
+                                        unoptimized
+                                    />
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => {
+                                            setOriginalImage(null);
+                                            setOriginalImageUrl("");
+                                            setOriginalDimensions({ width: 0, height: 0 });
+                                            setUploadProgress(0);
+                                            form.reset();
+                                        }}
+                                        className="absolute top-2 right-2 h-8 w-8 p-0"
+                                    >
+                                        <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                </div>
                             </div>
                         )}
                     </div>

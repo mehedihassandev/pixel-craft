@@ -14,12 +14,12 @@ export const menus: IMenus[] = [
         href: ROUTER.RESIZE,
         icon: "Maximize",
     },
-    // {
-    //     id: "background-remove",
-    //     label: "Background Remove",
-    //     href: ROUTER.BACKGROUND_REMOVE,
-    //     icon: "Eraser",
-    // },
+    {
+        id: "background-remove",
+        label: "Background Remove",
+        href: ROUTER.BACKGROUND_REMOVE,
+        icon: "Eraser",
+    },
     // {
     //     id: "image-optimization",
     //     label: "Image Optimization",

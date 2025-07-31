@@ -3,12 +3,14 @@
 import { useState, useCallback, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 import Tesseract from "tesseract.js";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ImageUploadZone } from "@/components/ui/image-upload-zone";
 import {
     Select,
     SelectContent,
@@ -157,7 +159,10 @@ export const OcrForm = () => {
 
     // Handle file selection and auto-process
     const handleFileSelect = useCallback(
-        async (file: File) => {
+        async (files: File[]) => {
+            const file = files[0];
+            if (!file) return;
+
             if (!file.type.startsWith("image/")) {
                 toast({
                     title: "Invalid file type",
@@ -194,6 +199,7 @@ export const OcrForm = () => {
             setResult(null);
             setProgress(0);
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [toast, watchedValues]
     );
 
@@ -203,7 +209,7 @@ export const OcrForm = () => {
             e.preventDefault();
             const files = Array.from(e.dataTransfer.files);
             if (files.length > 0) {
-                handleFileSelect(files[0]);
+                handleFileSelect([files[0]]);
             }
         },
         [handleFileSelect]
@@ -242,7 +248,7 @@ export const OcrForm = () => {
                                     "camera-capture.jpg",
                                     { type: "image/jpeg" }
                                 );
-                                handleFileSelect(file);
+                                handleFileSelect([file]);
                             }
                         },
                         "image/jpeg",
@@ -292,7 +298,7 @@ export const OcrForm = () => {
     }, [worker, watchedValues.language, watchedValues.oem, watchedValues.psm]);
 
     // Auto-process OCR with current form settings
-    const autoProcessOcr = async (file: File) => {
+    const autoProcessOcr = useCallback(async (file: File) => {
         const currentData = {
             language: watchedValues.language,
             outputFormat: watchedValues.outputFormat,
@@ -382,7 +388,7 @@ export const OcrForm = () => {
             setProgress(0);
             setCurrentStatus("");
         }
-    };
+    }, [watchedValues, initializeWorker, toast]);
 
     // Reprocess with current settings
     const reprocessOcr = async () => {
@@ -716,31 +722,18 @@ export const OcrForm = () => {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         {/* Upload Area */}
-                        <div
-                            className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-gray-400 transition-colors"
-                            onDrop={handleDrop}
-                            onDragOver={handleDragOver}
-                            onClick={() => fileInputRef.current?.click()}
-                        >
-                            <Upload className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                            <p className="text-lg font-medium text-gray-600 mb-2">
-                                Drop an image here or click to select
-                            </p>
-                            <p className="text-sm text-gray-500">
-                                Supports PNG, JPG, WebP, BMP, TIFF (max 10MB) -
-                                OCR starts automatically
-                            </p>
-                        </div>
-
-                        <input
-                            ref={fileInputRef}
-                            type="file"
+                        <ImageUploadZone
+                            onFilesSelected={handleFileSelect}
                             accept="image/*"
-                            className="hidden"
-                            onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) handleFileSelect(file);
-                            }}
+                            multiple={false}
+                            maxFileSize={10}
+                            disabled={isProcessing}
+                            isProcessing={isProcessing}
+                            processingText="Processing OCR..."
+                            progress={progress}
+                            title="Drop an image here or click to select"
+                            subtitle="Supports PNG, JPG, WebP, BMP, TIFF (max 10MB) - OCR starts automatically"
+                            supportedFormats="PNG, JPG, WebP, BMP, TIFF"
                         />
 
                         {/* Action Buttons */}
@@ -782,10 +775,13 @@ export const OcrForm = () => {
                             <CardTitle>Preview</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <img
+                            <Image
                                 src={imagePreview}
                                 alt="Preview"
+                                width={800}
+                                height={600}
                                 className="w-full object-contain"
+                                unoptimized
                             />
                         </CardContent>
                     </Card>
