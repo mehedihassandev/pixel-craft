@@ -154,7 +154,7 @@ export const ImageComparison: React.FC<ImageComparisonProps> = ({
     return (
         <div className="w-full max-w-4xl mx-auto space-y-6">
             {/* Controls */}
-            <Card>
+            <Card className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <ArrowLeftRight className="h-6 w-6" />
@@ -381,7 +381,7 @@ export const ImageComparison: React.FC<ImageComparisonProps> = ({
             </Card>
 
             {/* Image Display */}
-            <Card>
+            <Card className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
                 <CardContent className="p-6">
                     <div className="relative rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-900">
                         {/* Checkerboard pattern for transparency preview */}

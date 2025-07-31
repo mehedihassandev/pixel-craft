@@ -242,7 +242,7 @@ export default function ResizePage() {
             </Card>
 
             {/* Resize Methods Info */}
-            <Card className="mt-8">
+            <Card className="mt-8 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
                 <CardHeader>
                     <CardTitle>Resize Methods Explained</CardTitle>
                     <CardDescription>

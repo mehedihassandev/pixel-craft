@@ -466,7 +466,7 @@ export const OcrForm = () => {
         <div className="space-y-6">
             {/* Top Configuration */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card>
+                <Card className="border-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <Settings className="h-5 w-5" />
@@ -597,7 +597,7 @@ export const OcrForm = () => {
                 </Card>
 
                 {/* Advanced Settings Card */}
-                <Card>
+                <Card className="border-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <Settings className="h-5 w-5" />
@@ -707,7 +707,7 @@ export const OcrForm = () => {
             {/* Image Upload and Settings Side by Side */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Image Upload Card */}
-                <Card>
+                <Card className="border-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <ImageIcon className="h-5 w-5" />
@@ -777,7 +777,7 @@ export const OcrForm = () => {
 
                 {/* Preview */}
                 {imagePreview && (
-                    <Card>
+                    <Card className="border-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
                         <CardHeader>
                             <CardTitle>Preview</CardTitle>
                         </CardHeader>
@@ -794,7 +794,7 @@ export const OcrForm = () => {
 
             {/* Results */}
             {result && (
-                <Card>
+                <Card className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <FileText className="h-5 w-5" />

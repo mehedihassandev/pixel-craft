@@ -113,7 +113,7 @@ export const ImagePreview = ({ options, url }: ImagePreviewProps) => {
     return (
         <div className="space-y-6">
             {/* Image Statistics */}
-            <Card>
+            <Card className="border-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Maximize2 className="h-5 w-5" />

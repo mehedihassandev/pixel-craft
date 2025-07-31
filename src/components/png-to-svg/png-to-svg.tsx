@@ -61,7 +61,7 @@ export const PngToSvgConverter: React.FC = () => {
     return (
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 space-y-6 xl:space-y-0">
             {/* Controls Card */}
-            <Card>
+            <Card className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <ImageIcon className="h-5 w-5" /> PNG to SVG Converter
@@ -83,7 +83,7 @@ export const PngToSvgConverter: React.FC = () => {
                         {file && <span className="text-sm">{file.name}</span>}
                     </div>
                     {/* Settings */}
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                         <div className="space-y-2">
                             <Label>Colors: {numColors}</Label>
                             <Slider
@@ -116,7 +116,7 @@ export const PngToSvgConverter: React.FC = () => {
                         </div>
                     </div>
                     {/* Action Buttons */}
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 pt-8">
                         <Button
                             onClick={handleConvert}
                             disabled={!file || loading}
@@ -139,7 +139,7 @@ export const PngToSvgConverter: React.FC = () => {
             </Card>
 
             {/* Preview Card */}
-            <Card>
+            <Card className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <ImageIcon className="h-5 w-5" /> Preview
