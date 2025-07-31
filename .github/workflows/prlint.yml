@@ -35,15 +35,15 @@ jobs:
         steps:
             - uses: maor-rozenfeld/prlint-reloaded@v1
               with:
-                  title-regex: ^MH-\d+:\s[A-Z][a-z]+
+                  title-regex: ^MH-\d+:\s[A-Z]
                   error-message: Your title must be in the format MH-{number}: Description (e.g., MH-123: Add new feature).
 
             - uses: maor-rozenfeld/prlint-reloaded@v1
               with:
-                  title-regex: ^MH-\d+:\s\S+(\s+\S+){2,}
-                  error-message: Your title must have at least three words after the colon
+                  title-regex: ^MH-\d+:\s\S+(\s+\S+)*
+                  error-message: Your title must have text after the colon
 
             - uses: maor-rozenfeld/prlint-reloaded@v1
               with:
-                  title-regex: ^MH-\d+:\s(?![A-Z][a-z]*ing\s)(?![A-Z][a-z]*ed\s)[A-Z][a-z]+
+                  title-regex: ^MH-\d+:\s(?![A-Z][a-z]*ing\s)(?![A-Z][a-z]*ed\s)[A-Z]
                   error-message: Use imperative mood (e.g., "Add", not "Adding" or "Added")
