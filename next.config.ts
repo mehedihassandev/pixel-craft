@@ -8,10 +8,6 @@ const nextConfig: NextConfig = {
     eslint: {
         ignoreDuringBuilds: true,
     },
-    // Enable experimental features for better SEO
-    experimental: {
-        optimizeCss: true,
-    },
     // Enable compression for better performance
     compress: true,
     // Enable poweredByHeader for security

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 // Replace with your actual Google Analytics Measurement ID
@@ -12,7 +12,7 @@ declare global {
     }
 }
 
-export function GoogleAnalytics() {
+function GoogleAnalyticsInner() {
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
@@ -58,7 +58,13 @@ export function GoogleAnalytics() {
     return null;
 }
 
-// Custom hook for tracking events
+export function GoogleAnalytics() {
+    return (
+        <Suspense fallback={null}>
+            <GoogleAnalyticsInner />
+        </Suspense>
+    );
+}// Custom hook for tracking events
 export function useGoogleAnalytics() {
     const trackEvent = (eventName: string, parameters?: Record<string, any>) => {
         if (!GA_MEASUREMENT_ID || !window.gtag) return;
