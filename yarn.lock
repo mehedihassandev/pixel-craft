@@ -1049,18 +1049,7 @@
     retry-request "^7.0.0"
     teeny-request "^9.0.0"
 
-"@google-cloud/firestore@^7.11.0", "@google-cloud/firestore@^7.6.0":
-  version "7.11.3"
-  resolved "https://registry.npmjs.org/@google-cloud/firestore/-/firestore-7.11.3.tgz"
-  integrity sha512-qsM3/WHpawF07SRVvEJJVRwhYzM7o9qtuksyuqnrMig6fxIrwWnsezECWsG/D5TyYru51Fv5c/RTqNDQ2yU+4w==
-  dependencies:
-    "@opentelemetry/api" "^1.3.0"
-    fast-deep-equal "^3.1.1"
-    functional-red-black-tree "^1.0.1"
-    google-gax "^4.3.3"
-    protobufjs "^7.2.6"
-
-"@google-cloud/firestore@^7.11.3":
+"@google-cloud/firestore@^7.11.0", "@google-cloud/firestore@^7.11.3", "@google-cloud/firestore@^7.6.0":
   version "7.11.3"
   resolved "https://registry.yarnpkg.com/@google-cloud/firestore/-/firestore-7.11.3.tgz#87cc3a58c5c297d6c9ca0e486fbf16b403585721"
   integrity sha512-qsM3/WHpawF07SRVvEJJVRwhYzM7o9qtuksyuqnrMig6fxIrwWnsezECWsG/D5TyYru51Fv5c/RTqNDQ2yU+4w==
