@@ -20,12 +20,12 @@ export const menus: IMenus[] = [
         href: ROUTER.BACKGROUND_REMOVE,
         icon: "Eraser",
     },
-    // {
-    //     id: "image-optimization",
-    //     label: "Image Optimization",
-    //     href: ROUTER.IMAGE_OPTIMIZATION,
-    //     icon: "Zap",
-    // },
+    {
+        id: "image-optimization",
+        label: "Image Optimization",
+        href: ROUTER.IMAGE_OPTIMIZATION,
+        icon: "Zap",
+    },
     {
         id: "image-compress",
         label: "Image Compress",
