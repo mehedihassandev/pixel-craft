@@ -1,4 +1,5 @@
 
+import { Metadata } from 'next';
 import {
     Card,
     CardContent,
@@ -20,6 +21,45 @@ import {
     ocrTips,
     ocrPerformanceFeatures,
 } from "@/constants/ocr";
+
+export const metadata: Metadata = {
+    title: 'OCR Text Extraction - Extract Text from Images Online',
+    description: 'Extract text from images using advanced OCR technology. Convert JPG, PNG, PDF to editable text. Supports 100+ languages with high accuracy for documents, receipts, and photos.',
+    keywords: [
+        'OCR',
+        'text extraction',
+        'image to text',
+        'optical character recognition',
+        'extract text from image',
+        'PDF to text',
+        'document scanner',
+        'photo to text',
+        'handwriting recognition',
+        'multilingual OCR'
+    ],
+    openGraph: {
+        title: 'OCR Text Extraction - Extract Text from Images Online',
+        description: 'Extract text from images using advanced OCR technology. Convert JPG, PNG, PDF to editable text with 100+ language support.',
+        url: 'https://pixel-craft-sigma.vercel.app/ocr',
+        images: [
+            {
+                url: '/og-ocr.jpg',
+                width: 1200,
+                height: 630,
+                alt: 'OCR Text Extraction Tool',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'OCR Text Extraction - Extract Text from Images Online',
+        description: 'Extract text from images using advanced OCR technology. Convert JPG, PNG, PDF to editable text with 100+ language support.',
+        images: ['/twitter-ocr.jpg'],
+    },
+    alternates: {
+        canonical: '/ocr',
+    },
+};
 
 export default function OcrPage() {
     return (
