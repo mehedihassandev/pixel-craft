@@ -59,7 +59,7 @@ To set up analytics:
 1. Create a Google Analytics 4 property
 2. Add your Measurement ID to `.env.local`:
    ```
-   NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+   GA_MEASUREMENT_ID=G-XXXXXXXXXX
    ```
 
 ### Search Console Setup
