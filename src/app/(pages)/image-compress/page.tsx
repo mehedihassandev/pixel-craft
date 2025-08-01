@@ -1,5 +1,6 @@
 "use client";
 
+import { Metadata } from 'next';
 import { useState } from "react";
 import { ImageCompressionForm } from '@/components/image-compress/image-compression-form';
 import {

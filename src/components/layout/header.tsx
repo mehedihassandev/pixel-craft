@@ -13,6 +13,7 @@ import Link from "next/link";
 import { menus } from "@/navigation/menus";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const iconMap = {
     Eraser,
@@ -32,10 +33,8 @@ const Header = () => {
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3">
-                        <div className="bg-primary p-2 rounded-lg">
-                            <ImageIcon className="text-primary-foreground h-5 w-5" />
-                        </div>
-                        <h1 className="text-xl md:text-2xl font-bold tracking-tight text-foreground">
+                        <Image src="/assets/logo.png" alt="Pixel Craft Logo" width={40} height={40} className="h-10 w-10" />
+                        <h1 className="text-lg md:text-xl font-bold tracking-tight text-foreground">
                             Pixel Craft
                         </h1>
                     </Link>

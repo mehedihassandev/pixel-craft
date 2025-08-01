@@ -1,5 +1,6 @@
 import React from "react";
-import { Mail, Globe, Github, PenTool, Linkedin } from "lucide-react";
+import Link from "next/link";
+import { Mail, Globe, Github, PenTool, Linkedin, BookOpen, HelpCircle } from "lucide-react";
 import { CONTACT_INFO } from "@/constants/contact";
 
 export const Footer = () => {
@@ -8,15 +9,14 @@ export const Footer = () => {
     return (
         <footer className="mt-auto border-t">
             <div className="container mx-auto px-4 py-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* Brand and Copyright */}
                     <div className="space-y-2">
                         <h3 className="text-lg font-semibold">Pixel Craft</h3>
                         <p className="text-sm text-muted-foreground">
                             An open-source image processing application powered
                             by AI. Transform, optimize, and enhance your images
-                            with cutting-edge technology. Built by the
-                            community, for the community.
+                            with cutting-edge technology.
                         </p>
                         <div className="flex items-center space-x-4 pt-2">
                             <a
@@ -38,6 +38,36 @@ export const Footer = () => {
                         <p className="text-sm text-muted-foreground pt-4">
                             © {currentYear} Pixel Craft. All rights reserved.
                         </p>
+                    </div>
+
+                    {/* Resources */}
+                    <div className="space-y-4">
+                        <h3 className="text-lg font-semibold">Resources</h3>
+                        <div className="flex flex-col space-y-2">
+                            <Link
+                                href="/blog"
+                                className="flex items-center space-x-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                <BookOpen className="h-4 w-4" />
+                                <span>Blog & Tutorials</span>
+                            </Link>
+                            <Link
+                                href="/faq"
+                                className="flex items-center space-x-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                <HelpCircle className="h-4 w-4" />
+                                <span>FAQ</span>
+                            </Link>
+                            <a
+                                href="https://github.com/mehedihassandev/pixel-craft#readme"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center space-x-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                <Github className="h-4 w-4" />
+                                <span>Documentation</span>
+                            </a>
+                        </div>
                     </div>
 
                     {/* Contact */}

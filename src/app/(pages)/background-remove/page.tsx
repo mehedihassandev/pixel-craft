@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import {
     Card,
     CardContent,
@@ -8,6 +9,43 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Eraser, Sparkles, Download, Eye, Layers } from "lucide-react";
 import { BackgroundRemovalFormWrapper } from '@/components/background-remove';
+
+export const metadata: Metadata = {
+    title: 'AI Background Removal - Remove Image Backgrounds Instantly',
+    description: 'Remove backgrounds from images instantly with AI. Upload your photo and get professional results in seconds. Perfect for product photos, portraits, and social media.',
+    keywords: [
+        'background removal',
+        'remove background',
+        'AI background remover',
+        'image background removal',
+        'photo background remover',
+        'transparent background',
+        'product photography',
+        'portrait background removal'
+    ],
+    openGraph: {
+        title: 'AI Background Removal - Remove Image Backgrounds Instantly',
+        description: 'Remove backgrounds from images instantly with AI. Upload your photo and get professional results in seconds.',
+        url: 'https://pixel-craft-sigma.vercel.app/background-remove',
+        images: [
+            {
+                url: '/og-background-remove.jpg',
+                width: 1200,
+                height: 630,
+                alt: 'AI Background Removal Tool',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'AI Background Removal - Remove Image Backgrounds Instantly',
+        description: 'Remove backgrounds from images instantly with AI. Upload your photo and get professional results in seconds.',
+        images: ['/twitter-background-remove.jpg'],
+    },
+    alternates: {
+        canonical: '/background-remove',
+    },
+};
 
 export default function BackgroundRemovePage() {
     return (

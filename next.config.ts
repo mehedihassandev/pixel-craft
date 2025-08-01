@@ -8,6 +8,12 @@ const nextConfig: NextConfig = {
     eslint: {
         ignoreDuringBuilds: true,
     },
+    // Enable compression for better performance
+    compress: true,
+    // Enable poweredByHeader for security
+    poweredByHeader: false,
+    // Generate static sitemap and robots.txt
+    trailingSlash: false,
     images: {
         remotePatterns: [
             {
@@ -17,6 +23,11 @@ const nextConfig: NextConfig = {
                 pathname: "/**",
             },
         ],
+        // Optimize images for better SEO
+        formats: ['image/webp', 'image/avif'],
+        minimumCacheTTL: 60,
+        dangerouslyAllowSVG: true,
+        contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     },
     webpack: (config, { isServer }) => {
         // Handle background removal library for client-side only
@@ -51,7 +62,7 @@ const nextConfig: NextConfig = {
 
         return config;
     },
-    // Add headers for SharedArrayBuffer support
+    // Add headers for SharedArrayBuffer support and SEO
     async headers() {
         return [
             {
@@ -64,6 +75,23 @@ const nextConfig: NextConfig = {
                     {
                         key: "Cross-Origin-Opener-Policy",
                         value: "same-origin",
+                    },
+                    // Security headers for better SEO ranking
+                    {
+                        key: "X-Frame-Options",
+                        value: "DENY",
+                    },
+                    {
+                        key: "X-Content-Type-Options",
+                        value: "nosniff",
+                    },
+                    {
+                        key: "Referrer-Policy",
+                        value: "origin-when-cross-origin",
+                    },
+                    {
+                        key: "Permissions-Policy",
+                        value: "camera=(), microphone=(), geolocation=()",
                     },
                 ],
             },
