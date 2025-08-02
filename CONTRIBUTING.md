@@ -8,22 +8,22 @@ Thank you for your interest in contributing to Pixel Craft! 🎉 We welcome cont
 
 Found a bug? Help us fix it by:
 
--   Checking if the issue already exists in [GitHub Issues](https://github.com/mehedihassandev/pixel-craft/issues)
--   If not, create a new issue with:
-    -   Clear description of the problem
-    -   Steps to reproduce
-    -   Expected vs actual behavior
-    -   Screenshots (if applicable)
-    -   Your environment details (OS, browser, etc.)
+- Checking if the issue already exists in [GitHub Issues](https://github.com/mehedihassandev/pixel-craft/issues)
+- If not, create a new issue with:
+  - Clear description of the problem
+  - Steps to reproduce
+  - Expected vs actual behavior
+  - Screenshots (if applicable)
+  - Your environment details (OS, browser, etc.)
 
 ### 💡 Feature Requests
 
 Have an idea for a new feature?
 
--   Check existing [feature requests](https://github.com/mehedihassandev/pixel-craft/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
--   Create a new issue with the `enhancement` label
--   Describe the feature and why it would be valuable
--   Include mockups or examples if possible
+- Check existing [feature requests](https://github.com/mehedihassandev/pixel-craft/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
+- Create a new issue with the `enhancement` label
+- Describe the feature and why it would be valuable
+- Include mockups or examples if possible
 
 ### 🔧 Code Contributions
 
@@ -33,36 +33,36 @@ Ready to write some code? Great!
 
 Look for issues labeled:
 
--   `good first issue` - Perfect for newcomers
--   `help wanted` - We need community help
--   `beginner friendly` - Great for learning
+- `good first issue` - Perfect for newcomers
+- `help wanted` - We need community help
+- `beginner friendly` - Great for learning
 
 #### Areas Where We Need Help
 
--   🎨 UI/UX improvements
--   🚀 Performance optimizations
--   🧪 Test coverage
--   📱 Mobile responsiveness
--   🌐 Internationalization
--   📚 Documentation
--   🔧 New image processing features
+- 🎨 UI/UX improvements
+- 🚀 Performance optimizations
+- 🧪 Test coverage
+- 📱 Mobile responsiveness
+- 🌐 Internationalization
+- 📚 Documentation
+- 🔧 New image processing features
 
 ## Development Setup
 
 1. Fork the repository
 2. Clone your fork:
-    ```bash
-    git clone https://github.com/mehedihassandev/pixel-craft.git
-    cd pixel-craft
-    ```
+   ```bash
+   git clone https://github.com/mehedihassandev/pixel-craft.git
+   cd pixel-craft
+   ```
 3. Install dependencies:
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 4. Create a feature branch:
-    ```bash
-    git checkout -b feature/your-feature-name
-    ```
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
 
 ## Code Standards
 
@@ -76,11 +76,11 @@ MH-XXX: Your commit message
 
 **Rules:**
 
--   Type must be exactly `MH`
--   Scope must be exactly 3 digits (000-999)
--   Use parentheses around the scope: `(XXX)`
--   Follow with a colon and space: `: `
--   Use imperative mood (e.g., "Add", "Fix", "Update", not "Added", "Fixed", "Updated")
+- Type must be exactly `MH`
+- Scope must be exactly 3 digits (000-999)
+- Use parentheses around the scope: `(XXX)`
+- Follow with a colon and space: `: `
+- Use imperative mood (e.g., "Add", "Fix", "Update", not "Added", "Fixed", "Updated")
 
 **Valid Examples:**
 
@@ -107,22 +107,22 @@ MH-789: Remove deprecated API calls
 
 The project uses automated tools to ensure code quality:
 
--   **ESLint**: Enforces JavaScript/TypeScript coding standards
--   **TypeScript**: Provides type safety
--   **Prettier**: Code formatting (if configured)
+- **ESLint**: Enforces JavaScript/TypeScript coding standards
+- **TypeScript**: Provides type safety
+- **Prettier**: Code formatting (if configured)
 
 These checks run automatically:
 
--   Before each commit (pre-commit hook)
--   On pull request creation/updates (CI pipeline)
+- Before each commit (pre-commit hook)
+- On pull request creation/updates (CI pipeline)
 
 ### Pre-commit Hooks
 
 Husky is configured to run the following checks before each commit:
 
--   `npm run lint` - ESLint checks
--   `npm run typecheck` - TypeScript compilation
--   `commitlint` - Commit message format validation
+- `npm run lint` - ESLint checks
+- `npm run typecheck` - TypeScript compilation
+- `commitlint` - Commit message format validation
 
 If any check fails, the commit will be rejected. Fix the issues and try again.
 
@@ -132,7 +132,7 @@ If any check fails, the commit will be rejected. Fix the issues and try again.
 
 1. **Branch**: Create PRs against the `develop` branch
 2. **Title Format**: Must match `MH-\d+:.[A-Z][a-z]+` pattern
-    - Example: `MH-123: Add image optimization feature`
+   - Example: `MH-123: Add image optimization feature`
 3. **Description**: Provide clear description of changes
 4. **Commits**: All commits must follow the commit message format
 5. **Tests**: Ensure all existing tests pass
@@ -150,9 +150,9 @@ Every PR triggers automated checks:
 
 ### PR Title Rules
 
--   Must start with `MH-` followed by digits and colon
--   Must have at least 3 words
--   Must use imperative mood (not past tense or gerund)
+- Must start with `MH-` followed by digits and colon
+- Must have at least 3 words
+- Must use imperative mood (not past tense or gerund)
 
 **Valid PR Titles:**
 
@@ -175,30 +175,30 @@ MH-789: Update background removal algorithm
 
 Use these scope ranges for different types of changes:
 
--   **000-099**: Infrastructure, build, configuration
--   **100-199**: Core functionality, major features
--   **200-299**: UI/UX improvements
--   **300-399**: Bug fixes
--   **400-499**: Performance optimizations
--   **500-599**: Documentation
--   **600-699**: Tests
--   **700-799**: Refactoring
--   **800-899**: Dependencies, external integrations
--   **900-999**: Miscellaneous/experimental
+- **000-099**: Infrastructure, build, configuration
+- **100-199**: Core functionality, major features
+- **200-299**: UI/UX improvements
+- **300-399**: Bug fixes
+- **400-499**: Performance optimizations
+- **500-599**: Documentation
+- **600-699**: Tests
+- **700-799**: Refactoring
+- **800-899**: Dependencies, external integrations
+- **900-999**: Miscellaneous/experimental
 
 ## Getting Help
 
--   Check existing issues before creating new ones
--   Use descriptive titles and detailed descriptions
--   Include steps to reproduce for bug reports
--   Add relevant labels and assignees
+- Check existing issues before creating new ones
+- Use descriptive titles and detailed descriptions
+- Include steps to reproduce for bug reports
+- Add relevant labels and assignees
 
 ## Code of Conduct
 
--   Be respectful and inclusive
--   Focus on constructive feedback
--   Help others learn and grow
--   Follow the project's technical standards
+- Be respectful and inclusive
+- Focus on constructive feedback
+- Help others learn and grow
+- Follow the project's technical standards
 
 ## Review Process
 

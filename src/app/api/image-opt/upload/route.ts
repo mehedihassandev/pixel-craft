@@ -25,20 +25,23 @@ export async function POST(request: Request) {
     const uploadForm = new FormData();
     uploadForm.append('file', file as Blob);
     uploadForm.append('upload_preset', uploadPreset);
-    const cloudRes = await fetch(
-      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-      { method: 'POST', body: uploadForm }
-    );
+    const cloudRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+      method: 'POST',
+      body: uploadForm,
+    });
     const cloudData = await cloudRes.json();
     if (!cloudRes.ok) {
-      return NextResponse.json({ error: 'Cloudinary upload failed', details: cloudData }, { status: 500 });
+      return NextResponse.json(
+        { error: 'Cloudinary upload failed', details: cloudData },
+        { status: 500 }
+      );
     }
     // cloudData.bytes is the delivered bytes after optimization
     return NextResponse.json({
       filename,
       originalSize: size,
       url: cloudData.secure_url,
-      compressedSize: cloudData.bytes
+      compressedSize: cloudData.bytes,
     });
   } catch (err) {
     console.error('API upload error:', err);

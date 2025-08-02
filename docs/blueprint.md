@@ -3,6 +3,7 @@
 ## Core Features:
 
 ### Placeholder Generation Module:
+
 - **Customizable Input Form**: React Hook Form with Zod validation for width, height, text, background color, and text color fields
 - **Format Selection**: Dropdown menu to select image format (PNG, JPG, WebP) using shadcn/ui Select component
 - **Live Preview**: Real-time preview using Next.js Image component that updates as user modifies input values
@@ -12,6 +13,7 @@
 - **Download Image**: Direct image download with proper MIME type handling
 
 ### Additional Image Processing Features:
+
 - **AI Background Removal**: Client-side and API-based background removal using @imgly/background-removal
 - **Image Compression**: Multi-format compression with quality controls and batch processing
 - **OCR Text Recognition**: Tesseract.js integration for single and batch text extraction

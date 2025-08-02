@@ -8,8 +8,8 @@
  * - SuggestFontSizeOutput - The return type for the suggestFontSize function.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
 
 const SuggestFontSizeInputSchema = z.object({
   width: z.number().describe('The width of the image in pixels.'),
@@ -19,9 +19,7 @@ const SuggestFontSizeInputSchema = z.object({
 export type SuggestFontSizeInput = z.infer<typeof SuggestFontSizeInputSchema>;
 
 const SuggestFontSizeOutputSchema = z.object({
-  fontSize: z
-    .number()
-    .describe('The suggested font size for the text, in pixels.'),
+  fontSize: z.number().describe('The suggested font size for the text, in pixels.'),
 });
 export type SuggestFontSizeOutput = z.infer<typeof SuggestFontSizeOutputSchema>;
 
@@ -31,8 +29,8 @@ export async function suggestFontSize(input: SuggestFontSizeInput): Promise<Sugg
 
 const prompt = ai.definePrompt({
   name: 'suggestFontSizePrompt',
-  input: {schema: SuggestFontSizeInputSchema},
-  output: {schema: SuggestFontSizeOutputSchema},
+  input: { schema: SuggestFontSizeInputSchema },
+  output: { schema: SuggestFontSizeOutputSchema },
   prompt: `You are an expert in typography and image design. Your task is to suggest an appropriate font size for text that will be displayed on an image.
 
   Consider the following factors:
@@ -51,7 +49,7 @@ const suggestFontSizeFlow = ai.defineFlow(
     outputSchema: SuggestFontSizeOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const { output } = await prompt(input);
     return output!;
   }
 );

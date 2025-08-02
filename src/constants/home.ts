@@ -113,26 +113,4 @@ export const features = [
     gradient: 'from-cyan-500 to-blue-600',
     popular: true,
   },
-  {
-    id: 'photo-editor',
-    title: 'Photo Editor',
-    description:
-      'Professional photo editing with advanced filters, adjustments, and real-time preview.',
-    icon: Palette,
-    href: ROUTER.PHOTO_EDITOR,
-    color: 'bg-pink-500',
-    gradient: 'from-pink-500 to-pink-600',
-    popular: true,
-  },
-  {
-    id: 'batch-processor',
-    title: 'Batch Processor',
-    description:
-      'Process hundreds of images simultaneously with automated operations and bulk download.',
-    icon: Zap,
-    href: ROUTER.BATCH_PROCESSOR,
-    color: 'bg-cyan-500',
-    gradient: 'from-cyan-500 to-cyan-600',
-    popular: true,
-  },
 ];

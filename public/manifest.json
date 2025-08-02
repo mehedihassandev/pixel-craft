@@ -7,11 +7,7 @@
   "background_color": "#ffffff",
   "theme_color": "#000000",
   "orientation": "portrait-primary",
-  "categories": [
-    "photo",
-    "productivity",
-    "utilities"
-  ],
+  "categories": ["photo", "productivity", "utilities"],
   "icons": [
     {
       "src": "/icon-192x192.png",

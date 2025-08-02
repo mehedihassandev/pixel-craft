@@ -7,8 +7,8 @@ Is it a bug fix, new feature, refactor, or something else?
 
 ## Changes details
 
--   Detail one
--   Detail two
+- Detail one
+- Detail two
 
 ## Testing Snapshot and Video
 

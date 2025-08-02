@@ -1,45 +1,49 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
     const form = await request.formData();
-    const file = form.get("file") as Blob;
+    const file = form.get('file') as Blob;
 
     if (!file) {
-      return NextResponse.json({ error: "No file provided" }, { status: 400 });
+      return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
     const apiKey = process.env.REMOVE_BG_API_KEY;
 
     // If no API key is configured, suggest client-side alternative
     if (!apiKey) {
-      return NextResponse.json({
-        error: "API key not configured. Please set REMOVE_BG_API_KEY in your environment variables or use client-side processing.",
-        fallback: "client-side"
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          error:
+            'API key not configured. Please set REMOVE_BG_API_KEY in your environment variables or use client-side processing.',
+          fallback: 'client-side',
+        },
+        { status: 500 }
+      );
     }
 
     const removeBgForm = new FormData();
-    removeBgForm.append("image_file", file);
-    removeBgForm.append("size", "auto");
+    removeBgForm.append('image_file', file);
+    removeBgForm.append('size', 'auto');
 
-    const response = await fetch("https://api.remove.bg/v1.0/removebg", {
-      method: "POST",
+    const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+      method: 'POST',
       headers: {
-        "X-Api-Key": apiKey,
+        'X-Api-Key': apiKey,
       },
       body: removeBgForm,
       signal: AbortSignal.timeout(30000), // 30 second timeout
     });
 
     if (!response.ok) {
-      let errorMsg = "Background removal failed";
+      let errorMsg = 'Background removal failed';
       let fallback = false;
 
       try {
         // Check if response is JSON
-        const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
           const errData = await response.json();
           errorMsg = errData.errors?.[0]?.title || errData.message || errorMsg;
         } else {
@@ -52,47 +56,51 @@ export async function POST(request: Request) {
       } catch (e) {
         // If parsing fails, use status-based error messages
         if (response.status === 402) {
-          errorMsg = "API quota exceeded. Try client-side processing instead.";
+          errorMsg = 'API quota exceeded. Try client-side processing instead.';
           fallback = true;
         } else if (response.status === 403) {
-          errorMsg = "Invalid API key or access denied.";
+          errorMsg = 'Invalid API key or access denied.';
         } else if (response.status >= 500) {
-          errorMsg = "Service temporarily unavailable. Try client-side processing instead.";
+          errorMsg = 'Service temporarily unavailable. Try client-side processing instead.';
           fallback = true;
         }
       }
 
-      return NextResponse.json({
-        error: errorMsg,
-        fallback: fallback ? "client-side" : undefined
-      }, { status: response.status });
+      return NextResponse.json(
+        {
+          error: errorMsg,
+          fallback: fallback ? 'client-side' : undefined,
+        },
+        { status: response.status }
+      );
     }
 
     const arrayBuffer = await response.arrayBuffer();
     return new Response(arrayBuffer, {
       status: 200,
-      headers: { "Content-Type": "image/png" },
+      headers: { 'Content-Type': 'image/png' },
     });
   } catch (error) {
-    console.error("Background removal API error:", error);
+    console.error('Background removal API error:', error);
 
     // Handle different types of errors
     if (error instanceof Error) {
       if (error.name === 'AbortError' || error.message.includes('timeout')) {
         return NextResponse.json(
           {
-            error: "Request timeout. Please try again with a smaller image or use client-side processing.",
-            fallback: "client-side"
+            error:
+              'Request timeout. Please try again with a smaller image or use client-side processing.',
+            fallback: 'client-side',
           },
           { status: 408 }
         );
       }
 
-      if (error.message.includes("fetch")) {
+      if (error.message.includes('fetch')) {
         return NextResponse.json(
           {
-            error: "Network error. Please check your connection or try client-side processing.",
-            fallback: "client-side"
+            error: 'Network error. Please check your connection or try client-side processing.',
+            fallback: 'client-side',
           },
           { status: 503 }
         );
@@ -101,8 +109,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-        error: "An unexpected error occurred. Please try again or use client-side processing.",
-        fallback: "client-side"
+        error: 'An unexpected error occurred. Please try again or use client-side processing.',
+        fallback: 'client-side',
       },
       { status: 500 }
     );

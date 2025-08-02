@@ -8,9 +8,22 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
 import { Settings2, RotateCcw } from 'lucide-react';
 
@@ -34,7 +47,7 @@ interface CompressionSettingsPanelProps {
 export function CompressionSettingsPanel({
   onSettingsChange,
   isVisible,
-  onToggleVisibility
+  onToggleVisibility,
 }: CompressionSettingsPanelProps) {
   const form = useForm<CompressionSettings>({
     resolver: zodResolver(compressionSettingsSchema),
@@ -72,20 +85,20 @@ export function CompressionSettingsPanel({
     0.7: 'Good',
     0.8: 'High',
     0.9: 'Very High',
-    1.0: 'Maximum'
+    1.0: 'Maximum',
   };
 
   const getQualityLabel = (value: number) => {
     const closestKey = Object.keys(qualityLabels)
       .map(Number)
-      .reduce((prev, curr) =>
-        Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
-      );
+      .reduce((prev, curr) => (Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev));
     return qualityLabels[closestKey as keyof typeof qualityLabels];
   };
 
   return (
-    <Card className={`transition-all duration-300 ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none absolute'}`}>
+    <Card
+      className={`transition-all duration-300 ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none absolute'}`}
+    >
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div className="space-y-1">
           <CardTitle className="text-lg flex items-center gap-2">
@@ -108,11 +121,7 @@ export function CompressionSettingsPanel({
             Reset
           </Button>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onToggleVisibility}
-          >
+          <Button variant="ghost" size="sm" onClick={onToggleVisibility}>
             ×
           </Button>
         </div>
@@ -135,7 +144,7 @@ export function CompressionSettingsPanel({
                 <FormControl>
                   <Slider
                     value={[field.value]}
-                    onValueChange={(values) => field.onChange(values[0])}
+                    onValueChange={values => field.onChange(values[0])}
                     min={0.1}
                     max={1}
                     step={0.05}
@@ -159,23 +168,19 @@ export function CompressionSettingsPanel({
               <FormItem className="space-y-3">
                 <div className="flex justify-between items-center">
                   <FormLabel>Target File Size (MB)</FormLabel>
-                  <div className="text-sm text-muted-foreground">
-                    {field.value} MB
-                  </div>
+                  <div className="text-sm text-muted-foreground">{field.value} MB</div>
                 </div>
                 <FormControl>
                   <Slider
                     value={[field.value]}
-                    onValueChange={(values) => field.onChange(values[0])}
+                    onValueChange={values => field.onChange(values[0])}
                     min={0.1}
                     max={10}
                     step={0.1}
                     className="w-full"
                   />
                 </FormControl>
-                <FormDescription>
-                  Maximum target file size after compression
-                </FormDescription>
+                <FormDescription>Maximum target file size after compression</FormDescription>
               </FormItem>
             )}
           />
@@ -190,14 +195,12 @@ export function CompressionSettingsPanel({
               <FormItem className="space-y-3">
                 <div className="flex justify-between items-center">
                   <FormLabel>Max Dimension (px)</FormLabel>
-                  <div className="text-sm text-muted-foreground">
-                    {field.value}px
-                  </div>
+                  <div className="text-sm text-muted-foreground">{field.value}px</div>
                 </div>
                 <FormControl>
                   <Slider
                     value={[field.value]}
-                    onValueChange={(values) => field.onChange(values[0])}
+                    onValueChange={values => field.onChange(values[0])}
                     min={480}
                     max={4000}
                     step={80}
@@ -233,9 +236,7 @@ export function CompressionSettingsPanel({
                     <SelectItem value="webp">WebP (Best compression)</SelectItem>
                   </SelectContent>
                 </Select>
-                <FormDescription>
-                  Choose the output format for compressed images
-                </FormDescription>
+                <FormDescription>Choose the output format for compressed images</FormDescription>
               </FormItem>
             )}
           />
@@ -258,10 +259,7 @@ export function CompressionSettingsPanel({
                     </FormDescription>
                   </div>
                   <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
+                    <Switch checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
                 </FormItem>
               )}
@@ -279,10 +277,7 @@ export function CompressionSettingsPanel({
                     </FormDescription>
                   </div>
                   <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
+                    <Switch checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
                 </FormItem>
               )}
