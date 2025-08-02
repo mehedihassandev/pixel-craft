@@ -1,16 +1,22 @@
-"use client";
+'use client';
 import React, { useState } from 'react';
 import imageCompression from 'browser-image-compression';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ImageIcon, Zap, Download, Cloud, Shield, Gauge, Globe, CheckCircle, Settings, FileImage, RotateCcw } from "lucide-react";
-import { ImageUploadZone } from "@/components/ui/image-upload-zone";
+  ImageIcon,
+  Zap,
+  Download,
+  Cloud,
+  Shield,
+  Gauge,
+  Globe,
+  CheckCircle,
+  Settings,
+  FileImage,
+  RotateCcw,
+} from 'lucide-react';
+import { ImageUploadZone } from '@/components/ui/image-upload-zone';
 
 export default function ImageOptimizationPage() {
   const [originalFile, setOriginalFile] = useState<File | null>(null);
@@ -35,7 +41,7 @@ export default function ImageOptimizationPage() {
         maxWidthOrHeight: 1920,
         useWebWorker: true,
         fileType: 'image/webp',
-        maxSizeMB: 1
+        maxSizeMB: 1,
       };
       const compressedBlob = await imageCompression(file, options);
       setOptimizedFile(compressedBlob);
@@ -57,12 +63,14 @@ export default function ImageOptimizationPage() {
       formData.append('file', optimizedFile, originalFile?.name);
       const res = await fetch('/api/image-opt/upload', {
         method: 'POST',
-        body: formData
+        body: formData,
       });
       const json = await res.json();
       if (json.url) {
         setUploadedImageUrl(json.url);
-        setUploadStatus(`Upload successful! Original: ${(json.originalSize / 1024).toFixed(2)} KB → Compressed: ${(json.compressedSize / 1024).toFixed(2)} KB`);
+        setUploadStatus(
+          `Upload successful! Original: ${(json.originalSize / 1024).toFixed(2)} KB → Compressed: ${(json.compressedSize / 1024).toFixed(2)} KB`
+        );
       } else {
         setUploadStatus(`Upload failed: ${JSON.stringify(json)}`);
       }
@@ -122,8 +130,8 @@ export default function ImageOptimizationPage() {
           </h1>
         </div>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-          Compress and optimize your images for web with advanced algorithms.
-          Reduce file size by up to 90% while maintaining quality with WebP conversion.
+          Compress and optimize your images for web with advanced algorithms. Reduce file size by up
+          to 90% while maintaining quality with WebP conversion.
         </p>
         <div className="flex justify-center gap-3 flex-wrap mt-6">
           <Badge
@@ -247,7 +255,9 @@ export default function ImageOptimizationPage() {
           {originalFile && (
             <Card className="bg-blue-50/50 dark:bg-blue-900/10 border-blue-200 dark:border-blue-800">
               <CardContent className="pt-4">
-                <p className="text-sm font-medium">Original size: {(originalSize / 1024).toFixed(2)} KB</p>
+                <p className="text-sm font-medium">
+                  Original size: {(originalSize / 1024).toFixed(2)} KB
+                </p>
               </CardContent>
             </Card>
           )}
@@ -273,7 +283,8 @@ export default function ImageOptimizationPage() {
                   </div>
                   <div>
                     <p className="font-medium text-green-700 dark:text-green-300">
-                      Compression: {(((originalSize - optimizedSize) / originalSize) * 100).toFixed(1)}% smaller
+                      Compression:{' '}
+                      {(((originalSize - optimizedSize) / originalSize) * 100).toFixed(1)}% smaller
                     </p>
                   </div>
                 </div>
@@ -354,7 +365,8 @@ export default function ImageOptimizationPage() {
               </div>
               <h3 className="font-semibold text-lg">Upload & Analyze</h3>
               <p className="text-sm text-muted-foreground">
-                We analyze your image dimensions, format, and quality to determine the best optimization strategy.
+                We analyze your image dimensions, format, and quality to determine the best
+                optimization strategy.
               </p>
             </div>
             <div className="text-center space-y-4">
@@ -365,7 +377,8 @@ export default function ImageOptimizationPage() {
               </div>
               <h3 className="font-semibold text-lg">Compress & Convert</h3>
               <p className="text-sm text-muted-foreground">
-                Smart compression reduces file size while converting to modern WebP format for optimal performance.
+                Smart compression reduces file size while converting to modern WebP format for
+                optimal performance.
               </p>
             </div>
             <div className="text-center space-y-4">
@@ -376,7 +389,8 @@ export default function ImageOptimizationPage() {
               </div>
               <h3 className="font-semibold text-lg">Download or Upload</h3>
               <p className="text-sm text-muted-foreground">
-                Get your optimized image instantly or upload to cloud storage for global CDN delivery.
+                Get your optimized image instantly or upload to cloud storage for global CDN
+                delivery.
               </p>
             </div>
           </div>
@@ -435,8 +449,11 @@ export default function ImageOptimizationPage() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-3">
-              {['JPEG', 'PNG', 'WebP', 'HEIC', 'BMP', 'TIFF', 'GIF', 'SVG'].map((format) => (
-                <div key={format} className="flex items-center gap-2 p-2 bg-green-50/50 dark:bg-green-900/10 rounded-md">
+              {['JPEG', 'PNG', 'WebP', 'HEIC', 'BMP', 'TIFF', 'GIF', 'SVG'].map(format => (
+                <div
+                  key={format}
+                  className="flex items-center gap-2 p-2 bg-green-50/50 dark:bg-green-900/10 rounded-md"
+                >
                   <CheckCircle className="h-4 w-4 text-green-600" />
                   <span className="text-sm font-medium">{format}</span>
                 </div>
@@ -466,7 +483,8 @@ export default function ImageOptimizationPage() {
               </div>
               <h3 className="font-semibold text-lg">Faster Loading</h3>
               <p className="text-sm text-muted-foreground">
-                Optimized images load up to 5x faster, improving user experience and reducing bounce rates.
+                Optimized images load up to 5x faster, improving user experience and reducing bounce
+                rates.
               </p>
             </div>
             <div className="text-center space-y-3">
@@ -477,7 +495,8 @@ export default function ImageOptimizationPage() {
               </div>
               <h3 className="font-semibold text-lg">Better SEO</h3>
               <p className="text-sm text-muted-foreground">
-                Faster loading images improve Core Web Vitals scores, boosting your search engine rankings.
+                Faster loading images improve Core Web Vitals scores, boosting your search engine
+                rankings.
               </p>
             </div>
             <div className="text-center space-y-3">
@@ -488,7 +507,8 @@ export default function ImageOptimizationPage() {
               </div>
               <h3 className="font-semibold text-lg">Global CDN</h3>
               <p className="text-sm text-muted-foreground">
-                Cloudinary CDN ensures your optimized images load quickly worldwide with 99.9% uptime.
+                Cloudinary CDN ensures your optimized images load quickly worldwide with 99.9%
+                uptime.
               </p>
             </div>
           </div>
@@ -501,9 +521,7 @@ export default function ImageOptimizationPage() {
           <CardTitle className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-green-900 dark:from-white dark:to-green-300 bg-clip-text text-transparent">
             Optimization Tips & Best Practices
           </CardTitle>
-          <CardDescription>
-            Get the most out of your image optimization
-          </CardDescription>
+          <CardDescription>Get the most out of your image optimization</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

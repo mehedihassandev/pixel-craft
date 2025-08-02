@@ -55,7 +55,7 @@ const MyComponent = () => {
     // Process files...
     for (let i = 0; i < files.length; i++) {
       // Simulate processing
-      setProgress((i + 1) / files.length * 100);
+      setProgress(((i + 1) / files.length) * 100);
       // Process file...
     }
 
@@ -97,31 +97,31 @@ const MyComponent = () => {
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `onFilesSelected` | `(files: File[]) => void` | **Required** | Callback when files are selected |
-| `accept` | `string` | `".jpg,.jpeg,.png,.webp"` | File input accept attribute |
-| `multiple` | `boolean` | `false` | Allow multiple file selection |
-| `maxFileSize` | `number` | `50` | Maximum file size in MB |
-| `maxFiles` | `number` | `undefined` | Maximum number of files (for multiple) |
-| `title` | `string` | Auto-generated | Main upload text |
-| `subtitle` | `string` | Auto-generated | Descriptive text below title |
-| `supportedFormats` | `string` | Auto-generated | Supported formats display text |
-| `className` | `string` | `undefined` | Additional CSS classes |
-| `disabled` | `boolean` | `false` | Disable the upload zone |
-| `isProcessing` | `boolean` | `false` | Show processing state |
-| `processingText` | `string` | `"Processing..."` | Text during processing |
-| `progress` | `number` | `undefined` | Progress percentage (0-100) |
-| `estimatedTime` | `number` | `undefined` | Estimated time remaining in seconds |
-| `validationErrors` | `FileValidationError[]` | `[]` | Validation errors to display |
-| `enableDragDrop` | `boolean` | `true` | Enable drag and drop functionality |
+| Prop               | Type                      | Default                   | Description                            |
+| ------------------ | ------------------------- | ------------------------- | -------------------------------------- |
+| `onFilesSelected`  | `(files: File[]) => void` | **Required**              | Callback when files are selected       |
+| `accept`           | `string`                  | `".jpg,.jpeg,.png,.webp"` | File input accept attribute            |
+| `multiple`         | `boolean`                 | `false`                   | Allow multiple file selection          |
+| `maxFileSize`      | `number`                  | `50`                      | Maximum file size in MB                |
+| `maxFiles`         | `number`                  | `undefined`               | Maximum number of files (for multiple) |
+| `title`            | `string`                  | Auto-generated            | Main upload text                       |
+| `subtitle`         | `string`                  | Auto-generated            | Descriptive text below title           |
+| `supportedFormats` | `string`                  | Auto-generated            | Supported formats display text         |
+| `className`        | `string`                  | `undefined`               | Additional CSS classes                 |
+| `disabled`         | `boolean`                 | `false`                   | Disable the upload zone                |
+| `isProcessing`     | `boolean`                 | `false`                   | Show processing state                  |
+| `processingText`   | `string`                  | `"Processing..."`         | Text during processing                 |
+| `progress`         | `number`                  | `undefined`               | Progress percentage (0-100)            |
+| `estimatedTime`    | `number`                  | `undefined`               | Estimated time remaining in seconds    |
+| `validationErrors` | `FileValidationError[]`   | `[]`                      | Validation errors to display           |
+| `enableDragDrop`   | `boolean`                 | `true`                    | Enable drag and drop functionality     |
 
 ## FileValidationError Interface
 
 ```tsx
 interface FileValidationError {
-  file: string;    // File name
-  error: string;   // Error message
+  file: string; // File name
+  error: string; // Error message
 }
 ```
 
@@ -138,6 +138,7 @@ The component uses Tailwind CSS classes and adapts to your theme. Key style poin
 ## Examples in Codebase
 
 See real implementations in:
+
 - `src/components/image-compress/image-compression-form.tsx` - Multiple file upload
 - `src/components/resize/image-resize-form.tsx` - Single file upload
 - `src/components/background-remove/background-removal-form-wrapper.tsx` - Single file with processing
