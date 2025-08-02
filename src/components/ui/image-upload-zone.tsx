@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useRef, useState, useCallback } from 'react';
 import { Upload, Loader2, Clock, AlertCircle } from 'lucide-react';
@@ -41,7 +41,7 @@ export interface ImageUploadZoneProps {
 
 export const ImageUploadZone: React.FC<ImageUploadZoneProps> = ({
   onFilesSelected,
-  accept = ".jpg,.jpeg,.png,.webp",
+  accept = '.jpg,.jpeg,.png,.webp',
   multiple = false,
   maxFileSize = 50,
   maxFiles,
@@ -51,7 +51,7 @@ export const ImageUploadZone: React.FC<ImageUploadZoneProps> = ({
   className,
   disabled = false,
   isProcessing = false,
-  processingText = "Processing...",
+  processingText = 'Processing...',
   progress,
   estimatedTime,
   validationErrors = [],
@@ -66,55 +66,69 @@ export const ImageUploadZone: React.FC<ImageUploadZoneProps> = ({
     : `Click to upload an image`;
 
   const defaultSubtitle = multiple
-    ? `Supports ${supportedFormats || "JPG, JPEG, PNG, WEBP"} • Max size: ${maxFileSize}MB per file`
-    : `${supportedFormats || "PNG, JPG, WebP"} up to ${maxFileSize}MB`;
+    ? `Supports ${supportedFormats || 'JPG, JPEG, PNG, WEBP'} • Max size: ${maxFileSize}MB per file`
+    : `${supportedFormats || 'PNG, JPG, WebP'} up to ${maxFileSize}MB`;
 
-  const handleDragOver = useCallback((e: React.DragEvent) => {
-    if (!enableDragDrop || disabled) return;
-    e.preventDefault();
-    setIsDragOver(true);
-  }, [enableDragDrop, disabled]);
+  const handleDragOver = useCallback(
+    (e: React.DragEvent) => {
+      if (!enableDragDrop || disabled) return;
+      e.preventDefault();
+      setIsDragOver(true);
+    },
+    [enableDragDrop, disabled]
+  );
 
-  const handleDragLeave = useCallback((e: React.DragEvent) => {
-    if (!enableDragDrop || disabled) return;
-    e.preventDefault();
-    setIsDragOver(false);
-  }, [enableDragDrop, disabled]);
+  const handleDragLeave = useCallback(
+    (e: React.DragEvent) => {
+      if (!enableDragDrop || disabled) return;
+      e.preventDefault();
+      setIsDragOver(false);
+    },
+    [enableDragDrop, disabled]
+  );
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    if (!enableDragDrop || disabled) return;
-    e.preventDefault();
-    setIsDragOver(false);
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      if (!enableDragDrop || disabled) return;
+      e.preventDefault();
+      setIsDragOver(false);
 
-    const files = Array.from(e.dataTransfer.files);
-    if (files.length > 0) {
-      const validFiles = multiple ? files : [files[0]];
-      if (maxFiles && validFiles.length > maxFiles) {
-        validFiles.splice(maxFiles);
+      const files = Array.from(e.dataTransfer.files);
+      if (files.length > 0) {
+        const validFiles = multiple ? files : [files[0]];
+        if (maxFiles && validFiles.length > maxFiles) {
+          validFiles.splice(maxFiles);
+        }
+        onFilesSelected(validFiles);
       }
-      onFilesSelected(validFiles);
-    }
-  }, [enableDragDrop, disabled, multiple, maxFiles, onFilesSelected]);
+    },
+    [enableDragDrop, disabled, multiple, maxFiles, onFilesSelected]
+  );
 
   const handleBrowseFiles = useCallback(() => {
     if (disabled) return;
     fileInputRef.current?.click();
   }, [disabled]);
 
-  const handleFileInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    if (files.length > 0) {
-      onFilesSelected(files);
-    }
-    // Reset input value to allow selecting the same file again
-    e.target.value = '';
-  }, [onFilesSelected]);
+  const handleFileInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = Array.from(e.target.files || []);
+      if (files.length > 0) {
+        onFilesSelected(files);
+      }
+      // Reset input value to allow selecting the same file again
+      e.target.value = '';
+    },
+    [onFilesSelected]
+  );
 
-  const dragProps = enableDragDrop ? {
-    onDragOver: handleDragOver,
-    onDragLeave: handleDragLeave,
-    onDrop: handleDrop,
-  } : {};
+  const dragProps = enableDragDrop
+    ? {
+        onDragOver: handleDragOver,
+        onDragLeave: handleDragLeave,
+        onDrop: handleDrop,
+      }
+    : {};
 
   return (
     <div className="space-y-4">
@@ -142,15 +156,14 @@ export const ImageUploadZone: React.FC<ImageUploadZoneProps> = ({
         />
 
         <div className="space-y-4">
-          <Upload className={cn(
-            "mx-auto text-gray-400",
-            multiple ? "h-12 w-12" : "h-8 w-8"
-          )} />
+          <Upload
+            className={cn('mx-auto text-muted-foreground', multiple ? 'h-12 w-12' : 'h-8 w-8')}
+          />
 
           <div>
             {multiple ? (
               <p className="text-lg font-medium">
-                {title || "Drop your images here, or"}{' '}
+                {title || 'Drop your images here, or'}{' '}
                 <button
                   onClick={handleBrowseFiles}
                   className="text-primary hover:underline font-semibold"
@@ -161,17 +174,11 @@ export const ImageUploadZone: React.FC<ImageUploadZoneProps> = ({
                 </button>
               </p>
             ) : (
-              <p className={cn(
-                "font-medium",
-                multiple ? "text-lg" : "text-sm"
-              )}>
+              <p className={cn('font-medium', multiple ? 'text-lg' : 'text-sm')}>
                 {title || defaultTitle}
               </p>
             )}
-            <p className={cn(
-              "text-gray-500 mt-1",
-              multiple ? "text-sm" : "text-xs"
-            )}>
+            <p className={cn('text-gray-500 mt-1', multiple ? 'text-sm' : 'text-xs')}>
               {subtitle || defaultSubtitle}
             </p>
           </div>

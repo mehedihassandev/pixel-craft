@@ -14,6 +14,7 @@ import Link from 'next/link';
 import { menus } from '@/navigation/menus';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
+import { ThemeToggleSimple } from '@/components/ui/theme-toggle-simple';
 import Image from 'next/image';
 
 const iconMap = {
@@ -48,24 +49,28 @@ const Header = () => {
           </Link>
 
           {/* Desktop Menu */}
-          <nav className="hidden md:flex items-center">
-            {menus.map(item => {
-              const IconComponent = iconMap[item.icon as keyof typeof iconMap];
-              return (
-                <Link
-                  key={item.id}
-                  href={item.href}
-                  className="flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors text-xs font-medium"
-                >
-                  <IconComponent className="h-4 w-4" />
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
-          </nav>
+          <div className="hidden md:flex items-center gap-2">
+            <nav className="flex items-center">
+              {menus.map(item => {
+                const IconComponent = iconMap[item.icon as keyof typeof iconMap];
+                return (
+                  <Link
+                    key={item.id}
+                    href={item.href}
+                    className="flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors text-xs font-medium"
+                  >
+                    <IconComponent className="h-4 w-4" />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+            <ThemeToggleSimple />
+          </div>
 
           {/* Mobile Menu */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
+            <ThemeToggleSimple />
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="h-9 w-9">

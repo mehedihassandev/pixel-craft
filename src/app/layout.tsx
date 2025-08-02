@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { GoogleAnalytics } from '@/components/analytics/google-analytics';
+import { ThemeProvider } from '@/components/providers/theme-provider';
 
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -134,12 +135,19 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body className="font-body antialiased bg-white">
-        <GoogleAnalytics />
-        <Header />
-        {children}
-        <Footer />
-        <Toaster />
+      <body className="font-body antialiased">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <GoogleAnalytics />
+          <Header />
+          {children}
+          <Footer />
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

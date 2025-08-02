@@ -7,7 +7,7 @@ import { formatFileSize, createFilePreviewUrl, revokeFilePreviewUrl } from '@/li
 import {
   validateFiles,
   estimateCompressionTime,
-  downloadCompressedImagesZip
+  downloadCompressedImagesZip,
 } from '@/lib/compression-utils';
 import { CompressionSettingsPanel } from './compression-settings-panel';
 import { ImageUploadZone } from '@/components/ui/image-upload-zone';
@@ -29,7 +29,7 @@ import {
   DownloadCloud,
   Eye,
   Archive,
-  Clock
+  Clock,
 } from 'lucide-react';
 
 interface CompressedImageData {
@@ -65,69 +65,74 @@ export function ImageCompressionForm() {
   });
   const [compressionProgress, setCompressionProgress] = useState(0);
   const [estimatedTime, setEstimatedTime] = useState<number>(0);
-  const [validationErrors, setValidationErrors] = useState<Array<{ file: File; reason: string }>>([]);
+  const [validationErrors, setValidationErrors] = useState<Array<{ file: File; reason: string }>>(
+    []
+  );
 
-  const handleFileSelect = useCallback(async (files: File[]) => {
-    if (!files || files.length === 0) return;
+  const handleFileSelect = useCallback(
+    async (files: File[]) => {
+      if (!files || files.length === 0) return;
 
-    clearError();
-    setCompressionProgress(0);
-    setValidationErrors([]);
+      clearError();
+      setCompressionProgress(0);
+      setValidationErrors([]);
 
-    // Convert to FileList-like array for validation
-    const fileList = files as any;
-    fileList.length = files.length;
+      // Convert to FileList-like array for validation
+      const fileList = files as any;
+      fileList.length = files.length;
 
-    // Validate files
-    const { validFiles, invalidFiles } = validateFiles(fileList);
+      // Validate files
+      const { validFiles, invalidFiles } = validateFiles(fileList);
 
-    if (invalidFiles.length > 0) {
-      setValidationErrors(invalidFiles);
-    }
-
-    if (validFiles.length === 0) return;
-
-    // Estimate compression time
-    const estimated = estimateCompressionTime(fileList);
-    setEstimatedTime(estimated);
-
-    const newCompressedImages: CompressedImageData[] = [];
-    const totalFiles = validFiles.length;
-
-    for (let i = 0; i < validFiles.length; i++) {
-      const file = validFiles[i];
-
-      try {
-        // Convert settings to compression options
-        const options = {
-          maxSizeMB: compressionSettings.maxSizeMB,
-          maxWidthOrHeight: compressionSettings.maxWidthOrHeight,
-          useWebWorker: compressionSettings.useWebWorker,
-          quality: compressionSettings.quality,
-        };
-
-        const result = await compressImage(file, options);
-
-        const originalPreviewUrl = createFilePreviewUrl(result.originalFile);
-        const compressedPreviewUrl = createFilePreviewUrl(result.compressedFile);
-
-        newCompressedImages.push({
-          ...result,
-          originalPreviewUrl,
-          compressedPreviewUrl,
-        });
-
-        // Update progress
-        setCompressionProgress(((i + 1) / totalFiles) * 100);
-      } catch (err) {
-        console.error('Failed to compress image:', file.name, err);
+      if (invalidFiles.length > 0) {
+        setValidationErrors(invalidFiles);
       }
-    }
 
-    setCompressedImages(prev => [...prev, ...newCompressedImages]);
-    setCompressionProgress(0);
-    setEstimatedTime(0);
-  }, [compressImage, clearError, compressionSettings]);
+      if (validFiles.length === 0) return;
+
+      // Estimate compression time
+      const estimated = estimateCompressionTime(fileList);
+      setEstimatedTime(estimated);
+
+      const newCompressedImages: CompressedImageData[] = [];
+      const totalFiles = validFiles.length;
+
+      for (let i = 0; i < validFiles.length; i++) {
+        const file = validFiles[i];
+
+        try {
+          // Convert settings to compression options
+          const options = {
+            maxSizeMB: compressionSettings.maxSizeMB,
+            maxWidthOrHeight: compressionSettings.maxWidthOrHeight,
+            useWebWorker: compressionSettings.useWebWorker,
+            quality: compressionSettings.quality,
+          };
+
+          const result = await compressImage(file, options);
+
+          const originalPreviewUrl = createFilePreviewUrl(result.originalFile);
+          const compressedPreviewUrl = createFilePreviewUrl(result.compressedFile);
+
+          newCompressedImages.push({
+            ...result,
+            originalPreviewUrl,
+            compressedPreviewUrl,
+          });
+
+          // Update progress
+          setCompressionProgress(((i + 1) / totalFiles) * 100);
+        } catch (err) {
+          console.error('Failed to compress image:', file.name, err);
+        }
+      }
+
+      setCompressedImages(prev => [...prev, ...newCompressedImages]);
+      setCompressionProgress(0);
+      setEstimatedTime(0);
+    },
+    [compressImage, clearError, compressionSettings]
+  );
 
   const handleDownload = useCallback((compressedFile: File, originalFileName: string) => {
     const url = createFilePreviewUrl(compressedFile);
@@ -184,7 +189,8 @@ export function ImageCompressionForm() {
   const totalOriginalSize = compressedImages.reduce((sum, img) => sum + img.originalSize, 0);
   const totalCompressedSize = compressedImages.reduce((sum, img) => sum + img.compressedSize, 0);
   const totalSavings = totalOriginalSize - totalCompressedSize;
-  const overallCompressionRatio = totalOriginalSize > 0 ? (totalSavings / totalOriginalSize) * 100 : 0;
+  const overallCompressionRatio =
+    totalOriginalSize > 0 ? (totalSavings / totalOriginalSize) * 100 : 0;
 
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6">
@@ -198,8 +204,8 @@ export function ImageCompressionForm() {
                 Image Compression
               </CardTitle>
               <CardDescription>
-                Compress your images to reduce file size while maintaining quality.
-                Supports JPG, JPEG, PNG, and WEBP formats.
+                Compress your images to reduce file size while maintaining quality. Supports JPG,
+                JPEG, PNG, and WEBP formats.
               </CardDescription>
             </div>
 
@@ -237,7 +243,7 @@ export function ImageCompressionForm() {
             estimatedTime={estimatedTime}
             validationErrors={validationErrors.map(error => ({
               file: error.file.name,
-              error: error.reason
+              error: error.reason,
             }))}
             supportedFormats="JPG, JPEG, PNG, WEBP"
           />
@@ -264,15 +270,21 @@ export function ImageCompressionForm() {
                 <div className="text-sm text-muted-foreground">Images Processed</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-red-600">{formatFileSize(totalOriginalSize)}</div>
+                <div className="text-2xl font-bold text-red-600">
+                  {formatFileSize(totalOriginalSize)}
+                </div>
                 <div className="text-sm text-muted-foreground">Original Size</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">{formatFileSize(totalCompressedSize)}</div>
+                <div className="text-2xl font-bold text-green-600">
+                  {formatFileSize(totalCompressedSize)}
+                </div>
                 <div className="text-sm text-muted-foreground">Compressed Size</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">{overallCompressionRatio.toFixed(1)}%</div>
+                <div className="text-2xl font-bold text-blue-600">
+                  {overallCompressionRatio.toFixed(1)}%
+                </div>
                 <div className="text-sm text-muted-foreground">Space Saved</div>
               </div>
             </div>
@@ -287,8 +299,8 @@ export function ImageCompressionForm() {
             <div>
               <CardTitle>Compression Results</CardTitle>
               <CardDescription>
-                {compressedImages.length} image{compressedImages.length !== 1 ? 's' : ''} compressed •
-                Saved {formatFileSize(totalSavings)} total
+                {compressedImages.length} image{compressedImages.length !== 1 ? 's' : ''} compressed
+                • Saved {formatFileSize(totalSavings)} total
               </CardDescription>
             </div>
 
@@ -302,10 +314,7 @@ export function ImageCompressionForm() {
                 Download ZIP
               </Button>
 
-              <Button
-                onClick={handleDownloadAll}
-                className="flex items-center gap-2"
-              >
+              <Button onClick={handleDownloadAll} className="flex items-center gap-2">
                 <DownloadCloud className="h-4 w-4" />
                 Download All
               </Button>
@@ -328,9 +337,7 @@ export function ImageCompressionForm() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="h-5 w-5 text-green-500" />
-                    <span className="font-medium truncate max-w-xs">
-                      {image.originalFile.name}
-                    </span>
+                    <span className="font-medium truncate max-w-xs">{image.originalFile.name}</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -343,11 +350,7 @@ export function ImageCompressionForm() {
                       Download
                     </Button>
 
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleRemove(index)}
-                    >
+                    <Button variant="outline" size="sm" onClick={() => handleRemove(index)}>
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
@@ -356,28 +359,26 @@ export function ImageCompressionForm() {
                 {/* Compression Stats */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                   <div>
-                    <span className="text-gray-500">Original Size:</span>
+                    <span className="text-muted-foreground">Original Size:</span>
                     <div className="font-medium">{formatFileSize(image.originalSize)}</div>
                   </div>
 
                   <div>
-                    <span className="text-gray-500">Compressed Size:</span>
+                    <span className="text-muted-foreground">Compressed Size:</span>
                     <div className="font-medium text-green-600">
                       {formatFileSize(image.compressedSize)}
                     </div>
                   </div>
 
                   <div>
-                    <span className="text-gray-500">Reduction:</span>
+                    <span className="text-muted-foreground">Reduction:</span>
                     <div className="font-medium">
-                      <Badge variant="secondary">
-                        {image.compressionRatio.toFixed(1)}%
-                      </Badge>
+                      <Badge variant="secondary">{image.compressionRatio.toFixed(1)}%</Badge>
                     </div>
                   </div>
 
                   <div>
-                    <span className="text-gray-500">Savings:</span>
+                    <span className="text-muted-foreground">Savings:</span>
                     <div className="font-medium text-green-600">
                       {formatFileSize(image.originalSize - image.compressedSize)}
                     </div>

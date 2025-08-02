@@ -147,7 +147,7 @@ export function AdvancedPhotoEditor() {
   }, [imageData]);
 
   const handleDownload = useCallback(() => {
-    if (!imageData?.processedBlob) return;
+    if (!imageData?.processedBlob || typeof document === 'undefined') return;
 
     const url = createFilePreviewUrl(new File([imageData.processedBlob], 'edited-image.png'));
     const link = document.createElement('a');

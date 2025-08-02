@@ -5,6 +5,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Palette, Sparkles, Eye, Sliders, Filter, Zap } from 'lucide-react';
 
+// Disable static generation for this page
+export const dynamic = 'force-dynamic';
+
 const features = [
   {
     icon: Palette,
