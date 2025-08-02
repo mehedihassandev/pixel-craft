@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   // Generate static sitemap and robots.txt
   trailingSlash: false,
+
   images: {
     remotePatterns: [
       {
@@ -23,7 +24,7 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
-    // Optimize images for better SEO
+    // Optimize images for better SEO and AdSense compliance
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 60,
     dangerouslyAllowSVG: true,
@@ -112,6 +113,12 @@ const nextConfig: NextConfig = {
           {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()',
+          },
+          // Preconnect to AdSense domains for better performance
+          {
+            key: 'Link',
+            value:
+              '<https://pagead2.googlesyndication.com>; rel=preconnect; crossorigin, <https://googleads.g.doubleclick.net>; rel=preconnect; crossorigin',
           },
         ],
       },

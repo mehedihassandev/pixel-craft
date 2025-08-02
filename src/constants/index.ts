@@ -7,6 +7,9 @@
 export * from './app-config';
 export * from './metadata';
 
+// Advertising configuration
+export * from './adsense';
+
 // File validation and processing
 export * from './file-validation';
 

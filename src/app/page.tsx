@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { BannerAd, InArticleAd } from '@/components/ads';
+import { useAdSenseConfig } from '@/contexts/adsense-context';
 import {
   ImageIcon,
   Maximize,
@@ -24,6 +26,9 @@ import { features } from '@/constants/home';
 import { getAppStats, additionalMetrics } from '@/constants/stats';
 
 export default function Home() {
+  // Get AdSense configuration from context
+  const adSenseConfig = useAdSenseConfig();
+
   // Get static stats data to prevent hydration mismatches
   const stats = getAppStats();
 
@@ -85,6 +90,14 @@ export default function Home() {
               </span>
             </Badge>
           </div>
+        </div>
+
+        {/* Top Banner Ad */}
+        <div className="flex justify-center mb-12">
+          <BannerAd
+            adSlot={adSenseConfig.adSlots.homepage.banner}
+            adClient={adSenseConfig.clientId}
+          />
         </div>
 
         {/* Features Grid */}
@@ -200,6 +213,12 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Middle In-Article Ad */}
+        <InArticleAd
+          adSlot={adSenseConfig.adSlots.homepage.rectangle}
+          adClient={adSenseConfig.clientId}
+        />
 
         {/* Open Source Section */}
         <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl p-8 shadow-lg mb-16">

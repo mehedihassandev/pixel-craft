@@ -1,10 +1,15 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { Mail, Globe, Github, PenTool, Linkedin, BookOpen, HelpCircle } from 'lucide-react';
+import { BannerAd } from '@/components/ads';
+import { useAdSenseConfig } from '@/contexts/adsense-context';
 import { CONTACT_INFO } from '@/constants/contact';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const adSenseConfig = useAdSenseConfig();
 
   return (
     <footer className="mt-auto border-t">
@@ -115,6 +120,16 @@ export const Footer = () => {
                 );
               })}
             </div>
+          </div>
+        </div>
+
+        {/* Footer Banner Ad */}
+        <div className="mt-8 pt-6 border-t">
+          <div className="flex justify-center">
+            <BannerAd
+              adSlot={adSenseConfig.adSlots.general.footer}
+              adClient={adSenseConfig.clientId}
+            />
           </div>
         </div>
 

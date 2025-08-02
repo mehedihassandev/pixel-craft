@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { GoogleAnalytics } from '@/components/analytics/google-analytics';
+import { GoogleAdsense } from '@/components/ads/google-adsense';
+import { AdSenseProvider } from '@/contexts/adsense-context';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -13,6 +15,7 @@ import {
   PRECONNECT_DOMAINS,
   CRITICAL_FONTS,
 } from '@/constants';
+import { SERVER_ADSENSE_CONFIG } from '@/constants/adsense-server';
 
 export const metadata: Metadata = DEFAULT_METADATA;
 
@@ -35,6 +38,14 @@ export default function RootLayout({
           <link key={domain} rel="preconnect" href={domain} crossOrigin="anonymous" />
         ))}
 
+        {/* AdSense preconnect for better performance */}
+        <link
+          rel="preconnect"
+          href="https://pagead2.googlesyndication.com"
+          crossOrigin="anonymous"
+        />
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net" crossOrigin="anonymous" />
+
         {/* Preload critical fonts */}
         {CRITICAL_FONTS.map(font => (
           <link key={font} href={font} rel="stylesheet" />
@@ -53,11 +64,14 @@ export default function RootLayout({
           enableSystem={THEME_CONFIG.enableSystem}
           disableTransitionOnChange={THEME_CONFIG.disableTransitionOnChange}
         >
-          <GoogleAnalytics />
-          <Header />
-          {children}
-          <Footer />
-          <Toaster />
+          <AdSenseProvider config={SERVER_ADSENSE_CONFIG}>
+            <GoogleAnalytics />
+            <GoogleAdsense pId={SERVER_ADSENSE_CONFIG.publisherId} />
+            <Header />
+            {children}
+            <Footer />
+            <Toaster />
+          </AdSenseProvider>
         </ThemeProvider>
       </body>
     </html>
