@@ -27,38 +27,46 @@ export interface PresetFilter {
 }
 
 export class ImageProcessor {
-  private canvas: HTMLCanvasElement;
-  private ctx: CanvasRenderingContext2D;
+  private canvas: HTMLCanvasElement | null = null;
+  private ctx: CanvasRenderingContext2D | null = null;
 
   constructor() {
-    this.canvas = document.createElement('canvas');
-    this.ctx = this.canvas.getContext('2d')!;
+    // Only create canvas on client side
+    if (typeof document !== 'undefined') {
+      this.canvas = document.createElement('canvas');
+      this.ctx = this.canvas.getContext('2d');
+    }
   }
 
   async applyFilters(file: File, options: FilterOptions): Promise<Blob> {
+    // Check if we're on the client side and canvas is available
+    if (!this.canvas || !this.ctx || typeof document === 'undefined') {
+      throw new Error('Canvas not available - this function can only run on the client side');
+    }
+
     return new Promise((resolve, reject) => {
       const img = new Image();
 
       img.onload = () => {
         try {
           // Set canvas size
-          this.canvas.width = img.width;
-          this.canvas.height = img.height;
+          this.canvas!.width = img.width;
+          this.canvas!.height = img.height;
 
           // Clear canvas
-          this.ctx.clearRect(0, 0, img.width, img.height);
+          this.ctx!.clearRect(0, 0, img.width, img.height);
 
           // Apply CSS filters first
-          this.ctx.filter = this.buildCSSFilter(options);
+          this.ctx!.filter = this.buildCSSFilter(options);
 
           // Draw image with CSS filters
-          this.ctx.drawImage(img, 0, 0);
+          this.ctx!.drawImage(img, 0, 0);
 
           // Apply custom effects
           this.applyCustomEffects(options);
 
           // Convert to blob
-          this.canvas.toBlob(
+          this.canvas!.toBlob(
             blob => {
               if (blob) {
                 resolve(blob);
@@ -108,6 +116,8 @@ export class ImageProcessor {
   }
 
   private applyCustomEffects(options: FilterOptions) {
+    if (!this.canvas || !this.ctx) return;
+
     const imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
     const data = imageData.data;
 
@@ -154,6 +164,8 @@ export class ImageProcessor {
   }
 
   private applyVignette(data: Uint8ClampedArray, intensity: number) {
+    if (!this.canvas) return;
+
     const centerX = this.canvas.width / 2;
     const centerY = this.canvas.height / 2;
     const maxDistance = Math.sqrt(centerX * centerX + centerY * centerY);
@@ -197,6 +209,8 @@ export class ImageProcessor {
   }
 
   private applySharpen(intensity: number) {
+    if (!this.canvas || !this.ctx) return;
+
     const imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
     const data = imageData.data;
     const width = this.canvas.width;

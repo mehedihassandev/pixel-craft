@@ -1,12 +1,6 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next';
+import { ROBOTS_CONFIG } from '@/constants';
 
 export default function robots(): MetadataRoute.Robots {
-  return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/api/', '/admin/'],
-    },
-    sitemap: 'https://pixel-craft-sigma.vercel.app/sitemap.xml',
-  }
+  return ROBOTS_CONFIG;
 }

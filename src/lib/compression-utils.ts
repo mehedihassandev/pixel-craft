@@ -1,4 +1,10 @@
 import JSZip from 'jszip';
+import {
+  SUPPORTED_IMAGE_TYPES,
+  FILE_SIZE_LIMITS,
+  ERROR_MESSAGES,
+  PERFORMANCE_METRICS,
+} from '@/constants';
 
 /**
  * Create a ZIP file containing all compressed images
@@ -50,12 +56,12 @@ export function estimateCompressionTime(files: FileList): number {
   }
 
   // Rough estimation: 1MB takes about 2 seconds
-  const baseTime = (totalSize / (1024 * 1024)) * 2;
+  const baseTime = (totalSize / (1024 * 1024)) * PERFORMANCE_METRICS.COMPRESSION_TIME_PER_MB;
 
   // Add overhead for multiple files
-  const fileOverhead = files.length * 0.5;
+  const fileOverhead = files.length * PERFORMANCE_METRICS.FILE_PROCESSING_OVERHEAD;
 
-  return Math.max(baseTime + fileOverhead, 1);
+  return Math.max(baseTime + fileOverhead, PERFORMANCE_METRICS.MIN_PROCESSING_TIME);
 }
 
 /**
@@ -70,24 +76,21 @@ export function validateFiles(files: FileList): FileValidationResult {
   const validFiles: File[] = [];
   const invalidFiles: Array<{ file: File; reason: string }> = [];
 
-  const supportedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
-  const maxFileSize = 50 * 1024 * 1024; // 50MB
-
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
 
-    if (!supportedTypes.includes(file.type)) {
+    if (!SUPPORTED_IMAGE_TYPES.includes(file.type as any)) {
       invalidFiles.push({
         file,
-        reason: `Unsupported file type: ${file.type}. Supported formats: JPG, JPEG, PNG, WEBP`
+        reason: ERROR_MESSAGES.UNSUPPORTED_FILE_TYPE(file.type),
       });
       continue;
     }
 
-    if (file.size > maxFileSize) {
+    if (file.size > FILE_SIZE_LIMITS.MAX_FILE_SIZE) {
       invalidFiles.push({
         file,
-        reason: `File too large: ${(file.size / (1024 * 1024)).toFixed(1)}MB. Maximum size: 50MB`
+        reason: ERROR_MESSAGES.FILE_TOO_LARGE(file.size),
       });
       continue;
     }
@@ -95,7 +98,7 @@ export function validateFiles(files: FileList): FileValidationResult {
     if (file.size === 0) {
       invalidFiles.push({
         file,
-        reason: 'File is empty'
+        reason: ERROR_MESSAGES.EMPTY_FILE,
       });
       continue;
     }

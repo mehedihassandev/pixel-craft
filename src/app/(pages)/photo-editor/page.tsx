@@ -1,9 +1,25 @@
 'use client';
 
-import { AdvancedPhotoEditor } from '@/components/photo-editor/advanced-photo-editor';
+import dynamicImport from 'next/dynamic';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Palette, Sparkles, Eye, Sliders, Filter, Zap } from 'lucide-react';
+
+// Dynamically import the photo editor to avoid SSR issues
+const AdvancedPhotoEditor = dynamicImport(
+  () =>
+    import('@/components/photo-editor/advanced-photo-editor').then(mod => ({
+      default: mod.AdvancedPhotoEditor,
+    })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-lg">Loading photo editor...</div>
+      </div>
+    ),
+  }
+);
 
 // Disable static generation for this page
 export const dynamic = 'force-dynamic';
