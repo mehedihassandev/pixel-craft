@@ -1,6 +1,6 @@
 import { generatePageMetadata } from '@/helper';
 import { Metadata } from 'next';
-import { PAGE_METADATA_KEY } from '@/models/page-metadata';
+import { PAGE_METADATA_KEY } from '@/models';
 
 export const metadata: Metadata = generatePageMetadata(PAGE_METADATA_KEY.PNG_TO_SVG);
 
