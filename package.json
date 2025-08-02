@@ -31,7 +31,11 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "commitlint": "commitlint --edit",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "clean": "rm -rf .next out",
+    "test": "echo \"No tests yet\" && exit 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@genkit-ai/firebase": "^1.15.5",
@@ -99,6 +103,7 @@
     "genkit-cli": "^1.14.1",
     "husky": "^9.1.7",
     "postcss": "^8",
+    "prettier": "^3.6.2",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

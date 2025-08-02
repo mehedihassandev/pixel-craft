@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, Suspense } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Script from 'next/script';
 
 // Google Analytics Measurement ID
@@ -16,18 +16,28 @@ declare global {
 
 function GoogleAnalyticsInner() {
     const pathname = usePathname();
-    const searchParams = useSearchParams();
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
-        if (!GA_MEASUREMENT_ID || !window.gtag) return;
+        setIsMounted(true);
+    }, []);
 
-        const url = pathname + searchParams.toString();
+    useEffect(() => {
+        if (!GA_MEASUREMENT_ID || !window.gtag || !isMounted) return;
+
+        // Use window.location.search instead of useSearchParams to avoid hydration issues
+        const url = pathname + window.location.search;
         // Track page views
         window.gtag('config', GA_MEASUREMENT_ID, {
             page_path: url,
             page_title: document.title,
         });
-    }, [pathname, searchParams]);
+    }, [pathname, isMounted]);
+
+    // Return null if not mounted to avoid hydration mismatch
+    if (!isMounted) {
+        return null;
+    }
 
     return null;
 }
@@ -51,10 +61,8 @@ export function GoogleAnalytics() {
                 `}
             </Script>
 
-            {/* Page tracking component */}
-            <Suspense fallback={null}>
-                <GoogleAnalyticsInner />
-            </Suspense>
+            {/* Page tracking component - Safe from hydration mismatch */}
+            <GoogleAnalyticsInner />
         </>
     );
 }
