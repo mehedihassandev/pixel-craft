@@ -5,6 +5,7 @@ import { Upload, Loader2, Clock, AlertCircle } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { cn } from '@/lib/utils';
+import { HTML_ACCEPT_STRING, SUPPORTED_FORMATS_DISPLAY } from '@/constants/file-validation';
 
 export interface FileValidationError {
   file: string;
@@ -41,7 +42,7 @@ export interface ImageUploadZoneProps {
 
 export const ImageUploadZone: React.FC<ImageUploadZoneProps> = ({
   onFilesSelected,
-  accept = '.jpg,.jpeg,.png,.webp',
+  accept = HTML_ACCEPT_STRING,
   multiple = false,
   maxFileSize = 50,
   maxFiles,
@@ -66,8 +67,8 @@ export const ImageUploadZone: React.FC<ImageUploadZoneProps> = ({
     : `Click to upload an image`;
 
   const defaultSubtitle = multiple
-    ? `Supports ${supportedFormats || 'JPG, JPEG, PNG, WEBP'} • Max size: ${maxFileSize}MB per file`
-    : `${supportedFormats || 'PNG, JPG, WebP'} up to ${maxFileSize}MB`;
+    ? `Supports ${supportedFormats || SUPPORTED_FORMATS_DISPLAY} • Max size: ${maxFileSize}MB per file`
+    : `${supportedFormats || SUPPORTED_FORMATS_DISPLAY} up to ${maxFileSize}MB`;
 
   const handleDragOver = useCallback(
     (e: React.DragEvent) => {

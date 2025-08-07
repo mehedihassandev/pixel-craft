@@ -26,16 +26,6 @@ export const features = [
     category: 'Generator',
   },
   {
-    id: 'resize',
-    title: 'Image Resize',
-    description: 'Resize images to specific dimensions while maintaining quality and aspect ratio.',
-    icon: Maximize,
-    href: ROUTER.RESIZE,
-    color: 'bg-green-500',
-    gradient: 'from-green-500 to-green-600',
-    category: 'Transform',
-  },
-  {
     id: 'background-remove',
     title: 'Background Remove',
     description: 'Remove backgrounds from images automatically using advanced AI technology.',
@@ -48,18 +38,6 @@ export const features = [
     category: 'AI Tools',
   },
   {
-    id: 'photo-editor',
-    title: 'Photo Editor',
-    description:
-      'Complete photo editing suite with filters, compression, and batch processing all in one place.',
-    icon: Palette,
-    href: ROUTER.PHOTO_EDITOR,
-    color: 'bg-pink-500',
-    gradient: 'from-pink-500 to-purple-600',
-    popular: true,
-    category: 'Editor',
-  },
-  {
     id: 'video-converter',
     title: 'Video Converter',
     description:
@@ -70,6 +48,28 @@ export const features = [
     gradient: 'from-blue-500 to-purple-600',
     new: true,
     category: 'Converter',
+  },
+  {
+    id: 'photo-editor',
+    title: 'Photo Editor',
+    description:
+      'Professional photo editing with advanced filters, adjustments, and real-time preview.',
+    icon: Palette,
+    href: ROUTER.PHOTO_EDITOR,
+    color: 'bg-pink-500',
+    gradient: 'from-pink-500 to-purple-600',
+    popular: true,
+    category: 'Editor',
+  },
+  {
+    id: 'resize',
+    title: 'Image Resize',
+    description: 'Resize images to specific dimensions while maintaining quality and aspect ratio.',
+    icon: Maximize,
+    href: ROUTER.RESIZE,
+    color: 'bg-green-500',
+    gradient: 'from-green-500 to-green-600',
+    category: 'Transform',
   },
   {
     id: 'ocr',
@@ -93,18 +93,7 @@ export const features = [
     aiPowered: true,
     category: 'Converter',
   },
-  {
-    id: 'photo-editor',
-    title: 'Photo Editor',
-    description:
-      'Professional photo editing with advanced filters, adjustments, and real-time preview.',
-    icon: Palette,
-    href: ROUTER.PHOTO_EDITOR,
-    color: 'bg-pink-500',
-    gradient: 'from-pink-500 to-purple-600',
-    popular: true,
-    category: 'Editor',
-  },
+
   {
     id: 'gif-to-json',
     title: 'GIF to JSON',

@@ -7,6 +7,7 @@ import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { ImageComparison } from '@/components/ui/image-comparison';
+import { SUPPORTED_FORMATS_DISPLAY } from '@/constants/file-validation';
 import {
   Upload,
   Image as ImageIcon,
@@ -42,7 +43,7 @@ export default function BackgroundRemovalFormWrapper() {
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
-      setError('Please select a valid image file (JPG, PNG, WebP)');
+      setError(`Please select a valid image file (${SUPPORTED_FORMATS_DISPLAY})`);
       return;
     }
 

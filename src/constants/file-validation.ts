@@ -7,16 +7,39 @@ export const SUPPORTED_IMAGE_TYPES = [
   'image/jpg',
   'image/png',
   'image/webp',
+  'image/heic',
+  'image/avif',
+  'image/tiff',
+  'image/tif',
+  'image/bmp',
+  'image/gif',
 ] as const;
 
-export const SUPPORTED_IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp'] as const;
+export const SUPPORTED_IMAGE_EXTENSIONS = [
+  'jpg',
+  'jpeg',
+  'png',
+  'webp',
+  'heic',
+  'avif',
+  'tiff',
+  'tif',
+  'bmp',
+  'gif',
+] as const;
 
-export const ADDITIONAL_SUPPORTED_TYPES = ['image/bmp', 'image/tiff', 'image/tif'] as const;
+export const ADDITIONAL_SUPPORTED_TYPES = [] as const;
 
 export const ALL_SUPPORTED_TYPES = [
   ...SUPPORTED_IMAGE_TYPES,
   ...ADDITIONAL_SUPPORTED_TYPES,
 ] as const;
+
+// Accept string for HTML input elements
+export const HTML_ACCEPT_STRING = SUPPORTED_IMAGE_TYPES.join(',');
+
+// Human-readable format list
+export const SUPPORTED_FORMATS_DISPLAY = 'JPEG, PNG, WebP, HEIC, AVIF, TIFF, BMP, GIF';
 
 export const FILE_SIZE_LIMITS = {
   // In bytes
@@ -128,7 +151,7 @@ export const BATCH_PROCESSING = {
 
 export const ERROR_MESSAGES = {
   UNSUPPORTED_FILE_TYPE: (type: string) =>
-    `Unsupported file type: ${type}. Supported formats: ${SUPPORTED_IMAGE_EXTENSIONS.join(', ').toUpperCase()}`,
+    `Unsupported file type: ${type}. Supported formats: ${SUPPORTED_FORMATS_DISPLAY}`,
   FILE_TOO_LARGE: (size: number) =>
     `File too large: ${(size / (1024 * 1024)).toFixed(1)}MB. Maximum size: ${FILE_SIZE_LIMITS.MAX_FILE_SIZE_MB}MB`,
   EMPTY_FILE: 'File is empty',

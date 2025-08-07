@@ -238,7 +238,6 @@ export function ImageCompressionForm() {
 
           <ImageUploadZone
             onFilesSelected={handleFileSelect}
-            accept=".jpg,.jpeg,.png,.webp"
             multiple={true}
             maxFileSize={50}
             disabled={isCompressing}
@@ -250,7 +249,6 @@ export function ImageCompressionForm() {
               file: error.file.name,
               error: error.reason,
             }))}
-            supportedFormats="JPG, JPEG, PNG, WEBP"
           />
 
           {error && (

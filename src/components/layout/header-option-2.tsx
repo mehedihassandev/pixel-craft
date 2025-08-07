@@ -275,18 +275,12 @@ const HeaderOption2 = () => {
                               {/* Radial glow effect */}
                               <div className="absolute inset-0 rounded-xl bg-gradient-radial from-primary/0 via-primary/0 to-primary/0 group-hover:from-primary/5 group-hover:via-primary/2 group-hover:to-transparent transition-all duration-700 -z-10"></div>
                               {item.id === 'background-remove' && (
-                                <Badge
-                                  variant="secondary"
-                                  className="absolute -top-2 -right-2 text-xs z-10 animate-pulse hover:animate-bounce transition-all duration-400"
-                                >
+                                <Badge className="absolute -top-0 -right-0 text-xs z-10 animate-pulse transition-all duration-400 bg-gradient-to-r from-orange-500 to-red-500 text-white border-0 shadow-lg rounded-tl-none rounded-bl-xl rounded-tr-none rounded-br-none">
                                   Popular
                                 </Badge>
                               )}
                               {item.id === 'video-converter' && (
-                                <Badge
-                                  variant="secondary"
-                                  className="absolute -top-2 -right-2 text-xs z-10 animate-pulse hover:animate-bounce transition-all duration-400"
-                                >
+                                <Badge className="absolute -top-0 -right-0 text-xs z-10 animate-pulse transition-all duration-400 bg-gradient-to-r from-green-500 to-emerald-500 text-white border-0 shadow-lg rounded-tl-none rounded-bl-xl rounded-tr-none rounded-br-none">
                                   New
                                 </Badge>
                               )}
@@ -372,18 +366,12 @@ const HeaderOption2 = () => {
                             {/* Sliding shimmer effect */}
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/3 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out -z-10"></div>
                             {item.id === 'background-remove' && (
-                              <Badge
-                                variant="secondary"
-                                className="ml-auto text-xs animate-pulse hover:animate-bounce transition-all duration-400"
-                              >
+                              <Badge className="ml-auto text-xs animate-pulse hover:animate-bounce transition-all duration-400 bg-gradient-to-r from-orange-500 to-red-500 text-white border-0 shadow-md hover:shadow-orange-500/20 rounded-tl-none rounded-bl-full rounded-tr-none rounded-br-none">
                                 HOT
                               </Badge>
                             )}
                             {item.id === 'video-converter' && (
-                              <Badge
-                                variant="secondary"
-                                className="ml-auto text-xs animate-pulse hover:animate-bounce transition-all duration-400"
-                              >
+                              <Badge className="ml-auto text-xs animate-pulse hover:animate-bounce transition-all duration-400 bg-gradient-to-r from-green-500 to-emerald-500 text-white border-0 shadow-md hover:shadow-green-500/20 rounded-tl-none rounded-bl-full rounded-tr-none rounded-br-none">
                                 New
                               </Badge>
                             )}

@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ImageUploadZone } from '@/components/ui/image-upload-zone';
+import { SUPPORTED_FORMATS_DISPLAY } from '@/constants/file-validation';
 import {
   Select,
   SelectContent,
@@ -403,7 +404,7 @@ export const BatchOcr = ({ language = 'eng' }: BatchOcrProps) => {
             disabled={isProcessing}
             title="Drop your images here, or browse files"
             subtitle="Upload multiple images to extract text from all of them"
-            supportedFormats="PNG, JPG, WebP, BMP, TIFF"
+            supportedFormats={SUPPORTED_FORMATS_DISPLAY}
           />
 
           <div className="flex gap-2 pt-4">

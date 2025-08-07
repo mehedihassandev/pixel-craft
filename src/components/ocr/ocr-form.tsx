@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ImageUploadZone } from '@/components/ui/image-upload-zone';
+import { SUPPORTED_FORMATS_DISPLAY } from '@/constants/file-validation';
 import {
   Select,
   SelectContent,
@@ -166,7 +167,7 @@ export const OcrForm = () => {
       if (!file.type.startsWith('image/')) {
         toast({
           title: 'Invalid file type',
-          description: 'Please select an image file (PNG, JPG, WebP, etc.)',
+          description: `Please select an image file (${SUPPORTED_FORMATS_DISPLAY})`,
           variant: 'destructive',
         });
         return;
@@ -636,8 +637,7 @@ export const OcrForm = () => {
               processingText="Processing OCR..."
               progress={progress}
               title="Drop an image here or click to select"
-              subtitle="Supports PNG, JPG, WebP, BMP, TIFF (max 10MB) - OCR starts automatically"
-              supportedFormats="PNG, JPG, WebP, BMP, TIFF"
+              subtitle={`Supports ${SUPPORTED_FORMATS_DISPLAY} (max 10MB) - OCR starts automatically`}
             />
 
             {/* Action Buttons */}

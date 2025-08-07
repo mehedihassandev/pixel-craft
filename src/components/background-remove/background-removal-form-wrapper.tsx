@@ -8,6 +8,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { ImageComparison } from '@/components/ui/image-comparison';
 import { ImageUploadZone } from '@/components/ui/image-upload-zone';
+import { HTML_ACCEPT_STRING, SUPPORTED_FORMATS_DISPLAY } from '@/constants/file-validation';
 import {
   Upload,
   Image as ImageIcon,
@@ -41,7 +42,7 @@ export default function BackgroundRemovalFormWrapper() {
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
-      setError('Please select a valid image file (JPG, PNG, WebP)');
+      setError(`Please select a valid image file (${SUPPORTED_FORMATS_DISPLAY})`);
       return;
     }
 
@@ -174,7 +175,6 @@ export default function BackgroundRemovalFormWrapper() {
           <CardContent className="p-8">
             <ImageUploadZone
               onFilesSelected={handleFileSelect}
-              accept=".jpg,.jpeg,.png,.webp"
               multiple={false}
               maxFileSize={10}
               disabled={isProcessing}
@@ -183,7 +183,6 @@ export default function BackgroundRemovalFormWrapper() {
               progress={progress}
               title="Upload Image to Remove Background"
               subtitle="Drag and drop your image here, or click to browse"
-              supportedFormats="JPG, PNG, WebP"
             />
           </CardContent>
         </Card>

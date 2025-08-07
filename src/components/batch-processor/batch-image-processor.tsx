@@ -23,6 +23,11 @@ import { Switch } from '@/components/ui/switch';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
+  SUPPORTED_IMAGE_TYPES,
+  FILE_SIZE_LIMITS,
+  HTML_ACCEPT_STRING,
+} from '@/constants/file-validation';
+import {
   Upload,
   Settings,
   Play,
@@ -121,7 +126,23 @@ export function BatchImageProcessor() {
   const processingRef = useRef<boolean>(false);
 
   const handleFileSelect = useCallback((files: File[]) => {
-    const newItems: ProcessingItem[] = files.map((file, index) => ({
+    const validFiles = files.filter(file => {
+      // Check if file type is supported
+      if (!SUPPORTED_IMAGE_TYPES.includes(file.type as any)) {
+        console.warn(`Unsupported file type: ${file.type} for file: ${file.name}`);
+        return false;
+      }
+
+      // Check file size
+      if (file.size > FILE_SIZE_LIMITS.MAX_FILE_SIZE) {
+        console.warn(`File too large: ${file.name} (${file.size} bytes)`);
+        return false;
+      }
+
+      return true;
+    });
+
+    const newItems: ProcessingItem[] = validFiles.map((file, index) => ({
       id: `${Date.now()}-${index}`,
       file,
       originalName: file.name,
@@ -695,7 +716,6 @@ export function BatchImageProcessor() {
               {items.length === 0 ? (
                 <ImageUploadZone
                   onFilesSelected={handleFileSelect}
-                  accept=".jpg,.jpeg,.png,.webp"
                   multiple={true}
                   maxFileSize={50}
                   className="min-h-32"
@@ -783,7 +803,7 @@ export function BatchImageProcessor() {
                       const input = document.createElement('input');
                       input.type = 'file';
                       input.multiple = true;
-                      input.accept = '.jpg,.jpeg,.png,.webp';
+                      input.accept = HTML_ACCEPT_STRING;
                       input.onchange = e => {
                         const files = Array.from((e.target as HTMLInputElement).files || []);
                         handleFileSelect(files);

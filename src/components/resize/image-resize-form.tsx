@@ -18,6 +18,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Checkbox } from '@/components/ui/checkbox';
+import { HTML_ACCEPT_STRING, SUPPORTED_FORMATS_DISPLAY } from '@/constants/file-validation';
 import { Slider } from '@/components/ui/slider';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
@@ -316,7 +317,8 @@ export const ImageResizeForm: React.FC<ImageResizeFormProps> = ({ onImageProcess
             Upload Image
           </CardTitle>
           <CardDescription>
-            Select an image to resize. Supported formats: PNG, JPG, WebP. Max size: 10MB.
+            Select an image to resize. Supported formats: {SUPPORTED_FORMATS_DISPLAY}, SVG. Max
+            size: 10MB.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -324,7 +326,7 @@ export const ImageResizeForm: React.FC<ImageResizeFormProps> = ({ onImageProcess
             {!originalImage && (
               <ImageUploadZone
                 onFilesSelected={handleFileSelect}
-                accept=".jpg,.jpeg,.png,.webp,.svg"
+                accept={`${HTML_ACCEPT_STRING},.svg`}
                 multiple={false}
                 maxFileSize={10}
                 disabled={uploadProgress > 0 && uploadProgress < 100}
@@ -333,7 +335,7 @@ export const ImageResizeForm: React.FC<ImageResizeFormProps> = ({ onImageProcess
                 progress={uploadProgress}
                 title="Upload Image to Resize"
                 subtitle="Drag and drop your image here, or click to browse"
-                supportedFormats="PNG, JPG, WebP, SVG"
+                supportedFormats={`${SUPPORTED_FORMATS_DISPLAY}, SVG`}
                 enableDragDrop={true}
               />
             )}

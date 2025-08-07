@@ -311,7 +311,6 @@ export function AdvancedPhotoEditor() {
           <CardContent className="p-8">
             <ImageUploadZone
               onFilesSelected={handleFileSelect}
-              accept=".jpg,.jpeg,.png,.webp,.heic,.avif,.tiff,.bmp,.gif"
               multiple={false}
               maxFileSize={50}
               className="min-h-80 border-2 border-dashed border-blue-300 dark:border-blue-600 bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-blue-900/20 dark:to-purple-900/20 hover:from-blue-100/70 hover:to-purple-100/70 dark:hover:from-blue-900/30 dark:hover:to-purple-900/30 transition-all duration-300 rounded-2xl"
