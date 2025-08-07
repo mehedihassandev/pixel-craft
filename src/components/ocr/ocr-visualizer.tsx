@@ -9,6 +9,7 @@ import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Eye, EyeOff, Download, Palette } from 'lucide-react';
+import { OCR_CANVAS_CONSTRAINTS } from '@/constants/ui-components';
 
 interface Word {
   text: string;
@@ -52,8 +53,8 @@ export const OcrVisualizer = ({ imageUrl, words, blocks, confidence }: OcrVisual
       const canvas = canvasRef.current;
 
       // Calculate display size while maintaining aspect ratio
-      const maxWidth = 800;
-      const maxHeight = 600;
+      const maxWidth = OCR_CANVAS_CONSTRAINTS.MAX_WIDTH;
+      const maxHeight = OCR_CANVAS_CONSTRAINTS.MAX_HEIGHT;
       let { width, height } = img;
 
       if (width > maxWidth) {

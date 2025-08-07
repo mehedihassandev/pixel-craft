@@ -69,6 +69,11 @@ export function ImageCompressionForm() {
     []
   );
 
+  // Memoize the settings change callback to prevent infinite loops
+  const handleSettingsChange = useCallback((settings: CompressionSettings) => {
+    setCompressionSettings(settings);
+  }, []);
+
   const handleFileSelect = useCallback(
     async (files: File[]) => {
       if (!files || files.length === 0) return;
@@ -225,7 +230,7 @@ export function ImageCompressionForm() {
           {/* Settings Panel */}
           {showSettings && (
             <CompressionSettingsPanel
-              onSettingsChange={setCompressionSettings}
+              onSettingsChange={handleSettingsChange}
               isVisible={showSettings}
               onToggleVisibility={() => setShowSettings(false)}
             />
@@ -233,7 +238,6 @@ export function ImageCompressionForm() {
 
           <ImageUploadZone
             onFilesSelected={handleFileSelect}
-            accept=".jpg,.jpeg,.png,.webp"
             multiple={true}
             maxFileSize={50}
             disabled={isCompressing}
@@ -245,7 +249,6 @@ export function ImageCompressionForm() {
               file: error.file.name,
               error: error.reason,
             }))}
-            supportedFormats="JPG, JPEG, PNG, WEBP"
           />
 
           {error && (

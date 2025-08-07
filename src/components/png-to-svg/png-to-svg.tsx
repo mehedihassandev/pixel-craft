@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { ImageUploadZone } from '@/components/ui/image-upload-zone';
 import { Loader2, ImageIcon, Download } from 'lucide-react';
+import { IMAGE_MIME_TYPES, FILE_ACCEPT_PATTERNS } from '@/constants';
 
 export const PngToSvgConverter: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -45,7 +46,7 @@ export const PngToSvgConverter: React.FC = () => {
 
   const handleDownload = () => {
     if (!svg) return;
-    const blob = new Blob([svg], { type: 'image/svg+xml' });
+    const blob = new Blob([svg], { type: IMAGE_MIME_TYPES.SVG });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -70,7 +71,7 @@ export const PngToSvgConverter: React.FC = () => {
           <div className="space-y-4">
             <ImageUploadZone
               onFilesSelected={handleFileSelect}
-              accept="image/png"
+              accept={IMAGE_MIME_TYPES.PNG}
               multiple={false}
               maxFileSize={10}
               title="Click to upload a PNG image"

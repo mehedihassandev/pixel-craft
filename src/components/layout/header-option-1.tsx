@@ -12,6 +12,7 @@ import {
   Layers,
   Palette,
   ChevronDown,
+  Video,
 } from 'lucide-react';
 import Link from 'next/link';
 import { menus } from '@/navigation/menus';
@@ -37,18 +38,17 @@ const iconMap = {
   FileText,
   Layers,
   Palette,
+  Video,
 };
 
 // Categorize menu items for better organization
 const imageEditingTools = menus.filter(item =>
-  ['background-remove', 'resize', 'image-optimization', 'photo-editor'].includes(item.id)
+  ['background-remove', 'resize', 'photo-editor'].includes(item.id)
 );
 
-const conversionTools = menus.filter(item =>
-  ['image-compress', 'png-to-svg', 'placeholder'].includes(item.id)
-);
+const conversionTools = menus.filter(item => ['png-to-svg', 'placeholder'].includes(item.id));
 
-const advancedTools = menus.filter(item => ['ocr', 'batch-processor'].includes(item.id));
+const advancedTools = menus.filter(item => ['ocr'].includes(item.id));
 
 const HeaderOption1 = () => {
   return (

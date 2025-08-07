@@ -15,6 +15,7 @@ import { placeholderFormSchema, type PlaceholderFormData } from '@/lib/schemas';
 import RhfTextField from '../ui/rhfTextfield/rhf-textfield';
 import RhfSelect from '../ui/rhfSelect/rhf-select';
 import { PlaceholdrOptions } from '@/app/(pages)/placeholder/page';
+import { PLACEHOLDER_FORMAT_OPTIONS, PLACEHOLDER_DEFAULTS } from '@/constants/ui-components';
 
 interface PlaceholdrFormProps {
   options: PlaceholdrOptions;
@@ -25,19 +26,12 @@ export const PlaceholderForm = ({ options, setOptions }: PlaceholdrFormProps) =>
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
 
-  // Format options for the select dropdown
-  const formatOptions = [
-    { value: 'png', label: 'PNG' },
-    { value: 'jpg', label: 'JPG' },
-    { value: 'webp', label: 'WebP' },
-  ];
-
   // Initialize React Hook Form
   const form = useForm<PlaceholderFormData>({
     resolver: zodResolver(placeholderFormSchema),
     defaultValues: {
-      width: options.width || 600,
-      height: options.height || 400,
+      width: options.width || PLACEHOLDER_DEFAULTS.WIDTH,
+      height: options.height || PLACEHOLDER_DEFAULTS.HEIGHT,
       text: options.text || '',
       bgColor: options.bgColor || 'c0c0c0',
       textColor: options.textColor || 'F0F8FF',
@@ -347,7 +341,7 @@ export const PlaceholderForm = ({ options, setOptions }: PlaceholdrFormProps) =>
             control={control}
             name="format"
             label="Image Format"
-            options={formatOptions}
+            options={PLACEHOLDER_FORMAT_OPTIONS}
             placeholder="Select format"
           />
 

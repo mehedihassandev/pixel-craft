@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -63,8 +63,15 @@ export function CompressionSettingsPanel({
 
   const watchedValues = form.watch();
 
-  React.useEffect(() => {
-    onSettingsChange(watchedValues);
+  // Use a ref to store the previous settings to prevent unnecessary calls
+  const prevSettingsRef = React.useRef<CompressionSettings>();
+
+  useEffect(() => {
+    // Only call onSettingsChange if the settings have actually changed
+    if (JSON.stringify(watchedValues) !== JSON.stringify(prevSettingsRef.current)) {
+      prevSettingsRef.current = watchedValues;
+      onSettingsChange(watchedValues);
+    }
   }, [watchedValues, onSettingsChange]);
 
   const handleResetToDefaults = useCallback(() => {

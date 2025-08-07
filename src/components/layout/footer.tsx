@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Mail, Globe, Github, PenTool, Linkedin, BookOpen, HelpCircle } from 'lucide-react';
 import { CONTACT_INFO } from '@/constants/contact';
+import { EXTERNAL_URLS } from '@/constants';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -19,7 +20,7 @@ export const Footer = () => {
             </p>
             <div className="flex items-center space-x-4 pt-2">
               <a
-                href="https://github.com/mehedihassandev/pixel-craft"
+                href={EXTERNAL_URLS.GITHUB_REPO}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center space-x-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -54,7 +55,7 @@ export const Footer = () => {
                 <span>FAQ</span>
               </Link>
               <a
-                href="https://github.com/mehedihassandev/pixel-craft#readme"
+                href={EXTERNAL_URLS.GITHUB_README}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -123,7 +124,7 @@ export const Footer = () => {
           <p className="text-sm text-muted-foreground">
             Made with ❤️ by the open source community •{' '}
             <a
-              href="https://github.com/mehedihassandev/pixel-craft"
+              href={EXTERNAL_URLS.GITHUB_REPO}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-foreground transition-colors"

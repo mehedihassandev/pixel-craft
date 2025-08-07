@@ -2,7 +2,9 @@
  * Performance monitoring utility for image processing operations
  */
 
-interface PerformanceMetrics {
+import { PERFORMANCE_THRESHOLDS } from '@/constants';
+
+export interface PerformanceMetrics {
   operationType: string;
   fileSize: number;
   processingTime: number;
@@ -85,7 +87,7 @@ class PerformanceMonitor {
     return (
       (memory && memory <= 2) || // Less than 2GB RAM
       (cores && cores <= 2) || // Less than 2 CPU cores
-      this.getAverageProcessingTime('compression') > 10000 // Slow compression
+      this.getAverageProcessingTime('compression') > PERFORMANCE_THRESHOLDS.SLOW_COMPRESSION_TIME // Slow compression
     );
   }
 
@@ -97,7 +99,9 @@ class PerformanceMonitor {
       case 'compression':
         return {
           maxSizeMB: isLowEnd ? 5 : 10,
-          maxWidthOrHeight: isLowEnd ? 1280 : 1920,
+          maxWidthOrHeight: isLowEnd
+            ? PERFORMANCE_THRESHOLDS.LOW_END_MAX_DIMENSION
+            : PERFORMANCE_THRESHOLDS.HIGH_END_MAX_DIMENSION,
           useWebWorker: !isLowEnd,
           quality: isLowEnd ? 0.8 : 0.75,
         };

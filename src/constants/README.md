@@ -19,6 +19,14 @@ This directory contains all constant data organized by functionality and purpose
 
 - **`ui-messages.ts`** - All user-facing text, error messages, form labels, tooltips
 
+### Processing and API Constants
+
+- **`processing.ts`** - Processing timeouts, progress intervals, performance thresholds, queue settings
+- **`api.ts`** - API endpoints, external URLs, HTTP status codes, content type validation
+- **`mime-types.ts`** - MIME types for all supported file formats, validation patterns, data URI prefixes
+- **`image-filters.ts`** - Image filter presets, filter ranges, processing constants, error messages
+- **`analytics.ts`** - Statistics configuration, metrics, performance monitoring constants
+
 ### Feature-Specific Constants
 
 - **`background-remove.ts`** - Background removal feature data
@@ -49,7 +57,16 @@ import { UI_MESSAGES } from '@/constants/ui-messages';
 ### Import from central index
 
 ```typescript
-import { APP_CONFIG, SUPPORTED_IMAGE_TYPES, UI_MESSAGES, generatePageMetadata } from '@/constants';
+import {
+  APP_CONFIG,
+  SUPPORTED_IMAGE_TYPES,
+  UI_MESSAGES,
+  generatePageMetadata,
+  API_ENDPOINTS,
+  IMAGE_MIME_TYPES,
+  FILTER_PRESETS,
+  PERFORMANCE_THRESHOLDS,
+} from '@/constants';
 ```
 
 ### Use in components
@@ -59,6 +76,25 @@ import { APP_CONFIG, SUPPORTED_IMAGE_TYPES, UI_MESSAGES, generatePageMetadata } 
 if (!SUPPORTED_IMAGE_TYPES.includes(file.type)) {
   throw new Error(ERROR_MESSAGES.UNSUPPORTED_FILE_TYPE(file.type));
 }
+
+// API calls
+const response = await fetch(API_ENDPOINTS.BACKGROUND_REMOVE, {
+  method: 'POST',
+  body: formData,
+});
+
+// MIME types
+const blob = new Blob([svg], { type: IMAGE_MIME_TYPES.SVG });
+
+// File size validation
+if (file.size > FILE_SIZE_LIMITS.TEN_MB) {
+  setError('File size must be less than 10MB');
+}
+
+// Progress intervals
+setInterval(() => {
+  // update progress
+}, PROGRESS_INTERVALS.DEFAULT_PROGRESS_INTERVAL);
 
 // UI messages
 const uploadText = `${UI_MESSAGES.CLICK_TO_SELECT} ${FILE_DESCRIPTIONS.SUPPORTED_FORMATS_BASIC}`;
@@ -99,6 +135,14 @@ The following hardcoded values have been moved to constants:
 - ✅ UI messages and error strings
 - ✅ Page-specific metadata
 - ✅ Utility values (byte conversion, time constants)
+- ✅ **API endpoints and external URLs**
+- ✅ **MIME types and file format definitions**
+- ✅ **Processing timeouts and performance thresholds**
+- ✅ **Image filter presets and ranges**
+- ✅ **Analytics and statistics configuration**
+- ✅ **File size limits (10MB, 5MB, etc.)**
+- ✅ **Progress intervals and simulation settings**
+- ✅ **HTTP status codes and content type validation**
 
 ## Files Updated
 
@@ -112,3 +156,13 @@ The following files were updated to use constants:
 - `src/hooks/use-image-compressor.ts` - Uses file validation constants
 - `src/lib/compression-utils.ts` - Uses validation and performance constants
 - `src/lib/utils.ts` - Uses byte conversion constants
+- **`src/lib/image-filters.ts`** - Uses filter presets and processing constants
+- **`src/lib/api-simulation.ts`** - Uses analytics and simulation constants
+- **`src/lib/image-converter.ts`** - Uses API endpoints
+- **`src/lib/performance-monitor.ts`** - Uses performance thresholds
+- **`src/hooks/use-github-stats.ts`** - Uses API endpoints and formatting constants
+- **`src/components/background-remove/`** - Uses file validation, API endpoints, and MIME types
+- **`src/components/ocr/`** - Uses file validation, MIME types, and API constants
+- **`src/components/png-to-svg/`** - Uses MIME types and file patterns
+- **`src/components/video-converter/`** - Uses API endpoints and content type validation
+- **`src/components/layout/footer.tsx`** - Uses external URL constants

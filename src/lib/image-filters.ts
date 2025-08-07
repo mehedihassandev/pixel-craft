@@ -2,6 +2,14 @@
  * Advanced image filters and effects using Canvas API
  */
 
+import {
+  FILTER_PRESETS,
+  FILTER_RANGES,
+  IMAGE_PROCESSING,
+  IMAGE_PROCESSING_ERRORS,
+  IMAGE_MIME_TYPES,
+} from '@/constants';
+
 export interface FilterOptions {
   brightness?: number; // -100 to 100
   contrast?: number; // -100 to 100
@@ -41,7 +49,7 @@ export class ImageProcessor {
   async applyFilters(file: File, options: FilterOptions): Promise<Blob> {
     // Check if we're on the client side and canvas is available
     if (!this.canvas || !this.ctx || typeof document === 'undefined') {
-      throw new Error('Canvas not available - this function can only run on the client side');
+      throw new Error(IMAGE_PROCESSING_ERRORS.CANVAS_NOT_AVAILABLE);
     }
 
     return new Promise((resolve, reject) => {
@@ -71,18 +79,18 @@ export class ImageProcessor {
               if (blob) {
                 resolve(blob);
               } else {
-                reject(new Error('Failed to create blob'));
+                reject(new Error(IMAGE_PROCESSING_ERRORS.FAILED_TO_CREATE_BLOB));
               }
             },
-            'image/png',
-            0.9
+            IMAGE_MIME_TYPES.PNG,
+            IMAGE_PROCESSING.DEFAULT_QUALITY
           );
         } catch (error) {
           reject(error);
         }
       };
 
-      img.onerror = () => reject(new Error('Failed to load image'));
+      img.onerror = () => reject(new Error(IMAGE_PROCESSING_ERRORS.FAILED_TO_LOAD_IMAGE));
       img.src = URL.createObjectURL(file);
     });
   }
@@ -109,7 +117,7 @@ export class ImageProcessor {
       filters.push(`sepia(${options.sepia}%)`);
     }
     if (options.blackAndWhite) {
-      filters.push('grayscale(100%)');
+      filters.push(`grayscale(${FILTER_RANGES.SEPIA.max}%)`);
     }
 
     return filters.join(' ');
@@ -216,9 +224,9 @@ export class ImageProcessor {
     const width = this.canvas.width;
     const height = this.canvas.height;
 
-    const sharpenKernel = [0, -1, 0, -1, 5, -1, 0, -1, 0];
+    const sharpenKernel = IMAGE_PROCESSING.SHARPEN_KERNEL;
 
-    const factor = intensity / 100;
+    const factor = intensity / FILTER_RANGES.SHARPEN.max;
     const tempData = new Uint8ClampedArray(data);
 
     for (let y = 1; y < height - 1; y++) {
@@ -246,93 +254,7 @@ export class ImageProcessor {
   }
 }
 
-// Preset filters
-export const presetFilters: PresetFilter[] = [
-  {
-    name: 'None',
-    description: 'Original image',
-    options: {},
-  },
-  {
-    name: 'Vivid',
-    description: 'Enhanced colors and contrast',
-    options: {
-      saturation: 30,
-      contrast: 15,
-      brightness: 5,
-    },
-  },
-  {
-    name: 'Vintage',
-    description: 'Classic vintage look',
-    options: {
-      vintage: true,
-      contrast: -10,
-      brightness: 5,
-      vignette: 30,
-    },
-  },
-  {
-    name: 'Black & White',
-    description: 'Classic monochrome',
-    options: {
-      blackAndWhite: true,
-      contrast: 20,
-    },
-  },
-  {
-    name: 'Sepia',
-    description: 'Warm sepia tone',
-    options: {
-      sepia: 80,
-      brightness: 10,
-    },
-  },
-  {
-    name: 'Cool',
-    description: 'Cool blue tones',
-    options: {
-      temperature: -40,
-      contrast: 10,
-      saturation: 15,
-    },
-  },
-  {
-    name: 'Warm',
-    description: 'Warm golden tones',
-    options: {
-      temperature: 40,
-      brightness: 5,
-      saturation: 10,
-    },
-  },
-  {
-    name: 'High Contrast',
-    description: 'Dramatic contrast',
-    options: {
-      contrast: 40,
-      saturation: 20,
-      sharpen: 20,
-    },
-  },
-  {
-    name: 'Soft',
-    description: 'Soft and dreamy',
-    options: {
-      blur: 1,
-      brightness: 10,
-      contrast: -15,
-    },
-  },
-  {
-    name: 'Sharp',
-    description: 'Enhanced details',
-    options: {
-      sharpen: 50,
-      contrast: 15,
-      saturation: 10,
-    },
-  },
-];
+// Export preset filters from constants (readonly)
+export { FILTER_PRESETS as presetFilters } from '@/constants';
 
 export const imageProcessor = new ImageProcessor();

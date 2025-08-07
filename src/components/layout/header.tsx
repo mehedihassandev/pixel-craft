@@ -81,10 +81,12 @@ const Header = () => {
               <SheetContent side="right" className="w-80">
                 <div className="flex flex-col space-y-4 mt-6">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="bg-primary p-2 rounded-lg">
+                    <div className="gradient-primary p-2 rounded-lg glow-primary">
                       <ImageIcon className="text-primary-foreground h-5 w-5" />
                     </div>
-                    <h2 className="text-lg font-bold tracking-tight">Pixel Craft</h2>
+                    <h2 className="text-lg font-bold tracking-tight text-gradient-primary">
+                      Pixel Craft
+                    </h2>
                   </div>
                   <nav className="flex flex-col space-y-2">
                     {menus.map(item => {

@@ -13,6 +13,7 @@ import {
   PRECONNECT_DOMAINS,
   CRITICAL_FONTS,
 } from '@/constants';
+import { HeaderMain } from '@/components/layout/header-option-2';
 
 export const metadata: Metadata = DEFAULT_METADATA;
 
@@ -54,7 +55,7 @@ export default function RootLayout({
           disableTransitionOnChange={THEME_CONFIG.disableTransitionOnChange}
         >
           <GoogleAnalytics />
-          <Header />
+          <HeaderMain />
           {children}
           <Footer />
           <Toaster />

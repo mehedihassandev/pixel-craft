@@ -5,14 +5,13 @@
 
 export enum PAGE_METADATA_KEY {
   PNG_TO_SVG = 'png-to-svg',
-  IMAGE_COMPRESS = 'image-compress',
   BACKGROUND_REMOVE = 'background-remove',
   OCR = 'ocr',
   RESIZE = 'resize',
   PLACEHOLDER = 'placeholder',
   PHOTO_EDITOR = 'photo-editor',
-  BATCH_PROCESSOR = 'batch-processor',
-  IMAGE_OPTIMIZATION = 'image-optimization',
+  GIF_TO_JSON = 'gif-to-json',
+  VIDEO_CONVERTER = 'video-converter',
   BLOG = 'blog',
   FAQ = 'faq',
 }

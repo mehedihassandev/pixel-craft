@@ -13,6 +13,7 @@ import {
   Palette,
   Search,
   Command,
+  Video,
 } from 'lucide-react';
 import Link from 'next/link';
 import { menus } from '@/navigation/menus';
@@ -35,6 +36,7 @@ const iconMap = {
   FileText,
   Layers,
   Palette,
+  Video,
 };
 
 const HeaderOption4 = () => {
@@ -64,7 +66,7 @@ const HeaderOption4 = () => {
   const popularTools = [
     menus.find(m => m.id === 'background-remove'),
     menus.find(m => m.id === 'resize'),
-    menus.find(m => m.id === 'image-compress'),
+    menus.find(m => m.id === 'photo-editor'),
   ].filter(Boolean);
 
   return (

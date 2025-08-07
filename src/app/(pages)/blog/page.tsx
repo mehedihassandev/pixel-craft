@@ -4,110 +4,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
+import { BLOG_POSTS, BLOG_CATEGORIES } from '@/constants/blog';
+import { generatePageMetadata } from '@/helper/metadata';
+import { PAGE_METADATA_KEY } from '@/models/page-metadata';
 
-export const metadata: Metadata = {
-  title: 'Blog - Image Processing Tips & Tutorials | PixelCraft',
-  description:
-    'Learn image processing techniques, photo editing tips, and AI-powered image manipulation tutorials. Expert guides for photographers and designers.',
-  keywords: [
-    'image processing blog',
-    'photo editing tutorials',
-    'image optimization tips',
-    'AI image processing',
-    'photography tips',
-    'image enhancement',
-    'background removal guide',
-    'image compression tips',
-  ],
-  openGraph: {
-    title: 'Blog - Image Processing Tips & Tutorials | PixelCraft',
-    description:
-      'Learn image processing techniques, photo editing tips, and AI-powered image manipulation tutorials.',
-    url: 'https://pixel-craft-sigma.vercel.app/blog',
-  },
-  alternates: {
-    canonical: '/blog',
-  },
-};
-
-const blogPosts = [
-  {
-    id: 1,
-    title: '10 Essential Image Optimization Tips for Better Website Performance',
-    excerpt:
-      'Learn how to optimize images for faster loading times and better SEO rankings. Discover the best formats, compression techniques, and tools.',
-    author: 'PixelCraft Team',
-    publishedAt: '2025-07-15',
-    readTime: '5 min read',
-    category: 'Optimization',
-    slug: 'image-optimization-tips-website-performance',
-  },
-  {
-    id: 2,
-    title: 'AI Background Removal: How It Works and Best Practices',
-    excerpt:
-      'Explore the technology behind AI-powered background removal and learn best practices for getting professional results.',
-    author: 'PixelCraft Team',
-    publishedAt: '2025-07-10',
-    readTime: '7 min read',
-    category: 'AI Technology',
-    slug: 'ai-background-removal-guide',
-  },
-  {
-    id: 3,
-    title: 'Complete Guide to Image Compression: Lossless vs Lossy',
-    excerpt:
-      'Understanding the difference between lossless and lossy compression, when to use each, and how to achieve the best results.',
-    author: 'PixelCraft Team',
-    publishedAt: '2025-07-05',
-    readTime: '6 min read',
-    category: 'Compression',
-    slug: 'image-compression-guide',
-  },
-  {
-    id: 4,
-    title: 'OCR Technology Explained: From Text Recognition to Digital Documents',
-    excerpt:
-      'Learn how OCR technology works, its applications, and tips for getting the best text extraction results from images.',
-    author: 'PixelCraft Team',
-    publishedAt: '2025-06-30',
-    readTime: '8 min read',
-    category: 'OCR',
-    slug: 'ocr-technology-explained',
-  },
-  {
-    id: 5,
-    title: 'Social Media Image Sizes: The Complete 2025 Guide',
-    excerpt:
-      'Stay updated with the latest social media image dimensions for Facebook, Instagram, Twitter, LinkedIn, and more platforms.',
-    author: 'PixelCraft Team',
-    publishedAt: '2025-06-25',
-    readTime: '4 min read',
-    category: 'Social Media',
-    slug: 'social-media-image-sizes-2025',
-  },
-  {
-    id: 6,
-    title: 'PNG vs SVG: When to Use Vector Graphics',
-    excerpt:
-      'Understand the differences between PNG and SVG formats, and learn when to convert raster images to vector graphics.',
-    author: 'PixelCraft Team',
-    publishedAt: '2025-06-20',
-    readTime: '5 min read',
-    category: 'Formats',
-    slug: 'png-vs-svg-vector-graphics',
-  },
-];
-
-const categories = [
-  'All',
-  'Optimization',
-  'AI Technology',
-  'Compression',
-  'OCR',
-  'Social Media',
-  'Formats',
-];
+export const metadata = generatePageMetadata(PAGE_METADATA_KEY.BLOG);
 
 export default function BlogPage() {
   return (
@@ -125,7 +26,7 @@ export default function BlogPage() {
 
       {/* Category Filter */}
       <div className="flex flex-wrap gap-2 justify-center mb-8">
-        {categories.map(category => (
+        {BLOG_CATEGORIES.map(category => (
           <Badge
             key={category}
             variant={category === 'All' ? 'default' : 'secondary'}
@@ -138,7 +39,7 @@ export default function BlogPage() {
 
       {/* Blog Posts Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        {blogPosts.map(post => (
+        {BLOG_POSTS.map(post => (
           <Card key={post.id} className="hover:shadow-lg transition-shadow duration-300">
             <CardHeader>
               <div className="flex items-center justify-between mb-2">

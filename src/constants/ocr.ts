@@ -45,6 +45,90 @@ export const ocrFeatures = [
   },
 ];
 
+// Language options for OCR
+export const LANGUAGE_OPTIONS = [
+  { value: 'eng', label: 'English' },
+  { value: 'spa', label: 'Spanish' },
+  { value: 'fra', label: 'French' },
+  { value: 'deu', label: 'German' },
+  { value: 'ita', label: 'Italian' },
+  { value: 'por', label: 'Portuguese' },
+  { value: 'rus', label: 'Russian' },
+  { value: 'jpn', label: 'Japanese' },
+  { value: 'chi_sim', label: 'Chinese (Simplified)' },
+  { value: 'chi_tra', label: 'Chinese (Traditional)' },
+  { value: 'kor', label: 'Korean' },
+  { value: 'ara', label: 'Arabic' },
+  { value: 'hin', label: 'Hindi' },
+  { value: 'tha', label: 'Thai' },
+  { value: 'vie', label: 'Vietnamese' },
+  { value: 'heb', label: 'Hebrew' },
+  { value: 'tur', label: 'Turkish' },
+  { value: 'pol', label: 'Polish' },
+  { value: 'nld', label: 'Dutch' },
+  { value: 'swe', label: 'Swedish' },
+  { value: 'nor', label: 'Norwegian' },
+  { value: 'dan', label: 'Danish' },
+  { value: 'fin', label: 'Finnish' },
+  { value: 'ces', label: 'Czech' },
+  { value: 'slk', label: 'Slovak' },
+  { value: 'hun', label: 'Hungarian' },
+  { value: 'ron', label: 'Romanian' },
+  { value: 'bul', label: 'Bulgarian' },
+  { value: 'hrv', label: 'Croatian' },
+  { value: 'srp', label: 'Serbian' },
+  { value: 'slv', label: 'Slovenian' },
+  { value: 'ukr', label: 'Ukrainian' },
+  { value: 'ben', label: 'Bengali' },
+  { value: 'guj', label: 'Gujarati' },
+  { value: 'pan', label: 'Punjabi' },
+  { value: 'tel', label: 'Telugu' },
+  { value: 'kan', label: 'Kannada' },
+  { value: 'mal', label: 'Malayalam' },
+  { value: 'tam', label: 'Tamil' },
+  { value: 'mar', label: 'Marathi' },
+  { value: 'nep', label: 'Nepali' },
+  { value: 'sin', label: 'Sinhala' },
+  { value: 'mya', label: 'Myanmar' },
+  { value: 'khm', label: 'Khmer' },
+  { value: 'lao', label: 'Lao' },
+  { value: 'tib', label: 'Tibetan' },
+  { value: 'urd', label: 'Urdu' },
+  { value: 'fas', label: 'Persian' },
+  { value: 'pus', label: 'Pashto' },
+  { value: 'tir', label: 'Tigrinya' },
+  { value: 'amh', label: 'Amharic' },
+] as const;
+
+// PSM (Page Segmentation Mode) options
+export const PSM_OPTIONS = [
+  { value: '0', label: 'OSD only' },
+  { value: '1', label: 'Automatic page segmentation with OSD' },
+  { value: '2', label: 'Automatic page segmentation, no OSD' },
+  { value: '3', label: 'Fully automatic page segmentation (Default)' },
+  { value: '4', label: 'Assume a single column of text' },
+  {
+    value: '5',
+    label: 'Assume a single uniform block of vertically aligned text',
+  },
+  { value: '6', label: 'Assume a single uniform block of text' },
+  { value: '7', label: 'Treat the image as a single text line' },
+  { value: '8', label: 'Treat the image as a single word' },
+  { value: '9', label: 'Treat the image as a single word in a circle' },
+  { value: '10', label: 'Treat the image as a single character' },
+  { value: '11', label: 'Sparse text. Find as much text as possible' },
+  { value: '12', label: 'Sparse text with OSD' },
+  { value: '13', label: 'Raw line. Treat the image as a single text line' },
+] as const;
+
+// OEM (OCR Engine Mode) options
+export const OEM_OPTIONS = [
+  { value: '0', label: 'Legacy engine only' },
+  { value: '1', label: 'Neural nets LSTM engine only' },
+  { value: '2', label: 'Legacy + LSTM engines' },
+  { value: '3', label: 'Default, based on what is available (Recommended)' },
+] as const;
+
 export const ocrUseCases = [
   {
     title: 'Document Digitization',
