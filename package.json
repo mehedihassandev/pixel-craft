@@ -76,6 +76,7 @@
     "firebase": "^11.9.1",
     "firebase-admin": "^13.4.0",
     "genkit": "^1.14.1",
+    "gifuct-js": "^2.1.2",
     "imagetracerjs": "^1.2.6",
     "jszip": "^3.10.1",
     "lucide-react": "^0.475.0",

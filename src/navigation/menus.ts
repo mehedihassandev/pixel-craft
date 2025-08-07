@@ -62,4 +62,10 @@ export const menus: IMenus[] = [
     href: ROUTER.BATCH_PROCESSOR,
     icon: 'Zap',
   },
+  {
+    id: 'gif-to-json',
+    label: 'GIF to JSON',
+    href: ROUTER.GIF_TO_JSON,
+    icon: 'FileText',
+  },
 ];

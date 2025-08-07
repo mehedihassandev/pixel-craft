@@ -16,6 +16,7 @@ export * from './ui-messages';
 // Feature-specific constants
 export * from './background-remove';
 export * from './contact';
+export * from './gif-to-json';
 export * from './home';
 export * from './image-compress';
 export * from './ocr';

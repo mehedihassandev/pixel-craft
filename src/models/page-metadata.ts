@@ -13,6 +13,7 @@ export enum PAGE_METADATA_KEY {
   PHOTO_EDITOR = 'photo-editor',
   BATCH_PROCESSOR = 'batch-processor',
   IMAGE_OPTIMIZATION = 'image-optimization',
+  GIF_TO_JSON = 'gif-to-json',
   BLOG = 'blog',
   FAQ = 'faq',
 }

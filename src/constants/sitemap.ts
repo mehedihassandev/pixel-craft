@@ -84,6 +84,12 @@ export const SITEMAP_ROUTES = [
     priority: SITEMAP_CONFIG.priorities.SECONDARY,
   },
   {
+    path: '/gif-to-json',
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: SITEMAP_CONFIG.priorities.FEATURES,
+  },
+  {
     path: '/blog',
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,

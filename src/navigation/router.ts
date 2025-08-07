@@ -10,4 +10,5 @@ export const ROUTER = {
   PNG_TO_SVG: '/png-to-svg',
   PHOTO_EDITOR: '/photo-editor',
   BATCH_PROCESSOR: '/batch-processor',
+  GIF_TO_JSON: '/gif-to-json',
 };

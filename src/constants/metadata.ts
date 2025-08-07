@@ -257,6 +257,28 @@ export const PAGE_METADATA: PageMetadataRecord = {
     ogImage: '/og-image-optimization.jpg',
     twitterImage: '/twitter-image-optimization.jpg',
   },
+  [PAGE_METADATA_KEY.GIF_TO_JSON]: {
+    title: 'GIF to JSON Converter - Extract Frame Data | Pixel Craft',
+    description:
+      'Convert animated GIFs to JSON format with frame data, delays, and metadata. Perfect for custom animation players, frame analysis, and web development.',
+    keywords: [
+      'gif to json',
+      'gif converter',
+      'animation frames',
+      'gif frame extraction',
+      'gif analysis',
+      'animation data',
+      'frame by frame',
+      'gif metadata',
+      'canvas animation',
+      'custom animation player',
+      'gif processing',
+      'animation reconstruction',
+    ],
+    canonical: '/gif-to-json',
+    ogImage: '/og-gif-to-json.jpg',
+    twitterImage: '/twitter-gif-to-json.jpg',
+  },
   [PAGE_METADATA_KEY.BLOG]: {
     title: 'Blog - Image Processing Tips & Tutorials | PixelCraft',
     description:

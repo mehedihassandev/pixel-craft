@@ -20,6 +20,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { ThemeToggleSimple } from '../theme';
 
 const iconMap = {
   Eraser,
@@ -64,7 +65,7 @@ const HeaderOption2 = () => {
               <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
                 Pixel Craft
               </h1>
-              <p className="text-xs text-muted-foreground -mt-1">Professional Image Tools</p>
+              <p className="text-xs text-muted-foreground -mt-1">Professional Tools</p>
             </div>
           </Link>
 
@@ -150,6 +151,7 @@ const HeaderOption2 = () => {
                 </div>
               </SheetContent>
             </Sheet>
+            <ThemeToggleSimple />
           </div>
 
           {/* Mobile Menu */}
@@ -219,4 +221,4 @@ const HeaderOption2 = () => {
   );
 };
 
-export { HeaderOption2 };
+export { HeaderOption2 as HeaderMain };
