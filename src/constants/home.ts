@@ -9,6 +9,7 @@ import {
   Sparkles,
   Zap,
   Palette,
+  Video,
 } from 'lucide-react';
 
 export const features = [
@@ -22,6 +23,7 @@ export const features = [
     color: 'bg-blue-500',
     gradient: 'from-blue-500 to-blue-600',
     popular: true,
+    category: 'Generator',
   },
   {
     id: 'resize',
@@ -31,6 +33,7 @@ export const features = [
     href: ROUTER.RESIZE,
     color: 'bg-green-500',
     gradient: 'from-green-500 to-green-600',
+    category: 'Transform',
   },
   {
     id: 'background-remove',
@@ -41,6 +44,8 @@ export const features = [
     color: 'bg-red-500',
     gradient: 'from-red-500 to-red-600',
     aiPowered: true,
+    popular: true,
+    category: 'AI Tools',
   },
   {
     id: 'image-compress',
@@ -50,6 +55,7 @@ export const features = [
     href: ROUTER.IMAGE_COMPRESS,
     color: 'bg-purple-500',
     gradient: 'from-purple-500 to-purple-600',
+    category: 'Optimization',
   },
   {
     id: 'image-optimize',
@@ -59,17 +65,19 @@ export const features = [
     href: ROUTER.IMAGE_OPTIMIZATION,
     color: 'bg-yellow-500',
     gradient: 'from-yellow-500 to-yellow-600',
+    category: 'Optimization',
   },
   {
-    id: 'add-background-ai',
-    title: 'AI Background',
-    description: 'Add stunning backgrounds to your images using artificial intelligence.',
-    icon: Sparkles,
-    href: ROUTER.ADD_BACKGROUND_AI,
-    color: 'bg-pink-500',
-    gradient: 'from-pink-500 to-pink-600',
-    aiPowered: true,
+    id: 'video-converter',
+    title: 'Video Converter',
+    description:
+      'Convert videos to multiple formats (MP4, WebM, MOV, AVI, GIF) with custom settings.',
+    icon: Video,
+    href: ROUTER.VIDEO_CONVERTER,
+    color: 'bg-blue-500',
+    gradient: 'from-blue-500 to-purple-600',
     new: true,
+    category: 'Converter',
   },
   {
     id: 'ocr',
@@ -80,6 +88,7 @@ export const features = [
     color: 'bg-indigo-500',
     gradient: 'from-indigo-500 to-indigo-600',
     aiPowered: true,
+    category: 'AI Tools',
   },
   {
     id: 'png-to-svg',
@@ -90,6 +99,7 @@ export const features = [
     color: 'bg-teal-500',
     gradient: 'from-teal-500 to-teal-600',
     aiPowered: true,
+    category: 'Converter',
   },
   {
     id: 'photo-editor',
@@ -101,6 +111,7 @@ export const features = [
     color: 'bg-pink-500',
     gradient: 'from-pink-500 to-purple-600',
     popular: true,
+    category: 'Editor',
   },
   {
     id: 'batch-processor',
@@ -112,5 +123,16 @@ export const features = [
     color: 'bg-cyan-500',
     gradient: 'from-cyan-500 to-blue-600',
     popular: true,
+    category: 'Automation',
+  },
+  {
+    id: 'gif-to-json',
+    title: 'GIF to JSON',
+    description: 'Convert animated GIFs to JSON format for web animations and data processing.',
+    icon: FileText,
+    href: ROUTER.GIF_TO_JSON,
+    color: 'bg-orange-500',
+    gradient: 'from-orange-500 to-red-600',
+    category: 'Converter',
   },
 ];
