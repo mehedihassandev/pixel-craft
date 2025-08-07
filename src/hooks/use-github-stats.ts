@@ -1,4 +1,10 @@
 import { useState, useEffect } from 'react';
+import {
+  API_ENDPOINTS,
+  EXTERNAL_URLS,
+  NUMBER_FORMAT_THRESHOLDS,
+  STATS_TIME_CONSTANTS,
+} from '@/constants';
 
 export interface GitHubStats {
   stars: number;
@@ -27,7 +33,7 @@ export const useGitHubStats = () => {
     const fetchGitHubStats = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/github-stats');
+        const response = await fetch(API_ENDPOINTS.GITHUB_STATS);
 
         if (!response.ok) {
           throw new Error('Failed to fetch GitHub stats');
@@ -53,7 +59,7 @@ export const useGitHubStats = () => {
           latestRelease: 'v1.0.0',
           releaseDate: new Date().toISOString(),
           description: 'Open-source image processing application powered by AI',
-          homepage: 'https://pixel-craft-sigma.vercel.app',
+          homepage: EXTERNAL_URLS.WEBSITE,
           topics: ['nextjs', 'typescript', 'ai', 'image-processing', 'open-source'],
         });
       } finally {
@@ -69,11 +75,15 @@ export const useGitHubStats = () => {
 
 // Utility function to format numbers
 export const formatNumber = (num: number): string => {
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(1) + 'M';
+  if (num >= NUMBER_FORMAT_THRESHOLDS.MILLION) {
+    return (
+      Math.floor(num / NUMBER_FORMAT_THRESHOLDS.MILLION) + NUMBER_FORMAT_THRESHOLDS.MILLION_SUFFIX
+    );
   }
-  if (num >= 1000) {
-    return (num / 1000).toFixed(1) + 'K';
+  if (num >= NUMBER_FORMAT_THRESHOLDS.THOUSAND) {
+    return (
+      Math.floor(num / NUMBER_FORMAT_THRESHOLDS.THOUSAND) + NUMBER_FORMAT_THRESHOLDS.THOUSAND_SUFFIX
+    );
   }
   return num.toString();
 };
@@ -93,7 +103,7 @@ export const timeAgo = (dateString: string): string => {
   const now = new Date();
   const date = new Date(dateString);
   const diffInMs = now.getTime() - date.getTime();
-  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  const diffInDays = Math.floor(diffInMs / STATS_TIME_CONSTANTS.MILLISECONDS_PER_DAY);
 
   if (diffInDays === 0) return 'Today';
   if (diffInDays === 1) return 'Yesterday';

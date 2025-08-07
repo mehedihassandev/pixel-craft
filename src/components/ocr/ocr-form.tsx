@@ -11,7 +11,14 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ImageUploadZone } from '@/components/ui/image-upload-zone';
-import { SUPPORTED_FORMATS_DISPLAY } from '@/constants/file-validation';
+import {
+  SUPPORTED_FORMATS_DISPLAY,
+  FILE_SIZE_LIMITS,
+  IMAGE_VALIDATION,
+  IMAGE_MIME_TYPES,
+  DOCUMENT_MIME_TYPES,
+  FILE_ACCEPT_PATTERNS,
+} from '@/constants';
 import {
   Select,
   SelectContent,
@@ -37,75 +44,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { ocrFormSchema, type OcrFormData } from '@/lib/schemas';
 import { OcrVisualizer } from './ocr-visualizer';
-
-// Language options for OCR
-const LANGUAGE_OPTIONS = [
-  { value: 'eng', label: 'English' },
-  { value: 'spa', label: 'Spanish' },
-  { value: 'fra', label: 'French' },
-  { value: 'deu', label: 'German' },
-  { value: 'ita', label: 'Italian' },
-  { value: 'por', label: 'Portuguese' },
-  { value: 'rus', label: 'Russian' },
-  { value: 'jpn', label: 'Japanese' },
-  { value: 'chi_sim', label: 'Chinese (Simplified)' },
-  { value: 'chi_tra', label: 'Chinese (Traditional)' },
-  { value: 'kor', label: 'Korean' },
-  { value: 'ara', label: 'Arabic' },
-  { value: 'hin', label: 'Hindi' },
-  { value: 'tha', label: 'Thai' },
-  { value: 'vie', label: 'Vietnamese' },
-  { value: 'heb', label: 'Hebrew' },
-  { value: 'ben', label: 'Bengali' },
-  { value: 'tam', label: 'Tamil' },
-  { value: 'tel', label: 'Telugu' },
-  { value: 'mar', label: 'Marathi' },
-  { value: 'guj', label: 'Gujarati' },
-  { value: 'kan', label: 'Kannada' },
-  { value: 'ori', label: 'Oriya' },
-  { value: 'pan', label: 'Punjabi' },
-  { value: 'asm', label: 'Assamese' },
-  { value: 'nep', label: 'Nepali' },
-  { value: 'sin', label: 'Sinhala' },
-  { value: 'mya', label: 'Myanmar' },
-  { value: 'khm', label: 'Khmer' },
-  { value: 'lao', label: 'Lao' },
-  { value: 'tib', label: 'Tibetan' },
-  { value: 'urd', label: 'Urdu' },
-  { value: 'fas', label: 'Persian' },
-  { value: 'pus', label: 'Pashto' },
-  { value: 'tir', label: 'Tigrinya' },
-  { value: 'amh', label: 'Amharic' },
-];
-
-// PSM (Page Segmentation Mode) options
-const PSM_OPTIONS = [
-  { value: '0', label: 'OSD only' },
-  { value: '1', label: 'Automatic page segmentation with OSD' },
-  { value: '2', label: 'Automatic page segmentation, no OSD' },
-  { value: '3', label: 'Fully automatic page segmentation (Default)' },
-  { value: '4', label: 'Assume a single column of text' },
-  {
-    value: '5',
-    label: 'Assume a single uniform block of vertically aligned text',
-  },
-  { value: '6', label: 'Assume a single uniform block of text' },
-  { value: '7', label: 'Treat the image as a single text line' },
-  { value: '8', label: 'Treat the image as a single word' },
-  { value: '9', label: 'Treat the image as a single word in a circle' },
-  { value: '10', label: 'Treat the image as a single character' },
-  { value: '11', label: 'Sparse text. Find as much text as possible' },
-  { value: '12', label: 'Sparse text with OSD' },
-  { value: '13', label: 'Raw line. Treat the image as a single text line' },
-];
-
-// OEM (OCR Engine Mode) options
-const OEM_OPTIONS = [
-  { value: '0', label: 'Legacy engine only' },
-  { value: '1', label: 'Neural nets LSTM engine only' },
-  { value: '2', label: 'Legacy + LSTM engines' },
-  { value: '3', label: 'Default, based on what is available (Recommended)' },
-];
+import { LANGUAGE_OPTIONS, PSM_OPTIONS, OEM_OPTIONS } from '@/constants/ocr';
 
 interface OcrResult {
   text: string;
@@ -164,7 +103,7 @@ export const OcrForm = () => {
       const file = files[0];
       if (!file) return;
 
-      if (!file.type.startsWith('image/')) {
+      if (!file.type.startsWith(IMAGE_VALIDATION.STARTS_WITH_IMAGE)) {
         toast({
           title: 'Invalid file type',
           description: `Please select an image file (${SUPPORTED_FORMATS_DISPLAY})`,
@@ -173,7 +112,7 @@ export const OcrForm = () => {
         return;
       }
 
-      if (file.size > 10 * 1024 * 1024) {
+      if (file.size > FILE_SIZE_LIMITS.TEN_MB) {
         // 10MB limit
         toast({
           title: 'File too large',
@@ -243,11 +182,13 @@ export const OcrForm = () => {
           canvas.toBlob(
             blob => {
               if (blob) {
-                const file = new File([blob], 'camera-capture.jpg', { type: 'image/jpeg' });
+                const file = new File([blob], 'camera-capture.jpg', {
+                  type: IMAGE_MIME_TYPES.JPEG,
+                });
                 handleFileSelect([file]);
               }
             },
-            'image/jpeg',
+            IMAGE_MIME_TYPES.JPEG,
             0.9
           );
 
@@ -418,17 +359,17 @@ export const OcrForm = () => {
       case 'txt':
         content = result.text;
         filename = 'ocr-result.txt';
-        mimeType = 'text/plain';
+        mimeType = DOCUMENT_MIME_TYPES.TEXT;
         break;
       case 'json':
         content = JSON.stringify(result, null, 2);
         filename = 'ocr-result.json';
-        mimeType = 'application/json';
+        mimeType = DOCUMENT_MIME_TYPES.JSON;
         break;
       case 'hocr':
         content = result.hocr || '';
         filename = 'ocr-result.hocr';
-        mimeType = 'text/html';
+        mimeType = DOCUMENT_MIME_TYPES.HTML;
         break;
     }
 
@@ -629,7 +570,7 @@ export const OcrForm = () => {
             {/* Upload Area */}
             <ImageUploadZone
               onFilesSelected={handleFileSelect}
-              accept="image/*"
+              accept={FILE_ACCEPT_PATTERNS.IMAGES}
               multiple={false}
               maxFileSize={10}
               disabled={isProcessing}

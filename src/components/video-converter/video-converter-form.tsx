@@ -28,7 +28,9 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
+import { API_ENDPOINTS, CONTENT_TYPE_CHECKS } from '@/constants';
 import { VIDEO_CONVERTER_CONFIG, VIDEO_CONVERTER_MESSAGES } from '@/constants/video-converter';
+import { FILE_SIZE_UNITS } from '@/constants/ui-components';
 import {
   Upload,
   Video,
@@ -176,7 +178,7 @@ export default function VideoConverterForm() {
 
       setProgress({ percent: 10, stage: 'uploading', message: 'Uploading video...' });
 
-      const response = await fetch('/api/video-converter', {
+      const response = await fetch(API_ENDPOINTS.VIDEO_CONVERTER, {
         method: 'POST',
         body: formData,
       });
@@ -197,7 +199,7 @@ export default function VideoConverterForm() {
       // Check if response is JSON (cloud processing) or blob (local processing)
       const contentType = response.headers.get('content-type');
 
-      if (contentType && contentType.includes('application/json')) {
+      if (contentType && contentType.includes(CONTENT_TYPE_CHECKS.JSON)) {
         // Cloud processing response (Vercel/Cloudinary)
         const result = await response.json();
 
@@ -255,10 +257,9 @@ export default function VideoConverterForm() {
   };
 
   const formatFileSize = (bytes: number) => {
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     if (bytes === 0) return '0 Byte';
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
-    return Math.round((bytes / Math.pow(1024, i)) * 100) / 100 + ' ' + sizes[i];
+    return Math.round((bytes / Math.pow(1024, i)) * 100) / 100 + ' ' + FILE_SIZE_UNITS[i];
   };
 
   const formatDuration = (seconds: number) => {

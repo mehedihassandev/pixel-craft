@@ -246,6 +246,29 @@ export const PAGE_METADATA: PageMetadataRecord = {
     ogImage: '/og-blog.jpg',
     twitterImage: '/twitter-blog.jpg',
   },
+  [PAGE_METADATA_KEY.VIDEO_CONVERTER]: {
+    title: 'Video Format Converter - Convert Videos to Multiple Formats',
+    description:
+      'Convert your videos to different formats (MP4, WebM, MOV, AVI, GIF) with customizable quality settings. Free online video converter tool with FFmpeg support.',
+    keywords: [
+      'video converter',
+      'format converter',
+      'MP4 converter',
+      'WebM converter',
+      'MOV converter',
+      'AVI converter',
+      'GIF converter',
+      'video format',
+      'online video converter',
+      'free video converter',
+      'FFmpeg',
+      'video compression',
+      'video optimization',
+    ],
+    canonical: '/video-converter',
+    ogImage: '/og-video-converter.jpg',
+    twitterImage: '/twitter-video-converter.jpg',
+  },
   [PAGE_METADATA_KEY.FAQ]: {
     title: 'FAQ - Frequently Asked Questions | PixelCraft',
     description:

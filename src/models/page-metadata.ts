@@ -11,6 +11,7 @@ export enum PAGE_METADATA_KEY {
   PLACEHOLDER = 'placeholder',
   PHOTO_EDITOR = 'photo-editor',
   GIF_TO_JSON = 'gif-to-json',
+  VIDEO_CONVERTER = 'video-converter',
   BLOG = 'blog',
   FAQ = 'faq',
 }

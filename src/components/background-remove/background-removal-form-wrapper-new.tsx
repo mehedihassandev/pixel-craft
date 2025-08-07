@@ -7,7 +7,15 @@ import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { ImageComparison } from '@/components/ui/image-comparison';
-import { SUPPORTED_FORMATS_DISPLAY } from '@/constants/file-validation';
+import {
+  SUPPORTED_FORMATS_DISPLAY,
+  FILE_SIZE_LIMITS,
+  API_ENDPOINTS,
+  IMAGE_VALIDATION,
+  CONTENT_TYPE_CHECKS,
+  FILE_ACCEPT_PATTERNS,
+  PROGRESS_INTERVALS,
+} from '@/constants';
 import {
   Upload,
   Image as ImageIcon,
@@ -42,13 +50,13 @@ export default function BackgroundRemovalFormWrapper() {
     const file = files[0];
 
     // Validate file type
-    if (!file.type.startsWith('image/')) {
+    if (!file.type.startsWith(IMAGE_VALIDATION.STARTS_WITH_IMAGE)) {
       setError(`Please select a valid image file (${SUPPORTED_FORMATS_DISPLAY})`);
       return;
     }
 
     // Validate file size (10MB limit)
-    if (file.size > 10 * 1024 * 1024) {
+    if (file.size > FILE_SIZE_LIMITS.TEN_MB) {
       setError('File size must be less than 10MB');
       return;
     }
@@ -64,19 +72,19 @@ export default function BackgroundRemovalFormWrapper() {
       // Simulate progress
       const progressInterval = setInterval(() => {
         setProgress(prev => {
-          if (prev >= 90) {
+          if (prev >= PROGRESS_INTERVALS.MAX_SIMULATED_PROGRESS) {
             clearInterval(progressInterval);
-            return 90;
+            return PROGRESS_INTERVALS.MAX_SIMULATED_PROGRESS;
           }
-          return prev + 10;
+          return prev + PROGRESS_INTERVALS.PROGRESS_STEP;
         });
-      }, 200);
+      }, PROGRESS_INTERVALS.DEFAULT_PROGRESS_INTERVAL);
 
       // Call the API
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch('/api/background-remove', {
+      const response = await fetch(API_ENDPOINTS.BACKGROUND_REMOVE, {
         method: 'POST',
         body: formData,
       });
@@ -89,7 +97,7 @@ export default function BackgroundRemovalFormWrapper() {
         try {
           // Check if response is JSON
           const contentType = response.headers.get('content-type');
-          if (contentType && contentType.includes('application/json')) {
+          if (contentType && contentType.includes(CONTENT_TYPE_CHECKS.JSON)) {
             const errorData = await response.json();
             errorMessage = errorData.error || errorMessage;
           } else {
@@ -222,7 +230,7 @@ export default function BackgroundRemovalFormWrapper() {
               <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/*"
+                accept={FILE_ACCEPT_PATTERNS.IMAGES}
                 onChange={handleFileInputChange}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 disabled={isProcessing}

@@ -3,9 +3,7 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Script from 'next/script';
-
-// Google Analytics Measurement ID
-const GA_MEASUREMENT_ID = process.env.GA_MEASUREMENT_ID;
+import { GA_MEASUREMENT_ID } from '@/constants/analytics';
 
 declare global {
   interface Window {

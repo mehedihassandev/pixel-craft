@@ -1,5 +1,6 @@
 import { ConversionOptions, ConversionResult, SUPPORTED_FORMATS } from '@/types/image-conversion';
 import { HEICProcessor } from '@/lib/heic-processor';
+import { API_ENDPOINTS } from '@/constants';
 
 export class ImageConverter {
   private static instance: ImageConverter;
@@ -39,7 +40,7 @@ export class ImageConverter {
       formData.append('height', options.height.toString());
     }
 
-    const response = await fetch('/api/image-convert', {
+    const response = await fetch(API_ENDPOINTS.IMAGE_CONVERT, {
       method: 'POST',
       body: formData,
     });

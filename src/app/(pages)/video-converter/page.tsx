@@ -3,51 +3,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Video, Settings, Download, Zap, FileVideo, Play } from 'lucide-react';
 import { VideoConverterForm } from '@/components/video-converter';
+import { generatePageMetadata } from '@/helper/metadata';
+import { PAGE_METADATA_KEY } from '@/models/page-metadata';
 
-export const metadata: Metadata = {
-  title: 'Video Format Converter - Convert Videos to Multiple Formats',
-  description:
-    'Convert your videos to different formats (MP4, WebM, MOV, AVI, GIF) with customizable quality settings. Free online video converter tool with FFmpeg support.',
-  keywords: [
-    'video converter',
-    'format converter',
-    'MP4 converter',
-    'WebM converter',
-    'MOV converter',
-    'AVI converter',
-    'GIF converter',
-    'video format',
-    'online video converter',
-    'free video converter',
-    'FFmpeg',
-    'video compression',
-    'video optimization',
-  ],
-  openGraph: {
-    title: 'Video Format Converter - Convert Videos to Multiple Formats',
-    description:
-      'Convert your videos to different formats with customizable quality settings. Professional video conversion tool.',
-    url: 'https://pixel-craft-sigma.vercel.app/video-converter',
-    images: [
-      {
-        url: '/og-video-converter.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Video Format Converter Tool',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Video Format Converter - Convert Videos to Multiple Formats',
-    description:
-      'Convert your videos to different formats with customizable quality settings. Professional video conversion tool.',
-    images: ['/twitter-video-converter.jpg'],
-  },
-  alternates: {
-    canonical: '/video-converter',
-  },
-};
+export const metadata = generatePageMetadata(PAGE_METADATA_KEY.VIDEO_CONVERTER);
 
 export default function VideoConverterPage() {
   return (

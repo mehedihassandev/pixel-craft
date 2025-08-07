@@ -3,6 +3,16 @@
  * In a real application, these would be actual API endpoints
  */
 
+import {
+  BASE_STATS,
+  STATS_VARIATIONS,
+  ACTIVITY_EVENTS,
+  USER_LOCATIONS,
+  NUMBER_FORMAT_THRESHOLDS,
+  STATS_TIME_CONSTANTS,
+  SIMULATION_SETTINGS,
+} from '@/constants';
+
 export interface APIStatsResponse {
   images_processed: number;
   active_users: number;
@@ -21,28 +31,44 @@ export interface APIStatsResponse {
  */
 export const fetchAppStatistics = async (): Promise<APIStatsResponse> => {
   // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, Math.random() * 1000 + 500));
+  await new Promise(resolve =>
+    setTimeout(
+      resolve,
+      Math.random() * SIMULATION_SETTINGS.MAX_DELAY + SIMULATION_SETTINGS.MIN_DELAY
+    )
+  );
 
   // Simulate some realistic data fluctuations
   const baseDate = new Date();
-  const daysSinceEpoch = Math.floor(baseDate.getTime() / (1000 * 60 * 60 * 24));
+  const daysSinceEpoch = Math.floor(baseDate.getTime() / STATS_TIME_CONSTANTS.MILLISECONDS_PER_DAY);
 
   // Use day-based seed for consistent but changing data
   const seed = daysSinceEpoch;
   const random = (min: number, max: number) => {
-    const x = Math.sin(seed * 9999) * 10000;
+    const x =
+      Math.sin(seed * STATS_TIME_CONSTANTS.SEED_MULTIPLIER) * STATS_TIME_CONSTANTS.SEED_OFFSET;
     return Math.floor((x - Math.floor(x)) * (max - min + 1)) + min;
   };
 
   return {
-    images_processed: 15000 + random(200, 500),
-    active_users: 5400 + random(20, 100),
-    tools_available: 8,
-    ai_tools: 5,
-    uptime_percentage: 99.9,
-    avg_processing_time: 1.8 + Math.random() * 0.4,
-    total_users: 12000 + random(50, 200),
-    monthly_growth: random(15, 25),
+    images_processed:
+      BASE_STATS.IMAGES_PROCESSED +
+      random(STATS_VARIATIONS.IMAGES_PROCESSED.min, STATS_VARIATIONS.IMAGES_PROCESSED.max),
+    active_users:
+      BASE_STATS.ACTIVE_USERS +
+      random(STATS_VARIATIONS.ACTIVE_USERS.min, STATS_VARIATIONS.ACTIVE_USERS.max),
+    tools_available: BASE_STATS.TOOLS_AVAILABLE,
+    ai_tools: BASE_STATS.AI_TOOLS,
+    uptime_percentage: BASE_STATS.UPTIME_PERCENTAGE,
+    avg_processing_time:
+      BASE_STATS.BASE_PROCESSING_TIME + Math.random() * BASE_STATS.PROCESSING_TIME_VARIANCE,
+    total_users:
+      BASE_STATS.TOTAL_USERS +
+      random(STATS_VARIATIONS.TOTAL_USERS.min, STATS_VARIATIONS.TOTAL_USERS.max),
+    monthly_growth: random(
+      STATS_VARIATIONS.MONTHLY_GROWTH.min,
+      STATS_VARIATIONS.MONTHLY_GROWTH.max
+    ),
     last_updated: new Date().toISOString(),
   };
 };
@@ -52,26 +78,16 @@ export const fetchAppStatistics = async (): Promise<APIStatsResponse> => {
  * This could be used to show live processing events
  */
 export const subscribeToRealTimeEvents = (callback: (event: any) => void) => {
-  const events = [
-    'image_resized',
-    'background_removed',
-    'image_compressed',
-    'placeholder_generated',
-    'text_extracted',
-    'svg_converted',
-  ];
-
   const interval = setInterval(() => {
-    if (Math.random() > 0.6) {
-      // 40% chance of event
+    if (Math.random() > 1 - SIMULATION_SETTINGS.EVENT_PROBABILITY) {
       const event = {
-        type: events[Math.floor(Math.random() * events.length)],
+        type: ACTIVITY_EVENTS[Math.floor(Math.random() * ACTIVITY_EVENTS.length)],
         timestamp: new Date().toISOString(),
-        user_location: ['US', 'UK', 'CA', 'AU', 'DE', 'FR', 'JP'][Math.floor(Math.random() * 7)],
+        user_location: USER_LOCATIONS[Math.floor(Math.random() * USER_LOCATIONS.length)],
       };
       callback(event);
     }
-  }, 3000);
+  }, SIMULATION_SETTINGS.REAL_TIME_EVENT_INTERVAL);
 
   return () => clearInterval(interval);
 };
@@ -80,11 +96,17 @@ export const subscribeToRealTimeEvents = (callback: (event: any) => void) => {
  * Format large numbers for display
  */
 export const formatNumber = (num: number): string => {
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(1) + 'M';
+  if (num >= NUMBER_FORMAT_THRESHOLDS.MILLION) {
+    return (
+      (num / NUMBER_FORMAT_THRESHOLDS.MILLION).toFixed(NUMBER_FORMAT_THRESHOLDS.DECIMAL_PLACES) +
+      NUMBER_FORMAT_THRESHOLDS.MILLION_SUFFIX
+    );
   }
-  if (num >= 1000) {
-    return (num / 1000).toFixed(1) + 'K';
+  if (num >= NUMBER_FORMAT_THRESHOLDS.THOUSAND) {
+    return (
+      (num / NUMBER_FORMAT_THRESHOLDS.THOUSAND).toFixed(NUMBER_FORMAT_THRESHOLDS.DECIMAL_PLACES) +
+      NUMBER_FORMAT_THRESHOLDS.THOUSAND_SUFFIX
+    );
   }
   return num.toLocaleString();
 };

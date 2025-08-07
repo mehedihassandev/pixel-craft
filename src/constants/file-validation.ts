@@ -48,6 +48,12 @@ export const FILE_SIZE_LIMITS = {
   MAX_SINGLE_IMAGE: 25 * 1024 * 1024, // 25MB for single image processing
   MIN_FILE_SIZE: 1, // 1 byte minimum
 
+  // Common file size limits used across the app
+  TEN_MB: 10 * 1024 * 1024, // 10MB - used for background removal, OCR
+  FIVE_MB: 5 * 1024 * 1024, // 5MB - used for video uploads
+  TWO_MB: 2 * 1024 * 1024, // 2MB - used for compressed output
+  ONE_MB: 1 * 1024 * 1024, // 1MB - used for thumbnails
+
   // Compression targets
   COMPRESSION_TARGET_SIZE: 1024 * 1024, // 1MB target size
 

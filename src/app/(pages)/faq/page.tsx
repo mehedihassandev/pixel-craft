@@ -6,29 +6,10 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { generatePageMetadata } from '@/helper/metadata';
+import { PAGE_METADATA_KEY } from '@/models/page-metadata';
 
-export const metadata: Metadata = {
-  title: 'FAQ - Frequently Asked Questions | PixelCraft',
-  description:
-    'Find answers to common questions about PixelCraft image processing tools. Learn about background removal, image compression, OCR, and more.',
-  keywords: [
-    'PixelCraft FAQ',
-    'image processing questions',
-    'background removal help',
-    'image compression FAQ',
-    'OCR questions',
-    'image resize help',
-    'photo editing FAQ',
-  ],
-  openGraph: {
-    title: 'FAQ - Frequently Asked Questions | PixelCraft',
-    description: 'Find answers to common questions about PixelCraft image processing tools.',
-    url: 'https://pixel-craft-sigma.vercel.app/faq',
-  },
-  alternates: {
-    canonical: '/faq',
-  },
-};
+export const metadata = generatePageMetadata(PAGE_METADATA_KEY.FAQ);
 
 const faqs = [
   {
