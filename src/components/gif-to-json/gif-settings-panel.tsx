@@ -240,7 +240,7 @@ export function GifSettingsPanel({
             </div>
           </div>
 
-          <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+          <div className="mt-3 p-3 bg-primary-50 dark:bg-primary-900/20 rounded-lg">
             <p className="text-xs text-blue-700 dark:text-blue-300">
               <strong>Tip:</strong> For large GIFs, consider using lower quality settings or the
               "separate files" format to reduce processing time and memory usage.

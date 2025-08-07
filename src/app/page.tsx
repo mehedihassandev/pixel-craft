@@ -19,7 +19,14 @@ import {
   TrendingUp,
   GitFork,
 } from 'lucide-react';
-import { features } from '@/constants/home';
+import {
+  features,
+  toolCardGradients,
+  toolCardIconColors,
+  toolCardHoverColors,
+  toolCardTitleHoverColors,
+  toolCardArrowHoverColors,
+} from '@/constants/home';
 import { getAppStats, additionalMetrics } from '@/constants/stats';
 import { useGitHubStats, formatNumber, timeAgo } from '@/hooks/use-github-stats';
 
@@ -36,25 +43,20 @@ export default function Home() {
   const aiFeatures = features.filter(f => f.aiPowered);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-primary-50/30 to-secondary-50/30 dark:from-slate-900 dark:via-primary-900/10 dark:to-secondary-900/10">
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-16">
           <div className="flex items-center justify-center mb-6">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-3 rounded-2xl">
+            <div className="gradient-primary p-3 rounded-2xl glow-primary">
               <Wand2 className="h-8 w-8 text-white" />
             </div>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 bg-clip-text text-transparent mb-6">
-            PixelCraft
-          </h1>
+          <h1 className="text-5xl md:text-6xl font-bold text-gradient-primary mb-6">PixelCraft</h1>
           <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-8 max-w-3xl mx-auto">
             Professional image processing tools powered by AI. Transform, optimize, and enhance your
             images with cutting-edge technology.
-            <span className="font-semibold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
-              {' '}
-              Open source{' '}
-            </span>
+            <span className="font-semibold text-gradient-primary"> Open source </span>
             and free for everyone.
           </p>
 
@@ -95,12 +97,12 @@ export default function Home() {
                   href="https://github.com/mehedihassandev/pixel-craft/fork"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all hover:scale-105 shadow-lg"
+                  className="flex items-center gap-2 px-4 py-2 btn-primary-gradient rounded-lg transition-all hover:scale-105 shadow-lg"
                 >
                   <GitFork className="h-4 w-4" />
                   <span className="font-medium">Fork</span>
                   {!githubLoading && githubStats && (
-                    <Badge variant="secondary" className="bg-blue-500 text-white text-xs">
+                    <Badge variant="secondary" className="bg-white/20 text-white text-xs">
                       {formatNumber(githubStats.forks)}
                     </Badge>
                   )}
@@ -111,35 +113,33 @@ export default function Home() {
           <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
             <Badge
               variant="secondary"
-              className="px-3 py-1 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border-yellow-300 dark:border-yellow-700 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+              className="px-3 py-1 gradient-primary-soft border-primary/30 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
             >
-              <Star className="h-3 w-3 mr-1 text-yellow-600" />
-              <span className="font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
-                AI Powered
-              </span>
+              <Star className="h-3 w-3 mr-1 text-primary" />
+              <span className="font-bold text-primary">AI Powered</span>
             </Badge>
             <Badge
               variant="outline"
-              className="px-3 py-1 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 border-green-300 dark:border-green-700 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+              className="px-3 py-1 bg-gradient-to-r from-green-50 to-primary-50 dark:from-green-900/20 dark:to-primary-900/20 border-green-300 dark:border-green-700 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
             >
               <Users className="h-3 w-3 mr-1 text-green-600" />
-              <span className="font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+              <span className="font-bold bg-gradient-to-r from-green-600 to-primary bg-clip-text text-transparent">
                 Open Source
               </span>
             </Badge>
             <Badge
               variant="outline"
-              className="px-3 py-1 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-300 dark:border-purple-700 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+              className="px-3 py-1 bg-gradient-to-r from-secondary-50 to-pink-50 dark:from-secondary-900/20 dark:to-pink-900/20 border-secondary/30 dark:border-secondary-700 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
             >
-              <span className="font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              <span className="font-bold bg-gradient-to-r from-secondary to-pink-600 bg-clip-text text-transparent">
                 Free to Use
               </span>
             </Badge>
             <Badge
               variant="outline"
-              className="px-3 py-1 bg-gradient-to-r from-cyan-50 to-teal-50 dark:from-cyan-900/20 dark:to-teal-900/20 border-cyan-300 dark:border-cyan-700 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+              className="px-3 py-1 bg-gradient-to-r from-cyan-50 to-primary-50 dark:from-cyan-900/20 dark:to-primary-900/20 border-cyan-300 dark:border-primary/30 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
             >
-              <span className="font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent">
+              <span className="font-bold bg-gradient-to-r from-cyan-600 to-primary bg-clip-text text-transparent">
                 No Watermarks
               </span>
             </Badge>
@@ -224,10 +224,10 @@ export default function Home() {
             </div>
 
             {/* Creator Information */}
-            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/30 dark:to-cyan-900/30 rounded-2xl p-6 border border-blue-200 dark:border-blue-800">
+            <div className="gradient-primary-soft rounded-2xl p-6 border border-primary/20 dark:border-primary/30">
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-shrink-0">
-                  <div className="w-20 h-20 rounded-full overflow-hidden shadow-lg ring-4 ring-white/50 dark:ring-slate-700/50">
+                  <div className="w-20 h-20 rounded-full overflow-hidden shadow-lg ring-4 ring-white/50 dark:ring-slate-700/50 glow-primary">
                     <Image
                       src="/assets/me.jpg"
                       alt="Md. Mehedi Hassan"
@@ -352,7 +352,7 @@ export default function Home() {
                       <div className={`p-2 rounded-lg ${feature.color} bg-opacity-20`}>
                         <IconComponent className="h-4 w-4" />
                       </div>
-                      <span className="font-medium group-hover:text-purple-600 transition-colors">
+                      <span className="font-medium group-hover:text-primary transition-colors">
                         {feature.title}
                       </span>
                       <ArrowRight className="h-4 w-4 ml-auto opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all" />
@@ -363,7 +363,7 @@ export default function Home() {
             </div>
 
             {/* New Features */}
-            <div className="bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 rounded-2xl p-6 border border-green-200 dark:border-green-800">
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl p-6 border border-green-200 dark:border-green-800">
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
                   <Zap className="h-5 w-5 text-green-600" />
@@ -385,7 +385,9 @@ export default function Home() {
                       <span className="font-medium group-hover:text-green-600 transition-colors">
                         {feature.title}
                       </span>
-                      <Badge className="ml-auto bg-green-500 hover:bg-green-600 text-xs">New</Badge>
+                      <Badge className="ml-auto bg-green-500 hover:bg-green-600 text-white text-xs">
+                        New
+                      </Badge>
                     </Link>
                   );
                 })}
@@ -406,15 +408,27 @@ export default function Home() {
 
           {/* Simple Grid Layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {features.map(feature => {
+            {features.map((feature, index) => {
               const IconComponent = feature.icon;
+
+              // Get color styles from constants using cycling index
+              const currentGradient = toolCardGradients[index % toolCardGradients.length];
+              const currentIconColor = toolCardIconColors[index % toolCardIconColors.length];
+              const currentHoverColor = toolCardHoverColors[index % toolCardHoverColors.length];
+              const currentTitleHover =
+                toolCardTitleHoverColors[index % toolCardTitleHoverColors.length];
+              const currentArrowHover =
+                toolCardArrowHoverColors[index % toolCardArrowHoverColors.length];
+
               return (
                 <Link key={feature.id} href={feature.href}>
-                  <Card className="group h-full hover:shadow-2xl shadow-lg hover:shadow-blue-500/25 transition-all duration-500 hover:-translate-y-2 cursor-pointer border-2 hover:border-blue-200 dark:hover:border-blue-700">
+                  <Card
+                    className={`group h-full hover:shadow-2xl shadow-lg ${currentHoverColor} transition-all duration-500 hover:-translate-y-2 cursor-pointer border-2 ${currentGradient}`}
+                  >
                     <CardHeader className="pb-4">
                       <div className="flex items-start justify-between mb-4">
-                        <div className="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-xl group-hover:bg-blue-100 dark:group-hover:bg-blue-800/40 transition-colors">
-                          <IconComponent className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                        <div className={`p-3 rounded-xl transition-colors ${currentIconColor}`}>
+                          <IconComponent className="h-6 w-6" />
                         </div>
                         <div className="flex flex-col gap-2">
                           {feature.popular && (
@@ -445,7 +459,9 @@ export default function Home() {
                           )}
                         </div>
                       </div>
-                      <CardTitle className="text-lg font-semibold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-2">
+                      <CardTitle
+                        className={`text-lg font-semibold transition-colors mb-2 ${currentTitleHover}`}
+                      >
                         {feature.title}
                       </CardTitle>
                       <CardDescription className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
@@ -458,7 +474,9 @@ export default function Home() {
                         <Badge variant="outline" className="text-xs">
                           {feature.category}
                         </Badge>
-                        <ArrowRight className="h-4 w-4 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-1 transition-all" />
+                        <ArrowRight
+                          className={`h-4 w-4 text-slate-400 group-hover:translate-x-1 transition-all ${currentArrowHover}`}
+                        />
                       </div>
                     </CardContent>
                   </Card>

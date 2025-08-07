@@ -286,8 +286,8 @@ export default function VideoConverterForm() {
           <div
             className={`border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 ${
               dragActive
-                ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-900/10 scale-[1.02]'
-                : 'border-muted-foreground/25 hover:border-blue-300 hover:bg-blue-50/25 dark:hover:bg-blue-900/5'
+                ? 'border-primary bg-primary-50/50 dark:bg-primary-900/10 scale-[1.02]'
+                : 'border-muted-foreground/25 hover:border-primary/60 hover:bg-primary-50/25 dark:hover:bg-primary-900/5'
             }`}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
@@ -303,7 +303,7 @@ export default function VideoConverterForm() {
                 </div>
                 <div className="bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/10 dark:to-blue-900/10 p-6 rounded-xl border border-green-200 dark:border-green-800">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
+                    <div className="p-2 bg-primary-100 dark:bg-primary-900/20 rounded-lg">
                       <FileVideo className="h-5 w-5 text-blue-600" />
                     </div>
                     <span className="font-semibold text-lg">{selectedFile.name}</span>
@@ -346,7 +346,7 @@ export default function VideoConverterForm() {
             ) : (
               <div className="space-y-6">
                 <div className="flex items-center justify-center">
-                  <div className="p-4 bg-blue-100 dark:bg-blue-900/20 rounded-full">
+                  <div className="p-4 bg-primary-100 dark:bg-primary-900/20 rounded-full">
                     <Upload className="h-12 w-12 text-blue-600" />
                   </div>
                 </div>
@@ -614,7 +614,7 @@ export default function VideoConverterForm() {
                   key={stage}
                   className={`p-2 rounded-lg text-xs font-medium transition-colors ${
                     progress.stage === stage
-                      ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+                      ? 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300'
                       : index <
                           ['uploading', 'processing', 'downloading', 'complete'].indexOf(
                             progress.stage
