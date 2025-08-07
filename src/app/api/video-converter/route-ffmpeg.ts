@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
       ]);
 
       // Return converted file
-      return new NextResponse(convertedFile, {
+      return new NextResponse(new Uint8Array(convertedFile), {
         status: 200,
         headers: {
           'Content-Type': mimeType,

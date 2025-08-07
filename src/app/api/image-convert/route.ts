@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
           headers.set('X-Compression-Ratio', '0');
           headers.set('X-Format-Note', 'HEIC converted to high-quality JPEG');
 
-          return new NextResponse(processedBuffer, { headers });
+          return new NextResponse(new Uint8Array(processedBuffer), { headers });
         } else {
           // Convert HEIC to target format
           processedBuffer = await convertWithSharp(sharpImage, targetFormat, quality);
@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
         headers.set('X-Compression-Ratio', '0');
         headers.set('X-Format-Note', 'HEIC converted to high-quality JPEG');
 
-        return new NextResponse(processedBuffer, { headers });
+        return new NextResponse(new Uint8Array(processedBuffer), { headers });
       } else {
         processedBuffer = await convertWithSharp(sharpImage, targetFormat, quality);
         ({ mimeType, extension } = getFormatInfo(targetFormat));
@@ -127,7 +127,7 @@ export async function POST(request: NextRequest) {
     headers.set('X-Converted-Size', convertedSize.toString());
     headers.set('X-Compression-Ratio', compressionRatio);
 
-    return new NextResponse(processedBuffer, { headers });
+    return new NextResponse(new Uint8Array(processedBuffer), { headers });
   } catch (error) {
     console.error('Image conversion error:', error);
     return NextResponse.json(
