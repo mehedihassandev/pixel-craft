@@ -7,7 +7,7 @@
   "crons": [
     {
       "path": "/api/cleanup-temp-files",
-      "schedule": "0 */6 * * *"
+      "schedule": "0 0 * * *"
     }
   ]
 }
