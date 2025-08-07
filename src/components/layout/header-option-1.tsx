@@ -12,6 +12,7 @@ import {
   Layers,
   Palette,
   ChevronDown,
+  Video,
 } from 'lucide-react';
 import Link from 'next/link';
 import { menus } from '@/navigation/menus';
@@ -37,6 +38,7 @@ const iconMap = {
   FileText,
   Layers,
   Palette,
+  Video,
 };
 
 // Categorize menu items for better organization

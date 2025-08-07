@@ -68,4 +68,10 @@ export const menus: IMenus[] = [
     href: ROUTER.GIF_TO_JSON,
     icon: 'FileText',
   },
+  {
+    id: 'video-converter',
+    label: 'Video Converter',
+    href: ROUTER.VIDEO_CONVERTER,
+    icon: 'Video',
+  },
 ];

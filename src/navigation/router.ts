@@ -11,4 +11,5 @@ export const ROUTER = {
   PHOTO_EDITOR: '/photo-editor',
   BATCH_PROCESSOR: '/batch-processor',
   GIF_TO_JSON: '/gif-to-json',
+  VIDEO_CONVERTER: '/video-converter',
 };

@@ -13,6 +13,7 @@ import {
   Palette,
   X,
   Search,
+  Video,
 } from 'lucide-react';
 import Link from 'next/link';
 import { menus } from '@/navigation/menus';
@@ -34,6 +35,7 @@ const iconMap = {
   FileText,
   Layers,
   Palette,
+  Video,
 };
 
 const HeaderOption3 = () => {

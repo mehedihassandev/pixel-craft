@@ -1,0 +1,22 @@
+# Development Dockerfile
+FROM node:18-alpine
+
+# Install FFmpeg for video processing
+RUN apk add --no-cache ffmpeg
+
+WORKDIR /app
+
+# Install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Create temp directory for video conversions
+RUN mkdir -p tmp/video-conversions
+
+# Copy source code (will be overridden by volume mount in development)
+COPY . .
+
+EXPOSE 9002
+
+# Development command
+CMD ["npm", "run", "dev"]

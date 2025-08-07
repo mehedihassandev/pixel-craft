@@ -1,0 +1,29 @@
+# Development Docker Compose file
+version: '3.8'
+
+services:
+  pixel-craft-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - '9002:9002'
+    environment:
+      - NODE_ENV=development
+    volumes:
+      # Mount source code for hot reloading
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    restart: unless-stopped
+    command: npm run dev
+
+  # Optional: Redis service for development
+  # redis-dev:
+  #   image: redis:7-alpine
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis_dev_data:/data
+# volumes:
+#   redis_dev_data:

@@ -11,10 +11,11 @@ import {
   FileText,
   Layers,
   Palette,
+  Video,
 } from 'lucide-react';
 import Link from 'next/link';
 import { menus } from '@/navigation/menus';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -32,6 +33,7 @@ const iconMap = {
   FileText,
   Layers,
   Palette,
+  Video,
 };
 
 const HeaderOption2 = () => {
@@ -71,82 +73,105 @@ const HeaderOption2 = () => {
 
           {/* Quick Actions - Desktop */}
           <div className="hidden lg:flex items-center gap-3">
-            {popularTools.map(item => {
-              if (!item) return null;
-              const IconComponent = iconMap[item.icon as keyof typeof iconMap];
-              const isActive = pathname === item.href;
+            {/* Scrollable Popular Tools */}
+            <div className="flex items-center gap-2 max-w-md overflow-x-auto scrollbar-hide">
+              <div className="flex items-center gap-2 min-w-max">
+                {popularTools.map(item => {
+                  if (!item) return null;
+                  const IconComponent = iconMap[item.icon as keyof typeof iconMap];
+                  const isActive = pathname === item.href;
 
-              return (
-                <Link
-                  key={item.id}
-                  href={item.href}
-                  className={`group relative flex items-center gap-2 px-4 py-2 rounded-xl transition-all hover:scale-105 ${
-                    isActive
-                      ? 'bg-primary text-primary-foreground shadow-lg'
-                      : 'bg-card hover:bg-accent hover:text-accent-foreground shadow-sm'
-                  }`}
-                >
-                  <IconComponent className="h-4 w-4" />
-                  <span className="text-sm font-medium">{item.label}</span>
-                  {item.id === 'background-remove' && (
-                    <Badge variant="secondary" className="ml-1 text-xs py-0 px-1">
-                      HOT
-                    </Badge>
-                  )}
-                </Link>
-              );
-            })}
+                  return (
+                    <Link
+                      key={item.id}
+                      href={item.href}
+                      className={`group relative flex items-center gap-2 px-3 py-2 rounded-xl transition-all hover:scale-105 whitespace-nowrap ${
+                        isActive
+                          ? 'bg-primary text-primary-foreground shadow-lg'
+                          : 'bg-card hover:bg-accent hover:text-accent-foreground shadow-sm'
+                      }`}
+                    >
+                      <IconComponent className="h-4 w-4 flex-shrink-0" />
+                      <span className="text-sm font-medium">{item.label}</span>
+                      {item.id === 'background-remove' && (
+                        <Badge variant="secondary" className="ml-1 text-xs py-0 px-1">
+                          HOT
+                        </Badge>
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
 
             {/* More Tools Button */}
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="outline" className="flex items-center gap-2">
+                <Button variant="outline" className="flex items-center gap-2 flex-shrink-0">
                   <Sparkles className="h-4 w-4" />
                   <span className="text-sm font-medium">All Tools</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-96">
-                <div className="flex flex-col space-y-6 mt-6">
+              <SheetContent side="right" className="w-96 max-h-screen">
+                <SheetHeader>
+                  <SheetTitle className="text-xl font-bold">All Tools</SheetTitle>
+                </SheetHeader>
+                <div className="flex flex-col space-y-6 mt-6 h-full">
                   <div className="text-center">
-                    <h2 className="text-xl font-bold">All Tools</h2>
                     <p className="text-sm text-muted-foreground">
                       Choose from our complete toolkit
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3">
-                    {menus.map(item => {
-                      const IconComponent = iconMap[item.icon as keyof typeof iconMap];
-                      const isActive = pathname === item.href;
+                  {/* Scrollable Tools Grid */}
+                  <div className="flex-1 overflow-y-auto scrollbar-hide pb-8">
+                    <div className="grid grid-cols-2 gap-3 pb-6">
+                      {menus.map(item => {
+                        const IconComponent = iconMap[item.icon as keyof typeof iconMap];
+                        const isActive = pathname === item.href;
 
-                      return (
-                        <Link
-                          key={item.id}
-                          href={item.href}
-                          className={`group relative flex flex-col items-center gap-3 p-4 rounded-xl border transition-all hover:scale-105 ${
-                            isActive
-                              ? 'bg-primary text-primary-foreground border-primary'
-                              : 'bg-card hover:bg-accent hover:text-accent-foreground border-border'
-                          }`}
-                        >
-                          <div
-                            className={`p-3 rounded-lg ${
-                              isActive ? 'bg-primary-foreground/20' : 'bg-primary/10'
+                        return (
+                          <Link
+                            key={item.id}
+                            href={item.href}
+                            className={`group relative flex flex-col items-center gap-3 p-4 rounded-xl border transition-all hover:scale-105 ${
+                              isActive
+                                ? 'bg-primary text-primary-foreground border-primary'
+                                : 'bg-card hover:bg-accent hover:text-accent-foreground border-border'
                             }`}
                           >
-                            <IconComponent className="h-6 w-6" />
-                          </div>
-                          <div className="text-center">
-                            <span className="text-sm font-medium leading-tight">{item.label}</span>
-                          </div>
-                          {item.id === 'background-remove' && (
-                            <Badge variant="secondary" className="absolute -top-2 -right-2 text-xs">
-                              Popular
-                            </Badge>
-                          )}
-                        </Link>
-                      );
-                    })}
+                            <div
+                              className={`p-3 rounded-lg ${
+                                isActive ? 'bg-primary-foreground/20' : 'bg-primary/10'
+                              }`}
+                            >
+                              <IconComponent className="h-6 w-6" />
+                            </div>
+                            <div className="text-center">
+                              <span className="text-sm font-medium leading-tight">
+                                {item.label}
+                              </span>
+                            </div>
+                            {item.id === 'background-remove' && (
+                              <Badge
+                                variant="secondary"
+                                className="absolute -top-2 -right-2 text-xs"
+                              >
+                                Popular
+                              </Badge>
+                            )}
+                            {item.id === 'video-converter' && (
+                              <Badge
+                                variant="secondary"
+                                className="absolute -top-2 -right-2 text-xs"
+                              >
+                                New
+                              </Badge>
+                            )}
+                          </Link>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </SheetContent>
@@ -163,53 +188,63 @@ const HeaderOption2 = () => {
                   <span className="sr-only">Toggle menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-80">
-                <div className="flex flex-col space-y-6 mt-6">
+              <SheetContent side="right" className="w-80 max-h-screen">
+                <SheetHeader>
+                  <SheetTitle className="flex items-center justify-center gap-3">
+                    <Image
+                      src="/assets/logo.png"
+                      alt="Pixel Craft Logo"
+                      width={32}
+                      height={32}
+                      className="h-8 w-8 rounded-lg"
+                    />
+                    <span className="text-lg font-bold">Pixel Craft</span>
+                  </SheetTitle>
+                </SheetHeader>
+                <div className="flex flex-col space-y-6 mt-6 h-full">
                   <div className="text-center">
-                    <div className="flex items-center justify-center gap-3 mb-4">
-                      <Image
-                        src="/assets/logo.png"
-                        alt="Pixel Craft Logo"
-                        width={32}
-                        height={32}
-                        className="h-8 w-8 rounded-lg"
-                      />
-                      <h2 className="text-lg font-bold">Pixel Craft</h2>
-                    </div>
                     <p className="text-sm text-muted-foreground">Professional Image Tools</p>
                   </div>
 
-                  <div className="grid grid-cols-1 gap-2">
-                    {menus.map(item => {
-                      const IconComponent = iconMap[item.icon as keyof typeof iconMap];
-                      const isActive = pathname === item.href;
+                  {/* Scrollable Menu Items */}
+                  <div className="flex-1 overflow-y-auto scrollbar-hide">
+                    <div className="grid grid-cols-1 gap-2 pb-6">
+                      {menus.map(item => {
+                        const IconComponent = iconMap[item.icon as keyof typeof iconMap];
+                        const isActive = pathname === item.href;
 
-                      return (
-                        <Link
-                          key={item.id}
-                          href={item.href}
-                          className={`flex items-center gap-4 p-3 rounded-lg transition-colors ${
-                            isActive
-                              ? 'bg-primary text-primary-foreground'
-                              : 'hover:bg-accent hover:text-accent-foreground'
-                          }`}
-                        >
-                          <div
-                            className={`p-2 rounded-lg ${
-                              isActive ? 'bg-primary-foreground/20' : 'bg-primary/10'
+                        return (
+                          <Link
+                            key={item.id}
+                            href={item.href}
+                            className={`flex items-center gap-4 p-3 rounded-lg transition-colors ${
+                              isActive
+                                ? 'bg-primary text-primary-foreground'
+                                : 'hover:bg-accent hover:text-accent-foreground'
                             }`}
                           >
-                            <IconComponent className="h-4 w-4" />
-                          </div>
-                          <span className="font-medium">{item.label}</span>
-                          {item.id === 'background-remove' && (
-                            <Badge variant="secondary" className="ml-auto text-xs">
-                              HOT
-                            </Badge>
-                          )}
-                        </Link>
-                      );
-                    })}
+                            <div
+                              className={`p-2 rounded-lg ${
+                                isActive ? 'bg-primary-foreground/20' : 'bg-primary/10'
+                              }`}
+                            >
+                              <IconComponent className="h-4 w-4" />
+                            </div>
+                            <span className="font-medium">{item.label}</span>
+                            {item.id === 'background-remove' && (
+                              <Badge variant="secondary" className="ml-auto text-xs">
+                                HOT
+                              </Badge>
+                            )}
+                            {item.id === 'video-converter' && (
+                              <Badge variant="secondary" className="ml-auto text-xs">
+                                New
+                              </Badge>
+                            )}
+                          </Link>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </SheetContent>
