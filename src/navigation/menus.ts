@@ -21,23 +21,11 @@ export const menus: IMenus[] = [
     icon: 'Eraser',
   },
   {
-    id: 'image-optimization',
-    label: 'Image Optimization',
-    href: ROUTER.IMAGE_OPTIMIZATION,
-    icon: 'Zap',
+    id: 'photo-editor',
+    label: 'Photo Editor',
+    href: ROUTER.PHOTO_EDITOR,
+    icon: 'Palette',
   },
-  {
-    id: 'image-compress',
-    label: 'Image Compress',
-    href: ROUTER.IMAGE_COMPRESS,
-    icon: 'Archive',
-  },
-  // {
-  //     id: "add-background-ai",
-  //     label: "Add Background with AI",
-  //     href: ROUTER.ADD_BACKGROUND_AI,
-  //     icon: "Sparkles",
-  // },
   {
     id: 'ocr',
     label: 'OCR Text Extract',
@@ -49,18 +37,6 @@ export const menus: IMenus[] = [
     label: 'PNG to SVG',
     href: ROUTER.PNG_TO_SVG,
     icon: 'Layers',
-  },
-  {
-    id: 'photo-editor',
-    label: 'Photo Editor',
-    href: ROUTER.PHOTO_EDITOR,
-    icon: 'Palette',
-  },
-  {
-    id: 'batch-processor',
-    label: 'Batch Processor',
-    href: ROUTER.BATCH_PROCESSOR,
-    icon: 'Zap',
   },
   {
     id: 'gif-to-json',

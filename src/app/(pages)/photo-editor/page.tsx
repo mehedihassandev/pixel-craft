@@ -3,9 +3,23 @@
 import dynamicImport from 'next/dynamic';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Palette, Sparkles, Eye, Sliders, Filter, Zap, FileImage, Repeat } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Palette,
+  Sparkles,
+  Eye,
+  Sliders,
+  Filter,
+  Zap,
+  FileImage,
+  Repeat,
+  Archive,
+  Image as ImageIcon,
+  Settings,
+  Layers,
+} from 'lucide-react';
 
-// Dynamically import the photo editor to avoid SSR issues
+// Dynamically import components to avoid SSR issues
 const AdvancedPhotoEditor = dynamicImport(
   () =>
     import('@/components/photo-editor/advanced-photo-editor').then(mod => ({
@@ -16,6 +30,36 @@ const AdvancedPhotoEditor = dynamicImport(
     loading: () => (
       <div className="flex items-center justify-center h-64">
         <div className="text-lg">Loading photo editor...</div>
+      </div>
+    ),
+  }
+);
+
+const ImageCompressionForm = dynamicImport(
+  () =>
+    import('@/components/image-compress/image-compression-form').then(mod => ({
+      default: mod.ImageCompressionForm,
+    })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-lg">Loading compression tool...</div>
+      </div>
+    ),
+  }
+);
+
+const BatchImageProcessor = dynamicImport(
+  () =>
+    import('@/components/batch-processor/batch-image-processor').then(mod => ({
+      default: mod.BatchImageProcessor,
+    })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-lg">Loading batch processor...</div>
       </div>
     ),
   }
@@ -42,6 +86,12 @@ const features = [
     description: 'Convert between JPG, PNG, WebP, AVIF, HEIC, TIFF, BMP, GIF with quality control.',
   },
   {
+    icon: Archive,
+    title: 'Smart Compression',
+    description:
+      'Reduce file size by up to 90% while maintaining visual quality with advanced algorithms.',
+  },
+  {
     icon: Eye,
     title: 'Real-time Preview',
     description: 'See changes instantly with side-by-side before/after comparison.',
@@ -59,12 +109,17 @@ const features = [
   {
     icon: Repeat,
     title: 'Batch Processing',
-    description: 'Convert images to multiple formats simultaneously with batch processing.',
+    description: 'Process multiple images simultaneously with batch operations and bulk download.',
   },
   {
     icon: Zap,
     title: 'Fast Processing',
     description: 'Server-side processing with Sharp ensures high quality and fast results.',
+  },
+  {
+    icon: Settings,
+    title: 'Advanced Settings',
+    description: 'Customize quality, dimensions, and output preferences for optimal results.',
   },
 ];
 
@@ -72,13 +127,15 @@ const tips = [
   'Start with preset filters to quickly enhance your photos',
   'Use the split view to compare original and edited versions',
   'Use modern formats like WebP and AVIF for better compression',
-  'Use batch conversion to export your image in multiple formats',
+  'Use batch processing to optimize multiple images at once',
   'Adjust exposure and highlights for better lighting balance',
   'Apply subtle vignette effects to draw focus to the center',
   'HEIC format provides excellent compression for Apple devices',
   'Combine multiple adjustments for professional-looking results',
-  'Use quality controls when converting to lossy formats',
+  'Use compression settings to balance quality and file size',
   'Save your edited images in high quality PNG format',
+  'Use batch conversion to export multiple formats simultaneously',
+  'Optimize images for web to improve loading speeds',
 ];
 
 export default function PhotoEditorPage() {
@@ -101,9 +158,9 @@ export default function PhotoEditorPage() {
         </div>
 
         <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-          Transform your photos with professional-grade filters, adjustments, and format conversion.
-          Apply artistic effects, enhance colors, and convert between all major image formats
-          including HEIC, WebP, and AVIF.
+          Complete photo editing suite with professional filters, adjustments, format conversion,
+          smart compression, and batch processing. Transform your images with AI-powered tools and
+          optimize them for web delivery.
         </p>
 
         <div className="flex flex-wrap justify-center gap-2 mt-6">
@@ -120,6 +177,9 @@ export default function PhotoEditorPage() {
             📱 HEIC Support
           </Badge>
           <Badge variant="secondary" className="text-sm">
+            📦 Smart Compression
+          </Badge>
+          <Badge variant="secondary" className="text-sm">
             ⚡ Batch Processing
           </Badge>
           <Badge variant="secondary" className="text-sm">
@@ -129,10 +189,75 @@ export default function PhotoEditorPage() {
       </div>
 
       {/* Main Editor */}
-      <AdvancedPhotoEditor />
+      <Card className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm shadow-lg">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Layers className="h-5 w-5" />
+            Photo Editing Studio
+          </CardTitle>
+          <CardDescription>
+            Choose your editing mode: individual photo editing, compression optimization, or batch
+            processing
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Tabs defaultValue="editor" className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="editor" className="flex items-center gap-2">
+                <Palette className="h-4 w-4" />
+                Photo Editor
+              </TabsTrigger>
+              <TabsTrigger value="compression" className="flex items-center gap-2">
+                <Archive className="h-4 w-4" />
+                Compression
+              </TabsTrigger>
+              <TabsTrigger value="batch" className="flex items-center gap-2">
+                <Layers className="h-4 w-4" />
+                Batch Processing
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="editor" className="mt-6">
+              <div className="space-y-4">
+                <div className="text-center space-y-2">
+                  <h3 className="text-lg font-semibold">Advanced Photo Editor</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Apply filters, adjust colors, and enhance your photos with professional tools
+                  </p>
+                </div>
+                <AdvancedPhotoEditor />
+              </div>
+            </TabsContent>
+
+            <TabsContent value="compression" className="mt-6">
+              <div className="space-y-4">
+                <div className="text-center space-y-2">
+                  <h3 className="text-lg font-semibold">Smart Image Compression</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Reduce file sizes while maintaining quality for web optimization
+                  </p>
+                </div>
+                <ImageCompressionForm />
+              </div>
+            </TabsContent>
+
+            <TabsContent value="batch" className="mt-6">
+              <div className="space-y-4">
+                <div className="text-center space-y-2">
+                  <h3 className="text-lg font-semibold">Batch Image Processing</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Process multiple images with resize, compress, and format conversion operations
+                  </p>
+                </div>
+                <BatchImageProcessor />
+              </div>
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
 
       {/* Features Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
         {features.map((feature, index) => (
           <Card
             key={index}
@@ -160,7 +285,7 @@ export default function PhotoEditorPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Sparkles className="h-5 w-5" />
-            Pro Tips for Better Photo Editing
+            Pro Tips for Better Photo Editing & Optimization
           </CardTitle>
           <CardDescription>
             Get the most out of your photo editing experience with these professional tips.
@@ -189,7 +314,7 @@ export default function PhotoEditorPage() {
           <CardTitle>Technical Specifications</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-4 gap-6">
             <div className="space-y-2">
               <h4 className="font-medium">Supported Formats</h4>
               <p className="text-sm text-gray-600 dark:text-gray-300">
@@ -206,10 +331,16 @@ export default function PhotoEditorPage() {
               </p>
             </div>
             <div className="space-y-2">
-              <h4 className="font-medium">Features</h4>
+              <h4 className="font-medium">Compression</h4>
               <p className="text-sm text-gray-600 dark:text-gray-300">
-                Format conversion, batch processing, quality control, resize options, and HEIC
-                support
+                Advanced algorithms with up to 90% size reduction while maintaining visual quality
+              </p>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-medium">Batch Operations</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                Process multiple images simultaneously with resize, compress, format conversion, and
+                bulk download
               </p>
             </div>
           </div>

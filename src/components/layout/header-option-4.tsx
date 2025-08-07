@@ -66,7 +66,7 @@ const HeaderOption4 = () => {
   const popularTools = [
     menus.find(m => m.id === 'background-remove'),
     menus.find(m => m.id === 'resize'),
-    menus.find(m => m.id === 'image-compress'),
+    menus.find(m => m.id === 'photo-editor'),
   ].filter(Boolean);
 
   return (

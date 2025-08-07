@@ -107,8 +107,8 @@ const HeaderOption2 = () => {
   const popularToolsBase = [
     menus.find(m => m.id === 'background-remove'),
     menus.find(m => m.id === 'resize'),
-    menus.find(m => m.id === 'image-compress'),
     menus.find(m => m.id === 'photo-editor'),
+    menus.find(m => m.id === 'ocr'),
   ].filter(Boolean);
 
   // Find the currently active menu item
