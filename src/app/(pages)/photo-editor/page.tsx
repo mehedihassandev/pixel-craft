@@ -3,7 +3,7 @@
 import dynamicImport from 'next/dynamic';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Palette, Sparkles, Eye, Sliders, Filter, Zap } from 'lucide-react';
+import { Palette, Sparkles, Eye, Sliders, Filter, Zap, FileImage, Repeat } from 'lucide-react';
 
 // Dynamically import the photo editor to avoid SSR issues
 const AdvancedPhotoEditor = dynamicImport(
@@ -37,6 +37,11 @@ const features = [
       'Fine-tune brightness, contrast, saturation, hue, and exposure with precision controls.',
   },
   {
+    icon: FileImage,
+    title: 'Format Conversion',
+    description: 'Convert between JPG, PNG, WebP, AVIF, HEIC, TIFF, BMP, GIF with quality control.',
+  },
+  {
     icon: Eye,
     title: 'Real-time Preview',
     description: 'See changes instantly with side-by-side before/after comparison.',
@@ -52,18 +57,27 @@ const features = [
     description: 'Choose from professionally crafted presets for instant photo enhancement.',
   },
   {
+    icon: Repeat,
+    title: 'Batch Processing',
+    description: 'Convert images to multiple formats simultaneously with batch processing.',
+  },
+  {
     icon: Zap,
     title: 'Fast Processing',
-    description: 'Client-side processing ensures privacy and lightning-fast results.',
+    description: 'Server-side processing with Sharp ensures high quality and fast results.',
   },
 ];
 
 const tips = [
   'Start with preset filters to quickly enhance your photos',
   'Use the split view to compare original and edited versions',
+  'Use modern formats like WebP and AVIF for better compression',
+  'Use batch conversion to export your image in multiple formats',
   'Adjust exposure and highlights for better lighting balance',
   'Apply subtle vignette effects to draw focus to the center',
+  'HEIC format provides excellent compression for Apple devices',
   'Combine multiple adjustments for professional-looking results',
+  'Use quality controls when converting to lossy formats',
   'Save your edited images in high quality PNG format',
 ];
 
@@ -87,8 +101,9 @@ export default function PhotoEditorPage() {
         </div>
 
         <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-          Transform your photos with professional-grade filters and adjustments. Apply artistic
-          effects, enhance colors, and create stunning visuals with real-time preview.
+          Transform your photos with professional-grade filters, adjustments, and format conversion.
+          Apply artistic effects, enhance colors, and convert between all major image formats
+          including HEIC, WebP, and AVIF.
         </p>
 
         <div className="flex flex-wrap justify-center gap-2 mt-6">
@@ -99,7 +114,13 @@ export default function PhotoEditorPage() {
             🎨 Real-time Preview
           </Badge>
           <Badge variant="secondary" className="text-sm">
-            ⚡ Instant Processing
+            🔄 Format Conversion
+          </Badge>
+          <Badge variant="secondary" className="text-sm">
+            📱 HEIC Support
+          </Badge>
+          <Badge variant="secondary" className="text-sm">
+            ⚡ Batch Processing
           </Badge>
           <Badge variant="secondary" className="text-sm">
             🔒 Privacy First
@@ -111,7 +132,7 @@ export default function PhotoEditorPage() {
       <AdvancedPhotoEditor />
 
       {/* Features Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {features.map((feature, index) => (
           <Card
             key={index}
@@ -172,19 +193,23 @@ export default function PhotoEditorPage() {
             <div className="space-y-2">
               <h4 className="font-medium">Supported Formats</h4>
               <p className="text-sm text-gray-600 dark:text-gray-300">
-                JPEG, PNG, WebP input formats with PNG output for best quality
+                Input: JPEG, PNG, WebP, HEIC, AVIF, TIFF, BMP, GIF
+                <br />
+                Output: All major formats with quality control
               </p>
             </div>
             <div className="space-y-2">
               <h4 className="font-medium">Processing</h4>
               <p className="text-sm text-gray-600 dark:text-gray-300">
-                Client-side processing using HTML5 Canvas API for privacy and speed
+                Server-side processing with Sharp for high-quality conversions and client-side
+                filters for privacy
               </p>
             </div>
             <div className="space-y-2">
-              <h4 className="font-medium">Browser Support</h4>
+              <h4 className="font-medium">Features</h4>
               <p className="text-sm text-gray-600 dark:text-gray-300">
-                Modern browsers with Canvas API support (Chrome 50+, Firefox 50+, Safari 10+)
+                Format conversion, batch processing, quality control, resize options, and HEIC
+                support
               </p>
             </div>
           </div>
