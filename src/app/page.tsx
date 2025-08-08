@@ -29,6 +29,7 @@ import {
 } from '@/constants/home';
 import { getAppStats, additionalMetrics } from '@/constants/stats';
 import { useGitHubStats, formatNumber, timeAgo } from '@/hooks/use-github-stats';
+import { useGitHubContributors, formatContributions } from '@/hooks/use-github-contributors';
 
 export default function Home() {
   // Get static stats data to prevent hydration mismatches
@@ -37,6 +38,9 @@ export default function Home() {
   // Get real GitHub stats
   const { stats: githubStats, loading: githubLoading } = useGitHubStats();
 
+  // Get GitHub contributors
+  const { contributors, loading: contributorsLoading } = useGitHubContributors();
+
   // Get popular and new features for quick access
   const popularFeatures = features.filter(f => f.popular);
   const newFeatures = features.filter(f => f.new);
@@ -44,255 +48,248 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-primary-50/30 to-secondary-50/30 dark:from-slate-900 dark:via-primary-900/10 dark:to-secondary-900/10">
-      {/* Hero Section */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center mb-16">
-          <div className="flex items-center justify-center mb-6">
-            <div className="gradient-primary p-3 rounded-2xl glow-primary">
-              <Wand2 className="h-8 w-8 text-white" />
-            </div>
-          </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-gradient-primary mb-6">PixelCraft</h1>
-          <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-8 max-w-3xl mx-auto">
-            Professional image processing tools powered by AI. Transform, optimize, and enhance your
-            images with cutting-edge technology.
-            <span className="font-semibold text-gradient-primary"> Open source </span>
-            and free for everyone.
-          </p>
-
-          {/* Project Creator & GitHub Stats */}
-          <div className="mb-8 space-y-4">
-            <div className="flex flex-col items-center gap-4">
-              <Badge
-                variant="outline"
-                className="px-4 py-2 bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-700 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300"
-              >
-                🚀 Built by &nbsp;
-                <a
-                  href="https://mehedihassan.me/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors underline decoration-dotted underline-offset-2"
-                >
-                  Md. Mehedi Hassan
-                </a>
-                &nbsp; with ❤️
-              </Badge>
-
-              {/* GitHub Stars */}
-              <div className="flex items-center gap-4">
-                <a
-                  href="https://github.com/mehedihassandev/pixel-craft"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white rounded-lg transition-all hover:scale-105 shadow-lg"
-                >
-                  <Star className="h-4 w-4" />
-                  <span className="font-medium">Star on GitHub</span>
-                  <Badge variant="secondary" className="bg-gray-700 text-white text-xs">
-                    {githubLoading ? '⭐ ...' : `⭐ ${formatNumber(githubStats?.stars || 0)}`}
-                  </Badge>
-                </a>
-                <a
-                  href="https://github.com/mehedihassandev/pixel-craft/fork"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 btn-primary-gradient rounded-lg transition-all hover:scale-105 shadow-lg"
-                >
-                  <GitFork className="h-4 w-4" />
-                  <span className="font-medium">Fork</span>
-                  {!githubLoading && githubStats && (
-                    <Badge variant="secondary" className="bg-white/20 text-white text-xs">
-                      {formatNumber(githubStats.forks)}
-                    </Badge>
-                  )}
-                </a>
+      {/* Hero + About Combined Section */}
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-900/20 dark:via-purple-900/20 dark:to-pink-900/20">
+        <div className="container mx-auto px-4 py-16">
+          {/* Hero Content */}
+          <div className="text-center mb-10">
+            <div className="flex items-center justify-center mb-6">
+              <div className="gradient-primary p-3 rounded-2xl glow-primary">
+                <Wand2 className="h-7 w-7 text-white" />
               </div>
             </div>
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
-            <Badge
-              variant="secondary"
-              className="px-3 py-1 gradient-primary-soft border-primary/30 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
-            >
-              <Star className="h-3 w-3 mr-1 text-primary" />
-              <span className="font-bold text-primary">AI Powered</span>
-            </Badge>
-            <Badge
-              variant="outline"
-              className="px-3 py-1 bg-gradient-to-r from-green-50 to-primary-50 dark:from-green-900/20 dark:to-primary-900/20 border-green-300 dark:border-green-700 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
-            >
-              <Users className="h-3 w-3 mr-1 text-green-600" />
-              <span className="font-bold bg-gradient-to-r from-green-600 to-primary bg-clip-text text-transparent">
-                Open Source
-              </span>
-            </Badge>
-            <Badge
-              variant="outline"
-              className="px-3 py-1 bg-gradient-to-r from-secondary-50 to-pink-50 dark:from-secondary-900/20 dark:to-pink-900/20 border-secondary/30 dark:border-secondary-700 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
-            >
-              <span className="font-bold bg-gradient-to-r from-secondary to-pink-600 bg-clip-text text-transparent">
-                Free to Use
-              </span>
-            </Badge>
-            <Badge
-              variant="outline"
-              className="px-3 py-1 bg-gradient-to-r from-cyan-50 to-primary-50 dark:from-cyan-900/20 dark:to-primary-900/20 border-cyan-300 dark:border-primary/30 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
-            >
-              <span className="font-bold bg-gradient-to-r from-cyan-600 to-primary bg-clip-text text-transparent">
-                No Watermarks
-              </span>
-            </Badge>
-          </div>
-        </div>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+              PixelCraft
+            </h2>
 
-        {/* Project Information Section */}
-        <div className="mb-16">
-          <div className="bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-900/20 dark:via-purple-900/20 dark:to-pink-900/20 rounded-3xl p-8 md:p-12 shadow-xl border border-indigo-200 dark:border-indigo-800">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                About PixelCraft
-              </h2>
-              <p className="text-lg text-slate-600 dark:text-slate-300 max-w-4xl mx-auto leading-relaxed">
-                PixelCraft is a comprehensive, open-source image processing platform that I've built
-                to democratize access to professional-grade image editing tools. Combining the power
-                of artificial intelligence with intuitive design, this project represents my
-                commitment to creating accessible, high-quality software for the global developer
-                and creator community.
+            <p className="text-lg text-slate-600 dark:text-slate-300 max-w-4xl mx-auto leading-relaxed mb-6">
+              PixelCraft is a comprehensive,{' '}
+              <span className="font-semibold text-gradient-primary"> Open source </span> image
+              processing platform designed to democratize access to professional-grade image editing
+              tools. Combining the power of artificial intelligence with intuitive design, this
+              project represents our commitment to creating accessible, high-quality software for
+              the global developer and creator community.
+            </p>
+
+            {/* Feature Badges */}
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <Badge
+                variant="secondary"
+                className="px-3 py-1 gradient-primary-soft border-primary/30 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+              >
+                <Star className="h-3 w-3 mr-1 text-primary" />
+                <span className="font-bold text-primary">AI Powered</span>
+              </Badge>
+              <Badge
+                variant="outline"
+                className="px-3 py-1 bg-gradient-to-r from-green-50 to-primary-50 dark:from-green-900/20 dark:to-primary-900/20 border-green-300 dark:border-green-700 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+              >
+                <Users className="h-3 w-3 mr-1 text-green-600" />
+                <span className="font-bold bg-gradient-to-r from-green-600 to-primary bg-clip-text text-transparent">
+                  Open Source
+                </span>
+              </Badge>
+              <Badge
+                variant="outline"
+                className="px-3 py-1 bg-gradient-to-r from-secondary-50 to-pink-50 dark:from-secondary-900/20 dark:to-pink-900/20 border-secondary/30 dark:border-secondary-700 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+              >
+                <span className="font-bold bg-gradient-to-r from-secondary to-pink-600 bg-clip-text text-transparent">
+                  Free to Use
+                </span>
+              </Badge>
+              <Badge
+                variant="outline"
+                className="px-3 py-1 bg-gradient-to-r from-cyan-50 to-primary-50 dark:from-cyan-900/20 dark:to-primary-900/20 border-cyan-300 dark:border-primary/30 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+              >
+                <span className="font-bold bg-gradient-to-r from-cyan-600 to-primary bg-clip-text text-transparent">
+                  No Watermarks
+                </span>
+              </Badge>
+            </div>
+          </div>
+
+          {/* Feature Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {/* Project Vision */}
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:shadow-indigo-500/25 border border-white/50 dark:border-slate-700/50 transition-all duration-500 hover:-translate-y-2 group">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl group-hover:bg-indigo-200 dark:group-hover:bg-indigo-800/50 transition-colors">
+                  <Sparkles className="h-6 w-6 text-indigo-600" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">Vision</h3>
+              </div>
+              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                To make professional image processing tools accessible to everyone, regardless of
+                budget or technical expertise. Every feature is designed with simplicity and power
+                in mind.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-              {/* Project Vision */}
-              <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:shadow-indigo-500/25 border border-white/50 dark:border-slate-700/50 transition-all duration-500 hover:-translate-y-2 group">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl group-hover:bg-indigo-200 dark:group-hover:bg-indigo-800/50 transition-colors">
-                    <Sparkles className="h-6 w-6 text-indigo-600" />
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">Vision</h3>
+            {/* Technology Stack */}
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:shadow-purple-500/25 border border-white/50 dark:border-slate-700/50 transition-all duration-500 hover:-translate-y-2 group">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-xl group-hover:bg-purple-200 dark:group-hover:bg-purple-800/50 transition-colors">
+                  <Layers className="h-6 w-6 text-purple-600" />
                 </div>
-                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                  To make professional image processing tools accessible to everyone, regardless of
-                  budget or technical expertise. Every feature is designed with simplicity and power
-                  in mind.
-                </p>
+                <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">Tech Stack</h3>
               </div>
-
-              {/* Technology Stack */}
-              <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:shadow-purple-500/25 border border-white/50 dark:border-slate-700/50 transition-all duration-500 hover:-translate-y-2 group">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-xl group-hover:bg-purple-200 dark:group-hover:bg-purple-800/50 transition-colors">
-                    <Layers className="h-6 w-6 text-purple-600" />
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">
-                    Tech Stack
-                  </h3>
+              <div className="space-y-2">
+                <div className="flex flex-wrap gap-1">
+                  {['Next.js 15', 'TypeScript', 'Tailwind CSS', 'AI APIs'].map(tech => (
+                    <Badge
+                      key={tech}
+                      variant="outline"
+                      className="text-xs bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-700"
+                    >
+                      {tech}
+                    </Badge>
+                  ))}
                 </div>
-                <div className="space-y-2">
-                  <div className="flex flex-wrap gap-1">
-                    {['Next.js 15', 'TypeScript', 'Tailwind CSS', 'AI APIs'].map(tech => (
-                      <Badge
-                        key={tech}
-                        variant="outline"
-                        className="text-xs bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-700"
-                      >
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">
-                    Built with modern web technologies for optimal performance and user experience.
-                  </p>
-                </div>
-              </div>
-
-              {/* Open Source Commitment */}
-              <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:shadow-pink-500/25 border border-white/50 dark:border-slate-700/50 transition-all duration-500 hover:-translate-y-2 group">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 bg-pink-100 dark:bg-pink-900/30 rounded-xl group-hover:bg-pink-200 dark:group-hover:bg-pink-800/50 transition-colors">
-                    <Users className="h-6 w-6 text-pink-600" />
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">
-                    Open Source
-                  </h3>
-                </div>
-                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                  Completely free and open-source under MIT license. Contributions, feedback, and
-                  feature requests from the community are always welcome and appreciated.
+                <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">
+                  Built with modern web technologies for optimal performance and user experience.
                 </p>
               </div>
             </div>
 
-            {/* Creator Information */}
-            <div className="gradient-primary-soft rounded-2xl p-6 border border-primary/20 dark:border-primary/30">
-              <div className="flex flex-col md:flex-row items-center gap-6">
-                <div className="flex-shrink-0">
-                  <div className="w-20 h-20 rounded-full overflow-hidden shadow-lg ring-4 ring-white/50 dark:ring-slate-700/50 glow-primary">
-                    <Image
-                      src="/assets/me.jpg"
-                      alt="Md. Mehedi Hassan"
-                      width={80}
-                      height={80}
-                      className="w-full h-full object-cover"
-                      priority
-                    />
-                  </div>
+            {/* Open Source Commitment */}
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:shadow-pink-500/25 border border-white/50 dark:border-slate-700/50 transition-all duration-500 hover:-translate-y-2 group">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-3 bg-pink-100 dark:bg-pink-900/30 rounded-xl group-hover:bg-pink-200 dark:group-hover:bg-pink-800/50 transition-colors">
+                  <Users className="h-6 w-6 text-pink-600" />
                 </div>
-                <div className="flex-grow text-center md:text-left">
-                  <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-2">
-                    Built by Md. Mehedi Hassan
-                  </h3>
-                  <p className="text-slate-600 dark:text-slate-400 mb-3 leading-relaxed">
-                    Full-stack developer passionate about creating tools that solve real problems. I
-                    believe in the power of open-source software to make technology accessible to
-                    everyone.
-                  </p>
-                  <div className="flex flex-wrap justify-center md:justify-start gap-3">
-                    <a
-                      href="https://mehedihassan.me/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium text-sm transition-colors"
-                    >
-                      🌐 Portfolio
-                    </a>
-                    <a
-                      href="https://github.com/mehedihassandev"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium text-sm transition-colors"
-                    >
-                      💻 GitHub
-                    </a>
-                    <a
-                      href="https://linkedin.com/in/mehedihassandev"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium text-sm transition-colors"
-                    >
-                      💼 LinkedIn
-                    </a>
+                <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">
+                  Open Source
+                </h3>
+              </div>
+              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Completely free and open-source under MIT license. Contributions, feedback, and
+                feature requests from the community are always welcome and appreciated.
+              </p>
+            </div>
+          </div>
+
+          {/* Contributors Section */}
+          <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/50 dark:border-slate-700/50">
+            <div className="text-center mb-6">
+              <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">
+                Our Amazing Contributors
+              </h3>
+              <p className="text-slate-600 dark:text-slate-400">
+                Meet the talented developers who are building PixelCraft together
+              </p>
+              <div className="text-xs text-slate-500 dark:text-slate-400 mt-2 flex items-center justify-center gap-1">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                Live data from GitHub
+              </div>
+            </div>
+
+            {contributorsLoading ? (
+              <div className="flex items-center justify-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                <span className="ml-2 text-slate-600 dark:text-slate-400">
+                  Loading contributors...
+                </span>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {contributors.map((contributor, index) => (
+                  <div
+                    key={contributor.id}
+                    className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group border border-slate-200 dark:border-slate-700"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0">
+                        <div className="w-16 h-16 rounded-full overflow-hidden shadow-lg ring-4 ring-white/50 dark:ring-slate-700/50 group-hover:ring-primary/30 transition-all">
+                          <Image
+                            src={contributor.avatar_url}
+                            alt={contributor.name}
+                            width={64}
+                            height={64}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      </div>
+                      <div className="flex-grow min-w-0">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h4 className="text-lg font-bold text-slate-800 dark:text-slate-200 truncate">
+                            {contributor.name}
+                          </h4>
+                          {index === 0 && (
+                            <Badge className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300 text-xs">
+                              Founder
+                            </Badge>
+                          )}
+                        </div>
+                        <p className="text-sm text-slate-600 dark:text-slate-400 mb-3 line-clamp-2">
+                          {contributor.bio}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
+                            <span className="flex items-center gap-1">
+                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                              {formatContributions(contributor.contributions)} commits
+                            </span>
+                          </div>
+                          <a
+                            href={contributor.html_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium text-sm transition-colors"
+                          >
+                            GitHub →
+                          </a>
+                        </div>
+                        {contributor.location && (
+                          <div className="mt-2 text-xs text-slate-500 dark:text-slate-400">
+                            📍 {contributor.location}
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
+                ))}
+              </div>
+            )}
+
+            {/* Contribution Stats */}
+            <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div className="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm">
+                  <div className="text-2xl font-bold text-primary mb-1">
+                    {contributorsLoading ? '...' : contributors.length}
+                  </div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">Contributors</div>
                 </div>
-                <div className="flex-shrink-0 text-center">
-                  <div className="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-lg">
-                    <div className="text-sm text-slate-500 dark:text-slate-400 mb-1">
-                      Project Status
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                      <span className="text-sm font-medium text-green-600 dark:text-green-400">
-                        Active Development
-                      </span>
-                    </div>
+                <div className="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm">
+                  <div className="text-2xl font-bold text-green-600 dark:text-green-400 mb-1">
+                    {contributorsLoading
+                      ? '...'
+                      : formatContributions(
+                          contributors.reduce((sum, c) => sum + c.contributions, 0)
+                        )}
                   </div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">Total Commits</div>
+                </div>
+                <div className="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm">
+                  <div className="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-1">
+                    24/7
+                  </div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">Development</div>
+                </div>
+                <div className="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm">
+                  <div className="text-2xl font-bold text-orange-600 dark:text-orange-400 mb-1">
+                    MIT
+                  </div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">License</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Quick Access Section */}
+      {/* Quick Access Section */}
+      <div className="container mx-auto px-4 py-16">
         <div className="mb-16">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold mb-4">Quick Access</h2>
@@ -677,7 +674,7 @@ export default function Home() {
             Choose any tool above to get started. No registration required, completely free to use.
           </p>
           <p className="text-sm text-slate-500 dark:text-slate-400 mb-8 italic">
-            "Built with passion by Md. Mehedi Hassan to empower creators worldwide" 💙
+            "Built with passion by our amazing contributors to empower creators worldwide" 💙
           </p>
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             <Link href="/placeholder">

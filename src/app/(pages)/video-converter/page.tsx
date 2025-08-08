@@ -35,6 +35,51 @@ export default function VideoConverterPage() {
           Convert your videos to multiple formats with professional quality. Support for MP4, WebM,
           MOV, AVI, GIF and more with customizable settings.
         </p>
+
+        {/* Warning Notice */}
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-6 shadow-lg">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <div className="w-8 h-8 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center">
+                  <svg className="w-5 h-5 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fillRule="evenodd"
+                      d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold text-amber-800 dark:text-amber-200 mb-2">
+                  ⚠️ Development Notice
+                </h3>
+                <div className="text-amber-700 dark:text-amber-300 space-y-2">
+                  <p className="font-medium">
+                    The video converter is currently not available in the deployed version.
+                  </p>
+                  <div className="space-y-1 text-sm">
+                    <p>
+                      <strong>To use the video converter:</strong> Clone the project from GitHub and
+                      run it locally.
+                    </p>
+                    <p>
+                      <strong>Status:</strong> We are actively working on this feature and it will
+                      be available very soon! 🚀
+                    </p>
+                  </div>
+                  <div className="mt-3 p-3 bg-amber-100 dark:bg-amber-900/30 rounded-lg border border-amber-200 dark:border-amber-700">
+                    <p className="text-sm font-mono text-amber-800 dark:text-amber-200">
+                      git clone https://github.com/your-repo/pixel-craft.git
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="flex justify-center gap-3 flex-wrap mt-6">
           {[
             { label: 'Multiple Formats', icon: Video },
