@@ -29,6 +29,7 @@ export * from './gif-to-json';
 export * from './home';
 export * from './image-compress';
 export * from './ocr';
+export * from './photo-editor';
 export * from './png-to-svg';
 export * from './stats';
 export * from './video-converter';
