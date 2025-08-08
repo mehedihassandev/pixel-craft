@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
           error: 'Video conversion requires cloud processing setup',
           suggestion: 'Please configure Cloudinary for video processing on Vercel',
           documentation: '/docs/video-converter-setup.md#vercel-deployment',
-          fallback: 'Use Docker deployment for FFmpeg-based processing',
+          fallback: 'Use local deployment for FFmpeg-based processing',
         },
         { status: 501 }
       );
