@@ -4,7 +4,7 @@ import { join } from 'path';
 import { VideoConverter, ConversionOptions } from '@/lib/video-converter';
 import { VIDEO_CONVERTER_CONFIG, VIDEO_CONVERTER_MESSAGES } from '@/constants/video-converter';
 
-// FFmpeg-based video conversion for local/Docker deployment
+// FFmpeg-based video conversion for local deployment
 export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {

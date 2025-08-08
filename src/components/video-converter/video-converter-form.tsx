@@ -219,7 +219,7 @@ export default function VideoConverterForm() {
           throw new Error('No download URL received from cloud processing');
         }
       } else {
-        // Local processing response (Docker/FFmpeg)
+        // Local processing response (FFmpeg)
         const blob = await response.blob();
         const url = URL.createObjectURL(blob);
         setDownloadUrl(url);

@@ -30,34 +30,8 @@ sudo apt install ffmpeg
 3. Add the `bin` folder to your system PATH
 4. Restart your terminal/command prompt
 
-#### Docker (Alternative)
+### Environment Variables
 
-If you prefer using Docker, you can use the included Dockerfile:
-
-```dockerfile
-# Build the Docker image
-docker build -t pixel-craft .
-
-# Run the container
-docker run -p 3000:3000 pixel-craft
-```
-
-Or use Docker Compose for easier management:
-
-```bash
-# Build and start the services
-docker-compose up --build
-
-# Run in background
-docker-compose up -d
-
-# Stop the services
-docker-compose down
-```
-
-The Docker setup includes:
-
-- Node.js 18 Alpine base image
 - FFmpeg pre-installed
 - Optimized multi-stage build
 - Health check endpoint
@@ -74,7 +48,7 @@ ffmpeg -version
 
 ## Environment Variables
 
-### For Local/Docker Development
+### For Local Development
 
 Create a `.env.local` file in your project root:
 
@@ -123,32 +97,6 @@ MAX_VIDEO_FILE_SIZE=524288000  # 500MB
 2. Set up Cloudinary account and get API credentials
 3. Add environment variables in Vercel dashboard
 4. Deploy automatically on git push
-
-### Option 2: Docker Deployment
-
-**Pros:**
-
-- Full control over video processing (FFmpeg)
-- Can run on any server/cloud provider
-- No external dependencies for video conversion
-- Better for complex video processing needs
-
-**Cons:**
-
-- Requires server management
-- Higher resource requirements
-- Manual scaling needed
-
-**Setup:**
-
-```bash
-# Build and run with Docker
-docker build -t pixel-craft .
-docker run -p 3000:3000 pixel-craft
-
-# Or use Docker Compose
-docker-compose up --build
-```
 
 ## Production Considerations
 
