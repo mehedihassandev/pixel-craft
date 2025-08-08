@@ -10,17 +10,10 @@
       "schedule": "0 0 * * *"
     }
   ],
+  "ignoreCommand": "if [ \"$VERCEL_GIT_COMMIT_REF\" != \"main\" ]; then exit 0; fi",
   "git": {
     "deploymentEnabled": {
       "main": true
     }
-  },
-  "github": {
-    "autoDeployOnCommit": true,
-    "autoAssignOwner": false,
-    "autoAssignDeveloper": false,
-    "deployCommits": true,
-    "deployPullRequests": false,
-    "silent": false
   }
 }
