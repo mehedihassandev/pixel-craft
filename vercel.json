@@ -16,10 +16,10 @@
     }
   },
   "github": {
-    "autoDeployOnCommit": true,
+    "autoDeployOnCommit": false,
     "autoAssignOwner": false,
     "autoAssignDeveloper": false,
-    "deployCommits": true,
+    "deployCommits": false,
     "deployPullRequests": false,
     "silent": false
   }
