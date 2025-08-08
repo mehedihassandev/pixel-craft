@@ -5,3 +5,15 @@ runConfig:
   # Increase this value if you'd like to automatically spin up
   # more instances in response to increased traffic.
   maxInstances: 1
+
+# Only build and deploy from main branch
+env:
+  - variable: BUILD_ONLY_ON_MAIN
+    value: 'true'
+
+# Build configuration
+buildConfig:
+  # Specify which branch to auto-deploy from
+  source:
+    gitRepository:
+      gitBranch: main

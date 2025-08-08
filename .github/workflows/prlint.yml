@@ -1,4 +1,4 @@
-name: PR Linting
+name: PR Checks (No Build/Deploy)
 
 on:
   pull_request:
