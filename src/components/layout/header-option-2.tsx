@@ -105,10 +105,10 @@ const HeaderOption2 = () => {
 
   // Group popular tools for quick access
   const popularToolsBase = [
+    menus.find(m => m.id === 'placeholder'),
     menus.find(m => m.id === 'background-remove'),
     menus.find(m => m.id === 'resize'),
     menus.find(m => m.id === 'photo-editor'),
-    menus.find(m => m.id === 'ocr'),
   ].filter(Boolean);
 
   // Find the currently active menu item
