@@ -3,9 +3,9 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { GoogleAnalytics } from '@/components/analytics/google-analytics';
 import { ThemeProvider } from '@/components/theme/theme-provider';
-import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { ReactNode } from 'react';
+import { Analytics } from '@vercel/analytics/next';
 import {
   DEFAULT_METADATA,
   STRUCTURED_DATA,
@@ -59,6 +59,7 @@ export default function RootLayout({
           {children}
           <Footer />
           <Toaster />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
