@@ -57,12 +57,15 @@ const PlaceholderPage = () => {
 
     const cleanBgColor = bgColor.replace('#', '');
     const cleanTextColor = textColor.replace('#', '');
-    let url = `https://placehold.co/${validWidth}x${validHeight}/${cleanBgColor}/${cleanTextColor}.${format}?text=${encodeURIComponent(
-      text
-    )}`;
-    if (fontSize && fontSize > 0) {
-      url += `&fontSize=${fontSize}`;
+
+    // Use the correct placehold.co URL format with extension
+    let url = `https://placehold.co/${validWidth}x${validHeight}/${cleanBgColor}/${cleanTextColor}.${format}`;
+
+    // Add text parameter if provided
+    if (text) {
+      url += `?text=${encodeURIComponent(text)}`;
     }
+
     return url;
   }, [options, mounted]);
 

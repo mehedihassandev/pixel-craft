@@ -100,63 +100,64 @@ export function JsonPlaybackDemo({ className }: JsonPlaybackDemoProps) {
   };
 
   const downloadExampleCode = () => {
-    const code = `// GIF JSON Playback Example
-class GifPlayer {
-  constructor(canvas, jsonData) {
-    this.canvas = canvas;
-    this.ctx = canvas.getContext('2d');
-    this.jsonData = jsonData;
-    this.currentFrame = 0;
-    this.isPlaying = false;
+    const code = `
+    // GIF JSON Playback Example
+      class GifPlayer {
+        constructor(canvas, jsonData) {
+          this.canvas = canvas;
+          this.ctx = canvas.getContext('2d');
+          this.jsonData = jsonData;
+          this.currentFrame = 0;
+          this.isPlaying = false;
 
-    // Set canvas dimensions
-    canvas.width = jsonData.width;
-    canvas.height = jsonData.height;
-  }
+          // Set canvas dimensions
+          canvas.width = jsonData.width;
+          canvas.height = jsonData.height;
+        }
 
-  play() {
-    if (this.isPlaying) return;
-    this.isPlaying = true;
-    this.animate();
-  }
+        play() {
+          if (this.isPlaying) return;
+          this.isPlaying = true;
+          this.animate();
+        }
 
-  pause() {
-    this.isPlaying = false;
-  }
+        pause() {
+          this.isPlaying = false;
+        }
 
-  animate() {
-    if (!this.isPlaying) return;
+        animate() {
+          if (!this.isPlaying) return;
 
-    const frame = this.jsonData.frames[this.currentFrame];
-    const img = new Image();
+          const frame = this.jsonData.frames[this.currentFrame];
+          const img = new Image();
 
-    img.onload = () => {
-      // Clear canvas
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+          img.onload = () => {
+            // Clear canvas
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-      // Draw frame
-      this.ctx.drawImage(img, frame.x, frame.y, frame.width, frame.height);
+            // Draw frame
+            this.ctx.drawImage(img, frame.x, frame.y, frame.width, frame.height);
 
-      // Next frame
-      this.currentFrame = (this.currentFrame + 1) % this.jsonData.frameCount;
+            // Next frame
+            this.currentFrame = (this.currentFrame + 1) % this.jsonData.frameCount;
 
-      // Schedule next animation
-      setTimeout(() => this.animate(), frame.delay);
-    };
+            // Schedule next animation
+            setTimeout(() => this.animate(), frame.delay);
+          };
 
-    img.src = frame.image;
-  }
+          img.src = frame.image;
+        }
 
-  reset() {
-    this.pause();
-    this.currentFrame = 0;
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  }
-}
+        reset() {
+          this.pause();
+          this.currentFrame = 0;
+          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
+      }
 
-// Usage:
-// const player = new GifPlayer(canvasElement, gifJsonData);
-// player.play();`;
+      // Usage:
+      // const player = new GifPlayer(canvasElement, gifJsonData);
+      // player.play();`;
 
     const blob = new Blob([code], { type: 'text/javascript' });
     const url = URL.createObjectURL(blob);

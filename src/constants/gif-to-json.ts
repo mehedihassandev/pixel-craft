@@ -99,3 +99,39 @@ export const QUALITY_PRESETS = [
     description: 'Smaller files, reduced quality',
   },
 ] as const;
+
+export const SAMPLE_JSON_STRUCTURE = `{
+  "width": 300,
+  "height": 200,
+  "frameCount": 12,
+  "duration": 1200,
+  "frames": [
+    {
+      "index": 0,
+      "delay": 100,
+      "image": "data:image/png;base64,...",
+      "width": 300,
+      "height": 200,
+      "x": 0,
+      "y": 0
+    }
+    // ... more frames
+  ]
+}`;
+
+export const SAMPLE_CANVAS_EXAMPLE = `// Animate frames on canvas
+const gifData = await fetch('frames.json');
+let currentFrame = 0;
+
+function animate() {
+  const frame = gifData.frames[currentFrame];
+  const img = new Image();
+  img.onload = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, frame.x, frame.y);
+    currentFrame = (currentFrame + 1) % gifData.frameCount;
+    setTimeout(animate, frame.delay);
+  };
+  img.src = frame.image;
+}
+animate();`;

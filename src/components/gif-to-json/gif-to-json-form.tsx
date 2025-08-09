@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -40,6 +40,7 @@ import {
   Info,
   Trash2,
   Eye,
+  Copy,
 } from 'lucide-react';
 
 interface ProcessedGifData {
@@ -191,7 +192,7 @@ export function GifToJsonForm() {
   }, []);
 
   // Preview animation logic
-  React.useEffect(() => {
+  useEffect(() => {
     if (!previewPlaying || !processedGif) return;
 
     const interval = setInterval(() => {
@@ -203,6 +204,43 @@ export function GifToJsonForm() {
 
     return () => clearInterval(interval);
   }, [previewPlaying, processedGif]);
+
+  const handleCopyJson = async () => {
+    if (!processedGif) return;
+
+    const jsonString = JSON.stringify(processedGif.jsonData, null, 2);
+
+    try {
+      await navigator.clipboard.writeText(jsonString);
+      toast({
+        title: 'Copied!',
+        description: 'JSON data copied to clipboard successfully.',
+      });
+    } catch (err) {
+      console.error('Failed to copy JSON:', err);
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = jsonString;
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        toast({
+          title: 'Copied!',
+          description: 'JSON data copied to clipboard successfully.',
+        });
+      } catch (fallbackErr) {
+        console.error('Fallback copy failed:', fallbackErr);
+        toast({
+          title: 'Copy Failed',
+          description: 'Failed to copy JSON data to clipboard.',
+          variant: 'destructive',
+        });
+      }
+      document.body.removeChild(textArea);
+    }
+  };
 
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6">
@@ -396,10 +434,22 @@ export function GifToJsonForm() {
 
               {/* JSON Preview */}
               <div className="space-y-4">
-                <h4 className="font-medium flex items-center gap-2">
-                  <FileText className="h-4 w-4" />
-                  JSON Structure Preview
-                </h4>
+                <div className="flex items-center justify-between">
+                  <h4 className="font-medium flex items-center gap-2">
+                    <FileText className="h-4 w-4" />
+                    JSON Structure Preview
+                  </h4>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleCopyJson}
+                    className="flex items-center gap-2"
+                    disabled={!processedGif}
+                  >
+                    <Copy className="h-4 w-4" />
+                    Copy JSON
+                  </Button>
+                </div>
                 <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 text-sm font-mono overflow-x-auto">
                   <pre className="text-xs">
                     {JSON.stringify(
